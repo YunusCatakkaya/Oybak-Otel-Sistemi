@@ -2,20 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.yunus.GUI;
+package com.oybak.otel.GUI;
 
 /**
  *
  * @author Yunus
  */
-public class AnaSayfa extends javax.swing.JFrame {
+public class YonetimSayfasi extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AnaSayfa.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimSayfasi.class.getName());
 
     /**
-     * Creates new form AnaSayfa
+     * Creates new form YonetimSayfasi
      */
-    public AnaSayfa() {
+    public YonetimSayfasi() {
         initComponents();
     }
 
@@ -66,7 +66,7 @@ public class AnaSayfa extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AnaSayfa().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new YonetimSayfasi().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
