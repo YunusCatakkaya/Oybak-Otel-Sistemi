@@ -11,7 +11,7 @@ package com.oybak.otel;
 public class Yonetim extends Personel{
 
     public Yonetim(String name, String lastName, String tcNo, String cinsiyet, int yas, double maas, String isTipi) {
-        super(name, lastName, tcNo, cinsiyet, yas, maas, isTipi);
+        super(name, lastName, tcNo, cinsiyet, yas, maas, "Yonetim");
     }
                         //ÇALIŞAN İŞLEMLERİ METOTLARI 
         // public void calisanEkle

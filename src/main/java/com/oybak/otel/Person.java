@@ -11,7 +11,7 @@ package com.oybak.otel;
 public abstract class Person {
 	protected String name;
 	protected String lastName;
-	protected String tcNo ;
+	protected String tcNo ; //double yap 
 	protected String cinsiyet;
 	protected int yas;
 	
