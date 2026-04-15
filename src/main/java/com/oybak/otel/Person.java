@@ -11,11 +11,11 @@ package com.oybak.otel;
 public abstract class Person {
 	protected String name;
 	protected String lastName;
-	protected String tcNo ; //double yap 
+	protected long tcNo ; 
 	protected String cinsiyet;
 	protected int yas;
 	
-	public Person(String name , String lastName,String tcNo,String cinsiyet,int yas ) {
+	public Person(String name , String lastName,long tcNo,String cinsiyet,int yas ) {
 		
 			this.name=name;
 			this.lastName=lastName;

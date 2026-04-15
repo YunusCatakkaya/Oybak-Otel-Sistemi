@@ -11,7 +11,7 @@ package com.oybak.otel;
 
 public class Resepsiyon extends Personel{
 
-	public Resepsiyon(String name, String lastName, String tcNo, String cinsiyet, int yas, double maas, String isTipi) {
+	public Resepsiyon(String name, String lastName, long tcNo, String cinsiyet, int yas, double maas, String isTipi) {
 		super(name, lastName, tcNo, cinsiyet, yas, maas, "Resepsiyon");
 	}
 		

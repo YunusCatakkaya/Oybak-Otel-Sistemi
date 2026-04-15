@@ -13,7 +13,7 @@ public class Personel extends Person{
 	private double maas;
 	private String isTipi;
 	
-		public Personel(String name, String lastName, String tcNo, String cinsiyet,int yas , double maas, String isTipi) {
+		public Personel(String name, String lastName, long tcNo, String cinsiyet,int yas , double maas, String isTipi) {
 			super(name, lastName, tcNo, cinsiyet,yas);
 			this.maas = maas;
 			this.isTipi = isTipi;

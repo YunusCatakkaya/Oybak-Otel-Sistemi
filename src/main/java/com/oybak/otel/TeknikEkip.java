@@ -12,7 +12,7 @@ public class TeknikEkip extends Personel {
     
     private String uzmanlikAlanı;
 
-    public TeknikEkip(String uzmanlikAlani, String name, String lastName, String tcNo, String cinsiyet, int yas, double maas, String isTipi) {
+    public TeknikEkip(String uzmanlikAlani, String name, String lastName, long tcNo, String cinsiyet, int yas, double maas, String isTipi) {
         super(name, lastName, tcNo, cinsiyet, yas, maas, "TeknikEkip");
         this.uzmanlikAlanı = uzmanlikAlanı;
     }

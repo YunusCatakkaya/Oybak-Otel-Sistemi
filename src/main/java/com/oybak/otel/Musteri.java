@@ -13,7 +13,7 @@ public class Musteri extends Person {
 	private int kaldigiOdaNo;
 	private double kasayaKatkisi;
 	
-	public Musteri(String name, String lastName, String tcNo, String cinsiyet, int yas, int kaldigiOdaNo) {
+	public Musteri(String name, String lastName, long tcNo, String cinsiyet, int yas, int kaldigiOdaNo) {
 			
 			super(name, lastName, tcNo, cinsiyet, yas);
 			this.kaldigiOdaNo = kaldigiOdaNo;
