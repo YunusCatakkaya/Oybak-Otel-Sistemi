@@ -4,6 +4,8 @@
  */
 package com.oybak.otel;
 
+import com.oybak.otel.enums.OdaDurumu;
+
 /**
  * 
  * @author Yunus                      //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
@@ -16,10 +18,10 @@ public class Resepsiyon extends Personel{
 	}
 		
 	public void musteriGirisYap(Oda secilenOda , Musteri yeniMusteri) { //Parametre almayı unutma.
-			if (secilenOda.getOdaDurumu().equals("Müsait")) {
+			if (secilenOda.getOdaDurumu().equals(OdaDurumu.MUSAİT)) {
 				
 				secilenOda.musteriEkle(yeniMusteri);//odaya musterı eklıyoruz
-				secilenOda.setOdaDurumu("Dolu"); //odanın durumunu dolu yapıyoruz
+				secilenOda.setOdaDurumu(OdaDurumu.DOLU); //odanın durumunu dolu yapıyoruz
 				
 				System.out.println("İşlem Başarılı "+yeniMusteri.name+"İsimli Müşteri"+secilenOda.getOdaNumarası()+"Numaralı Odaya Giriş Yaptı");
 				System.out.println("Odada şu an "+secilenOda.getKisiSayisi()+"Kişi Kalıyor..");
@@ -29,9 +31,9 @@ public class Resepsiyon extends Personel{
 		}
 		
 	public void musteriCıkısYap(Oda secilenOda , Musteri yenMusteri) {
-		if (secilenOda.getOdaDurumu().equals("Dolu")) {
+		if (secilenOda.getOdaDurumu().equals(OdaDurumu.DOLU)) {
 			
-			secilenOda.setOdaDurumu("Müsait");//oda durumunu tekrar musait yaouyorz
+			secilenOda.setOdaDurumu(OdaDurumu.MUSAİT);//oda durumunu tekrar musait yaouyorz
 			secilenOda.musterileriTemizle(); //odadakı musterılerı temızlıyoruz
 			
 				System.out.println(secilenOda.getOdaNumarası() + " numaralı odanın çıkış işlemi yapıldı. Oda artık Müsait.");

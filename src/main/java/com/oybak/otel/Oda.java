@@ -7,30 +7,41 @@ package com.oybak.otel;
 /**
  *
  * @author Yunus
- */                          //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
-
+ */                        
+import com.oybak.otel.enums.OdaOzelligi;
+import com.oybak.otel.enums.OdaDurumu;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Oda {
 	private int odaNumarası;   //Örn:3002
-	private String odaDurumu;  // Bakımda  Müsait Dolu
+	private OdaDurumu odaDurumu;  // Bakımda  Müsait Dolu
 	private String odaTipi;  //Tek kişilik  Çift Kişilik   
-	private String ekOzellikler;  // Deniz Manzararlı  Geniş Balkon
+	private List<OdaOzelligi>ekOzellikler; // Deniz Manzararlı  
 	private List<Musteri> odadakiMusteriler;
+        private int kapasite;//odanın kapasitresinii belirlemek için
+        
 	
-	public Oda(int odaNumarası, String odaDurumu, String odaTipi, String ekOzellikler) { //oda constructor 
+	public Oda(int odaNumarası, OdaDurumu odaDurumu, String odaTipi, String ekOzellikler,int kapasite) { //oda constructor 
 		super();
 		this.odaNumarası = odaNumarası;
 		this.odaDurumu = odaDurumu;
 		this.odaTipi = odaTipi;
-		this.ekOzellikler = ekOzellikler;
+		this.ekOzellikler = new ArrayList<OdaOzelligi>();
 		this.odadakiMusteriler = new ArrayList<Musteri>();//Odada birden fazla musteri kalması durumunda gerekli
+                this.kapasite=kapasite;
+                
 	}
 	//odaya musteri ekleme methodu
 	public void musteriEkle(Musteri musteri) {
-		
-		odadakiMusteriler.add(musteri); //arraylist sayesınde musterı eklenır
+            if (getKisiSayisi()<kapasite) {//odaya gelen kişilerin sayısı kapasiteden fazla olma hatasını onler
+                
+                odadakiMusteriler.add(musteri); //arraylist sayesınde musterı eklenır
+            }else{
+                System.out.println("Hata: Oda kapasitesi dolu");
+                    
+            }
 		
 	}
 	public void musterileriTemizle() {
@@ -42,7 +53,21 @@ public class Oda {
 		
 		return odadakiMusteriler.size();
 	}
-	
+        //ozellık ekleme methodu
+	public void ozellikEkle(OdaOzelligi ozellik){
+            if(!ekOzellikler.contains(ozellik)){
+                
+                ekOzellikler.add(ozellik);
+            }
+        }
+        //Odadan ozellık cıkarma methodu
+        public void ozellikCikar(OdaOzelligi ozellik){
+            ekOzellikler.remove(ozellik);
+           }
+        //odanın sahip oldugu ozellıklerı listeleme
+        public List<OdaOzelligi> getEkOzellikler() {
+                 return ekOzellikler;
+            }
 	
 
 	public int getOdaNumarası() {
@@ -55,14 +80,14 @@ public class Oda {
 		}
 	}
 
-	public String getOdaDurumu() {
-		return odaDurumu;
-	}
+	public OdaDurumu getOdaDurumu() {
+                return odaDurumu;
+        }
 
-	public void setOdaDurumu(String odaDurumu) {
-		this.odaDurumu = odaDurumu;
-	}
-
+        public void setOdaDurumu(OdaDurumu odaDurumu) {
+                this.odaDurumu = odaDurumu;
+            }
+        
 	public String getOdaTipi() {
 		return odaTipi;
 	}
@@ -70,20 +95,25 @@ public class Oda {
 	public void setOdaTipi(String odaTipi) {
 		this.odaTipi = odaTipi;
 	}
-
-	public String getEkOzellikler() {
-		return ekOzellikler;
-	}
-
-	public void setEkOzellikler(String ekOzellikler) {
-		this.ekOzellikler = ekOzellikler;
-	}
 	
 	public void odaBilgileri() {
 		
 		System.out.println("Oda Numarası:"+odaNumarası+"Oda Tipi:"+odaTipi+"Ek Özellikler"+ekOzellikler+"Oda Müsaitlik Durumu"+odaDurumu);
 	}
-	
+
+         public int getKapasite() {
+                  return kapasite;
+         }
+
+         public void setKapasite(int kapasite) {
+                 this.kapasite = kapasite;
+         }
+                
+             public List<Musteri> getOdadakiMusteriler() {
+                 return odadakiMusteriler;
+           }
+
+         
 
 }
 
