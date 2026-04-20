@@ -2,20 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.oybak.otel.ResepsiyonGUI;
+package com.oybakotel.GUI;
 
 /**
  *
- * @author ahmet
+ * @author Yunus
  */
-public class ResepsiyonSayfa extends javax.swing.JFrame {
+public class YonetimSayfasi extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ResepsiyonSayfa.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimSayfasi.class.getName());
 
     /**
-     * Creates new form ResepsiyonSayfa
+     * Creates new form YonetimSayfasi
      */
-    public ResepsiyonSayfa() {
+    public YonetimSayfasi() {
         initComponents();
     }
 
@@ -66,7 +66,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ResepsiyonSayfa().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new YonetimSayfasi().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
