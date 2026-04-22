@@ -4,6 +4,12 @@
  */
 package com.oybakotel.GUI;
 
+import com.oybak.otel.GUIMusteri.MusteriSayfasi;
+import com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa;
+import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
+import com.oybak.otel.GUIYonetim.YonetimEkran;
+
+//vıaaa
 /**
  *
  * @author ahmet
@@ -28,12 +34,16 @@ public class Anasayfa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         Musteri = new javax.swing.JButton();
         resepsiyon = new javax.swing.JButton();
         müdüriyet = new javax.swing.JButton();
         teknikPeronel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         Musteri.setBackground(new java.awt.Color(51, 51, 255));
         Musteri.setForeground(new java.awt.Color(255, 255, 255));
@@ -55,50 +65,74 @@ public class Anasayfa extends javax.swing.JFrame {
         teknikPeronel.setText("Teknik Peronel Girişi");
         teknikPeronel.addActionListener(this::teknikPeronelActionPerformed);
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(260, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(teknikPeronel, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(Musteri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(resepsiyon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(müdüriyet, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(263, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(78, Short.MAX_VALUE)
+                .addComponent(Musteri, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(resepsiyon, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(müdüriyet, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(teknikPeronel, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(131, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(resepsiyon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(teknikPeronel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(müdüriyet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Musteri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(133, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(126, Short.MAX_VALUE)
-                .addComponent(Musteri)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(resepsiyon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(müdüriyet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(teknikPeronel)
-                .addContainerGap(82, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void MusteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MusteriActionPerformed
-        // TODO add your handling code here:
+        MusteriSayfasi m = new MusteriSayfasi();
+        m.setLocationRelativeTo(null); // Ortada aç
+        m.setVisible(true);
+        this.dispose(); // Anasayfayı kapat        /
     }//GEN-LAST:event_MusteriActionPerformed
 
     private void resepsiyonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resepsiyonActionPerformed
-        // TODO add your handling code here:
+        ResepsiyonSayfa r = new ResepsiyonSayfa();
+        r.setLocationRelativeTo(null);
+        r.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_resepsiyonActionPerformed
 
     private void müdüriyetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_müdüriyetActionPerformed
-        // TODO add your handling code here:
+        YonetimEkran y = new YonetimEkran();
+        y.setLocationRelativeTo(null);
+        y.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_müdüriyetActionPerformed
 
     private void teknikPeronelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teknikPeronelActionPerformed
-        // TODO add your handling code here:
+        TeknikPersonelSayfasi t = new TeknikPersonelSayfasi();
+        t.setLocationRelativeTo(null);
+        t.setVisible(true);
+        this.dispose();            // TODO add your handling code here:
     }//GEN-LAST:event_teknikPeronelActionPerformed
 
     /**
@@ -128,6 +162,7 @@ public class Anasayfa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Musteri;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton müdüriyet;
     private javax.swing.JButton resepsiyon;
     private javax.swing.JButton teknikPeronel;
