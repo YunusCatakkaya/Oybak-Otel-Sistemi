@@ -6,16 +6,16 @@ package com.oybak.otel.GUIResepsiyon;
 
 /**
  *
- * @author ahmet
+ * @author onuro
  */
-public class ResepsiyonSayfa extends javax.swing.JFrame {
+public class RezervasyonIslemleri extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ResepsiyonSayfa.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RezervasyonIslemleri.class.getName());
 
     /**
-     * Creates new form ResepsiyonSayfa
+     * Creates new form RezervasyonIslemleri
      */
-    public ResepsiyonSayfa() {
+    public RezervasyonIslemleri() {
         initComponents();
     }
 
@@ -30,79 +30,59 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setBackground(new java.awt.Color(51, 51, 255));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Odalar");
+        jButton1.setText("Oda Rezervasyonu");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setBackground(new java.awt.Color(51, 51, 255));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Rezervasyon İşlemleri");
+        jButton2.setText("Odadan Ayrılma");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jButton3.setBackground(new java.awt.Color(51, 51, 255));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Müşteri Arama");
-
-        jButton4.setBackground(new java.awt.Color(51, 51, 255));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Para İşlemleri");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        jLabel1.setText("     Odaya Yapılacak İşlemi Seçiniz");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(64, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(29, 29, 29)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jButton4)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(107, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(120, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri rezervasyonEkrani = new com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri();
- 
-        rezervasyonEkrani.setLocationRelativeTo(null);
-        rezervasyonEkrani.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani();
-        
-        odaEkrani.setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        com.oybak.otel.GUIResepsiyon.ParaIslemleri paraEkrani = new com.oybak.otel.GUIResepsiyon.ParaIslemleri();
-        
-        paraEkrani.setLocationRelativeTo(null);
-        paraEkrani.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,13 +106,12 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ResepsiyonSayfa().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new RezervasyonIslemleri().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

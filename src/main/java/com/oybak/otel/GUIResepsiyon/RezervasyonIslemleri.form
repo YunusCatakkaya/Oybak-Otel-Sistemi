@@ -23,30 +23,31 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace pref="64" max="32767" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <Component id="jButton2" min="-2" pref="127" max="-2" attributes="0"/>
+              <EmptySpace pref="53" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="84" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" pref="142" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton3" min="-2" pref="136" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="188" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace pref="107" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace pref="30" max="32767" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="50" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
-                  <Component id="jButton3" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
-                  <Component id="jButton4" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
+                  <Component id="jButton2" alignment="3" min="-2" pref="75" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="120" max="32767" attributes="0"/>
+              <EmptySpace pref="127" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,7 +61,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Odalar"/>
+        <Property name="text" type="java.lang.String" value="Oda Rezervasyonu"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
@@ -74,36 +75,16 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Rezervasyon &#x130;&#x15f;lemleri"/>
+        <Property name="text" type="java.lang.String" value="Odadan Ayr&#x131;lma"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="33" red="33" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="M&#xfc;&#x15f;teri Arama"/>
+        <Property name="text" type="java.lang.String" value="     Odaya Yap&#x131;lacak &#x130;&#x15f;lemi Se&#xe7;iniz"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="33" red="33" type="rgb"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Para &#x130;&#x15f;lemleri"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

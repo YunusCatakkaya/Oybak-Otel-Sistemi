@@ -53,7 +53,20 @@ public class Resepsiyon extends Personel{
 		
 		}
         
-	
+	public void paraIadeEt(Musteri musteri, double iadeMiktari){
+            if(iadeMiktari > 0){
+                if(musteri.getKasayaKatkisi() >= iadeMiktari){
+                    musteri.kasayaKatkiCikar(iadeMiktari);
+                    
+                    System.out.println("İşlem Başarılı: " + musteri.name + " isimli müşteriye " + iadeMiktari + " TL iade edildi.");
+                    System.out.println("Müşterinin kasada kalan bakiyesi (toplam harcaması): " + musteri.getKasayaKatkisi() + " TL oldu.");
+                } else{
+                    System.out.println("Hata: Müşteriye otele ödediği toplam tutardan (" + musteri.getKasayaKatkisi() + " TL) daha fazla iade yapılamaz!");
+                }
+            } else{
+                System.out.println("Hata: İade edilecek miktar sıfırdan büyük olmalıdır!");
+            }
+        }
 	
 	}
 	

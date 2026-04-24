@@ -43,9 +43,19 @@ public class Musteri extends Person {
 		}
 	}
 	public void kasayaKatkiEkle(double miktar) {
+            if (miktar > 0) {  //eklenen para 0'dan büyük olmalı
 		this.kasayaKatkisi+=miktar;
+            } else{
+                System.out.println("Hata: Eklenecek miktar 0'dan büyük olmalıdır!");
+            }    
 		
 	}
+        
+        public void kasayaKatkiCikar(double miktar) {
+                if (miktar > 0 && this.kasayaKatkisi >= miktar) {  //müşterinin kasaya katkısından daha fazlasını iade edemeyiz
+                this.kasayaKatkisi -= miktar;
+        }
+}
 	
 
 	
