@@ -18,9 +18,10 @@ public class Oda {
 	private int odaNumarası;   //Örn:3002
 	private OdaDurumu odaDurumu;  // Bakımda  Müsait Dolu
 	private String odaTipi;  //Tek kişilik  Çift Kişilik   
-	private List<OdaOzelligi>ekOzellikler; // Deniz Manzararlı  
+	public List<OdaOzelligi>ekOzellikler; // Deniz Manzararlı  
 	private List<Musteri> odadakiMusteriler;
         private int kapasite;//odanın kapasitresinii belirlemek için
+        private String bakım;
         
 	
 	public Oda(int odaNumarası, OdaDurumu odaDurumu, String odaTipi, String ekOzellikler,int kapasite) { //oda constructor 
@@ -95,23 +96,18 @@ public class Oda {
 	public void setOdaTipi(String odaTipi) {
 		this.odaTipi = odaTipi;
 	}
-	
-	public void odaBilgileri() {
-		
-		System.out.println("Oda Numarası:"+odaNumarası+"Oda Tipi:"+odaTipi+"Ek Özellikler"+ekOzellikler+"Oda Müsaitlik Durumu"+odaDurumu);
-	}
 
-         public int getKapasite() {
+        public int getKapasite() {
                   return kapasite;
-         }
+        }
 
-         public void setKapasite(int kapasite) {
+        public void setKapasite(int kapasite) {
                  this.kapasite = kapasite;
-         }
+        }
                 
-             public List<Musteri> getOdadakiMusteriler() {
+        public List<Musteri> getOdadakiMusteriler() {
                  return odadakiMusteriler;
-           }
+        }
 
          
 

@@ -4,11 +4,15 @@
  */
 package com.oybak.otel;
 
+import com.oybak.otel.enums.OdaDurumu;
+import com.oybak.otel.enums.OdaOzelligi;
+import java.util.List;
+
 /**
  *
  * @author Yunus                      //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
  */
-public class TeknikEkip extends Personel {
+public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
     private String uzmanlikAlanı;
 
@@ -16,6 +20,22 @@ public class TeknikEkip extends Personel {
         super(name, lastName, tcNo, cinsiyet, yas, maas, "TeknikEkip");
         this.uzmanlikAlanı = uzmanlikAlanı;
     }
+    
+    /**
+     * @param odaNumarası
+     * @param odaTipi
+     * @param ekOzellikler
+     * @param odaDurumu
+     */
+    @Override
+    public void OdaGoruntule(int odaNumarası,  String odaTipi, List<OdaOzelligi>ekOzellikler, OdaDurumu odaDurumu){
+    }
+    //overload
+    public void odaGoruntule(int odaNumarası,  String odaTipi, List<OdaOzelligi>ekOzellikler, OdaDurumu odaDurumu, String bakım){
+        System.out.println("Bakım sebebi"+ bakım);
+    }
+    
+    
    
                 //ODA İŞLEMLERİ
          //public void odayiBakimaAl (equal kullanılır)

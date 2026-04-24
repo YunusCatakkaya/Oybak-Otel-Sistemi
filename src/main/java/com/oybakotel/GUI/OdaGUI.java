@@ -4,8 +4,8 @@
  */
 package com.oybakotel.GUI;
 
-import com.oybakotel.GUI.BakımSebebiPopupGUI;
-import com.oybak.otel.models.Oda;
+import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
+import com.oybak.otel.Oda;
 
 /**
  *
@@ -30,8 +30,8 @@ public class OdaGUI extends javax.swing.JFrame {
 
     private void ekranıDoldur() {
         // Bileşenleri veritabanından gelen verilerle doldur
-        OdaNo.setText("Oda: " + secilenOda.getOdaNo());
-        Ozellikler.setText(secilenOda.getOzellikler());
+        OdaNo.setText("Oda: " + secilenOda.getOdaNumarası());
+        Ozellikler.setText(secilenOda.ekOzellikler);
     }
     
     public OdaGUI() {

@@ -9,5 +9,7 @@ package com.oybak.otel.enums;
  * @author Yunus
  */
 public enum OdaDurumu { //oda durumuna 1 liste verıoyrum kı baska seyler kullanılması
-    MUSAİT,DOLU,BAKIMDA
+    MUSAİT,
+    DOLU,
+    BAKIMDA
 }
