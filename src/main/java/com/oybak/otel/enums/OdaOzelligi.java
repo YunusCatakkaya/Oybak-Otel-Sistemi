@@ -12,5 +12,4 @@ public enum OdaOzelligi {
     DENIZ_MANZARASI,
     MINIBAR,
     JAKUZI
-    
 }
