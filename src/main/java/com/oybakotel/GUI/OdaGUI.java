@@ -32,7 +32,7 @@ public class OdaGUI extends javax.swing.JFrame {
     private void ekranıDoldur() {
         // Bileşenleri veritabanından gelen verilerle doldur
         OdaNo.setText("Oda: " + secilenOda.getOdaNumarası());
-        Ozellikler.setText(secilenOda.ekOzellikler);
+        //Ozellikler.setText(secilenOda.ekOzellikler);
     }
     
     public OdaGUI() {
