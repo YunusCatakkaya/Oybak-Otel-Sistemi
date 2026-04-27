@@ -17,7 +17,7 @@ public class Yonetim extends Personel{
         // public void calisanEkle
         //public void calisanCikar
         //public void maasBelirle
-        
+        //a
     
     
                         //ÖZEL BİLGİ KASA İŞLEMLERİ
