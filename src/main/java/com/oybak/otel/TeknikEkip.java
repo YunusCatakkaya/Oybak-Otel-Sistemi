@@ -12,10 +12,6 @@ import com.oybak.otel.enums.OdaOzelligi;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- *Deneme1 burayı sil
- * @author Yunus                      //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
- */
 public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
     private String uzmanlikAlanı;
