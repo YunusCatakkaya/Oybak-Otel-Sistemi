@@ -4,6 +4,8 @@
  */
 package com.oybak.otel.GUIYonetim;
 
+import com.oybak.otel.GUIYonetim.YonetimMusteriArama;
+
 /**
  *
  * @author userxpc666
@@ -89,7 +91,7 @@ public class YonetimEkran extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       com.oybakotel.GUI.YonetimMusteriArama musteriArama = new com.oybakotel.GUI.YonetimMusteriArama();
+       com.oybak.otel.GUIYonetim.YonetimMusteriArama musteriArama = new com.oybak.otel.GUIYonetim.YonetimMusteriArama();
        
        musteriArama.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
