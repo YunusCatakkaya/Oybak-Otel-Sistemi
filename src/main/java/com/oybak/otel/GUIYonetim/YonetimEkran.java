@@ -20,6 +20,7 @@ public class YonetimEkran extends javax.swing.JFrame {
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
 
+                      
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +42,7 @@ public class YonetimEkran extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jButton1.setText("Odalar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -59,6 +61,7 @@ public class YonetimEkran extends javax.swing.JFrame {
         getContentPane().add(jButton2, gridBagConstraints);
 
         jButton3.setText("Müşteri Arama");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -78,6 +81,18 @@ public class YonetimEkran extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani();
+        
+        odaEkrani.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       com.oybakotel.GUI.YonetimMusteriArama musteriArama = new com.oybakotel.GUI.YonetimMusteriArama();
+       
+       musteriArama.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

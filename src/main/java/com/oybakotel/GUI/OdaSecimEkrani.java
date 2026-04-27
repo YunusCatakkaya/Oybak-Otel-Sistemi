@@ -31,31 +31,30 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
 
         textField1 = new java.awt.TextField();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
+        j101 = new javax.swing.JButton();
+        j102 = new javax.swing.JButton();
+        j103 = new javax.swing.JButton();
+        j104 = new javax.swing.JButton();
+        j105 = new javax.swing.JButton();
+        j201 = new javax.swing.JButton();
+        j202 = new javax.swing.JButton();
+        j203 = new javax.swing.JButton();
+        j204 = new javax.swing.JButton();
+        j205 = new javax.swing.JButton();
+        j301 = new javax.swing.JButton();
+        j302 = new javax.swing.JButton();
+        j303 = new javax.swing.JButton();
+        j304 = new javax.swing.JButton();
+        j305 = new javax.swing.JButton();
+        j401 = new javax.swing.JButton();
+        j402 = new javax.swing.JButton();
+        j403 = new javax.swing.JButton();
+        j404 = new javax.swing.JButton();
+        j405 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        Filtreleme = new javax.swing.JComboBox<>();
+        Geri = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         textField1.setText("textField1");
         textField1.addActionListener(this::textField1ActionPerformed);
@@ -65,87 +64,83 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridLayout(4, 6, 10, 10));
 
-        jButton1.setLabel("100");
-        jButton1.setPreferredSize(new java.awt.Dimension(100, 100));
-        jPanel1.add(jButton1);
+        j101.setLabel("101");
+        j101.addActionListener(this::j101ActionPerformed);
+        jPanel1.add(j101);
 
-        jButton2.setLabel("101");
-        jPanel1.add(jButton2);
+        j102.setLabel("102");
+        jPanel1.add(j102);
 
-        jButton3.setLabel("102");
-        jPanel1.add(jButton3);
+        j103.setLabel("103");
+        j103.addActionListener(this::j103ActionPerformed);
+        jPanel1.add(j103);
 
-        jButton4.setLabel("103");
-        jPanel1.add(jButton4);
+        j104.setLabel("104");
+        jPanel1.add(j104);
 
-        jButton5.setLabel("104");
-        jPanel1.add(jButton5);
+        j105.setLabel("105");
+        jPanel1.add(j105);
 
-        jButton6.setLabel("105");
-        jPanel1.add(jButton6);
+        j201.setText("201");
+        jPanel1.add(j201);
 
-        jButton7.setLabel("200");
-        jPanel1.add(jButton7);
+        j202.setText("202");
+        jPanel1.add(j202);
 
-        jButton8.setText("201");
-        jPanel1.add(jButton8);
+        j203.setText("203");
+        jPanel1.add(j203);
 
-        jButton9.setText("202");
-        jPanel1.add(jButton9);
+        j204.setText("204");
+        j204.addActionListener(this::j204ActionPerformed);
+        jPanel1.add(j204);
 
-        jButton10.setText("203");
-        jPanel1.add(jButton10);
+        j205.setText("205");
+        jPanel1.add(j205);
 
-        jButton11.setText("204");
-        jPanel1.add(jButton11);
+        j301.setText("301");
+        jPanel1.add(j301);
 
-        jButton12.setText("205");
-        jPanel1.add(jButton12);
+        j302.setText("302");
+        j302.setToolTipText("");
+        jPanel1.add(j302);
 
-        jButton13.setText("300");
-        jPanel1.add(jButton13);
+        j303.setText("303");
+        jPanel1.add(j303);
 
-        jButton14.setText("301");
-        jPanel1.add(jButton14);
+        j304.setText("304");
+        jPanel1.add(j304);
 
-        jButton15.setText("302");
-        jButton15.setToolTipText("");
-        jPanel1.add(jButton15);
+        j305.setText("305");
+        j305.setMaximumSize(new java.awt.Dimension(50, 50));
+        j305.setMinimumSize(new java.awt.Dimension(50, 50));
+        j305.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(j305);
 
-        jButton16.setText("303");
-        jPanel1.add(jButton16);
+        j401.setText("401");
+        jPanel1.add(j401);
 
-        jButton17.setText("304");
-        jPanel1.add(jButton17);
+        j402.setText("402");
+        jPanel1.add(j402);
 
-        jButton18.setText("305");
-        jButton18.setMaximumSize(new java.awt.Dimension(50, 50));
-        jButton18.setMinimumSize(new java.awt.Dimension(50, 50));
-        jButton18.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel1.add(jButton18);
+        j403.setText("403");
+        jPanel1.add(j403);
 
-        jButton19.setText("400");
-        jPanel1.add(jButton19);
+        j404.setText("404");
+        jPanel1.add(j404);
 
-        jButton20.setText("401");
-        jPanel1.add(jButton20);
-
-        jButton21.setText("402");
-        jPanel1.add(jButton21);
-
-        jButton22.setText("403");
-        jPanel1.add(jButton22);
-
-        jButton23.setText("404");
-        jPanel1.add(jButton23);
-
-        jButton24.setText("405");
-        jPanel1.add(jButton24);
+        j405.setText("405");
+        jPanel1.add(j405);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ODA SEÇİNİZ");
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        Filtreleme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hepsi", "1 Kişilik", "2 Kişilik", "3 Kişilik", "4 Kişilik" }));
+
+        Geri.setText("GERİ");
+
+        jLabel2.setText("FİLTRELEME");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,18 +148,33 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(136, 136, 136)
+                .addGap(37, 37, 37)
+                .addComponent(Geri)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(136, 136, 136))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Filtreleme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Geri, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Filtreleme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
                 .addContainerGap())
@@ -176,6 +186,18 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
     private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textField1ActionPerformed
+
+    private void j101ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j101ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_j101ActionPerformed
+
+    private void j103ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j103ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_j103ActionPerformed
+
+    private void j204ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j204ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_j204ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,31 +225,30 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> Filtreleme;
+    private javax.swing.JButton Geri;
+    private javax.swing.JButton j101;
+    private javax.swing.JButton j102;
+    private javax.swing.JButton j103;
+    private javax.swing.JButton j104;
+    private javax.swing.JButton j105;
+    private javax.swing.JButton j201;
+    private javax.swing.JButton j202;
+    private javax.swing.JButton j203;
+    private javax.swing.JButton j204;
+    private javax.swing.JButton j205;
+    private javax.swing.JButton j301;
+    private javax.swing.JButton j302;
+    private javax.swing.JButton j303;
+    private javax.swing.JButton j304;
+    private javax.swing.JButton j305;
+    private javax.swing.JButton j401;
+    private javax.swing.JButton j402;
+    private javax.swing.JButton j403;
+    private javax.swing.JButton j404;
+    private javax.swing.JButton j405;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private java.awt.TextField textField1;
     // End of variables declaration//GEN-END:variables
@@ -240,8 +261,7 @@ public void filtreyiUygula(int kapasite) {
     // Şimdilik mantığı anlaman için örnek:
     
     if (kapasite == 0) { // "Hepsi" seçildiyse
-        jButton1.setVisible(true); // Örnek oda 101
-        jButton2.setVisible(true); // Örnek oda 102
+        
     } else {
         // Burada normalde veritabanına bakılır ama manuel test için:
         // Eğer seçilen kapasite oda kapasitesine uymuyorsa gizle
