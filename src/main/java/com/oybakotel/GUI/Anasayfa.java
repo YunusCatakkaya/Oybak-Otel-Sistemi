@@ -8,6 +8,11 @@ import com.oybak.otel.GUIMusteri.MusteriSayfasi;
 import com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa;
 import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
 import com.oybak.otel.GUIYonetim.YonetimEkran;
+import com.oybak.otel.enums.UserRole;
+import static com.oybak.otel.enums.UserRole.MUSTERI;
+import static com.oybak.otel.enums.UserRole.RESEPSIYON;
+import static com.oybak.otel.enums.UserRole.TEKNIKPERSONEL;
+import static com.oybak.otel.enums.UserRole.YONETIM;
 
 //vıaaa
 /**
@@ -17,14 +22,15 @@ import com.oybak.otel.GUIYonetim.YonetimEkran;
 public class Anasayfa extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Anasayfa.class.getName());
-
+    private UserRole aktifRol;
+    
     /**
      * Creates new form Anasayfa
      */
     public Anasayfa() {
         initComponents();
-    }
-
+    }  
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,6 +114,7 @@ public class Anasayfa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MusteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MusteriActionPerformed
+        aktifRol = MUSTERI;
         MusteriSayfasi m = new MusteriSayfasi();
         m.setLocationRelativeTo(null); // Ortada aç
         m.setVisible(true);
@@ -115,6 +122,7 @@ public class Anasayfa extends javax.swing.JFrame {
     }//GEN-LAST:event_MusteriActionPerformed
 
     private void resepsiyonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resepsiyonActionPerformed
+        aktifRol = RESEPSIYON;
         ResepsiyonSayfa r = new ResepsiyonSayfa();
         r.setLocationRelativeTo(null);
         r.setVisible(true);
@@ -122,6 +130,7 @@ public class Anasayfa extends javax.swing.JFrame {
     }//GEN-LAST:event_resepsiyonActionPerformed
 
     private void müdüriyetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_müdüriyetActionPerformed
+        aktifRol = YONETIM;
         YonetimEkran y = new YonetimEkran();
         y.setLocationRelativeTo(null);
         y.setVisible(true);
@@ -129,6 +138,7 @@ public class Anasayfa extends javax.swing.JFrame {
     }//GEN-LAST:event_müdüriyetActionPerformed
 
     private void teknikPeronelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teknikPeronelActionPerformed
+        aktifRol = TEKNIKPERSONEL;
         TeknikPersonelSayfasi t = new TeknikPersonelSayfasi();
         t.setLocationRelativeTo(null);
         t.setVisible(true);
@@ -158,6 +168,14 @@ public class Anasayfa extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Anasayfa().setVisible(true));
+    }
+
+    public UserRole getAktifRol() {
+        return aktifRol;
+    }
+
+    public void setAktifRol(UserRole aktifRol) {
+        this.aktifRol = aktifRol;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

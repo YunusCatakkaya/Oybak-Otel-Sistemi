@@ -72,4 +72,12 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
                 System.out.println("Oda bakımda değildir.");
         }
     }
+
+    public String getUzmanlikAlanı() {
+        return uzmanlikAlanı;
+    }
+
+    public void setUzmanlikAlanı(String uzmanlikAlanı) {
+        this.uzmanlikAlanı = uzmanlikAlanı;
+    }
 }
