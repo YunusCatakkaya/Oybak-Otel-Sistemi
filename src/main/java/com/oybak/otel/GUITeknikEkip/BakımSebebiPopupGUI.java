@@ -177,7 +177,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                BakımSebebiPopupGUI dialog = new BakımSebebiPopupGUI(new javax.swing.JFrame(), true, 101);
+                BakımSebebiPopupGUI dialog = new BakımSebebiPopupGUI(new javax.swing.JFrame(), true, 0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
