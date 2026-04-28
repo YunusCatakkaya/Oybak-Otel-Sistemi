@@ -57,7 +57,6 @@ public interface VeriTabanı {
 
             if (sonuc.next()) { // Eğer böyle bir kullanıcı bulunduysa
                 String veri = sonuc.getString("is_tipi"); // Veritabanından gelen yazı (örn: "YONETICI")
-            
                 // 4. Yazıyı Enum tipine çevir ve geri gönder
                 return UserRole.valueOf(veri); 
             }
