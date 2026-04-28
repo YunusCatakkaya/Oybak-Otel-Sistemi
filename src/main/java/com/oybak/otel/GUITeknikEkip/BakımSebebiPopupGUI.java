@@ -43,7 +43,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
         jPanel2 = new javax.swing.JPanel();
         bakımSebebi = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        tamam = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -58,9 +58,9 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Bakım sebebini giriniz:");
 
-        jButton1.setText("Tamam");
-        jButton1.setHideActionText(true);
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        tamam.setText("Tamam");
+        tamam.setHideActionText(true);
+        tamam.addActionListener(this::tamamActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -72,7 +72,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
                     .addComponent(bakımSebebi)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(90, 90, 90)
-                        .addComponent(jButton1))
+                        .addComponent(tamam))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
@@ -84,7 +84,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bakımSebebi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tamam, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
 
@@ -123,7 +123,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
         // TODO add your handling code here:
     }//GEN-LAST:event_bakımSebebiActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void tamamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tamamActionPerformed
         String sebep = bakımSebebi.getText().trim();
 
         if (sebep.isEmpty()) {
@@ -145,7 +145,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
             }
         }
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_tamamActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,9 +186,9 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bakımSebebi;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton tamam;
     // End of variables declaration//GEN-END:variables
 }

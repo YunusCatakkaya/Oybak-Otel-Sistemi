@@ -10,20 +10,20 @@ package com.oybak.otel;
  */
 
 public class Personel extends Person{
-	private double maas;
-	private String isTipi;
+    private double maas;
+    private String isTipi;
 	
-		public Personel(String name, String lastName, long tcNo, String cinsiyet,int yas , double maas, String isTipi) {
-			super(name, lastName, tcNo, cinsiyet,yas);
-			this.maas = maas;
-			this.isTipi = isTipi;
-	}
-		@Override
-		public void bilgileriYazdir() {
-			System.out.println("Personel İsim ve Soy İsim"+name+lastName+"Tc No"+tcNo+"TC");
-			System.out.println("Görevi"+isTipi+"Maaşı"+maas+"TL");
-                        
-		}
+    public Personel(String name, String lastName, long tcNo, String cinsiyet,int yas , double maas, String isTipi) {
+        super(name, lastName, tcNo);
+        this.maas = maas;
+        this.isTipi = isTipi;
+    }
+    
+    @Override
+    public void bilgileriYazdir() {
+        System.out.println("Personel İsim ve Soy İsim"+getName()+getLastName()+"Tc No"+getTcNo()+"TC");
+	System.out.println("Görevi"+isTipi+"Maaşı"+maas+"TL");
+    }
 		public double getMaas() {
 			return maas;
 		}

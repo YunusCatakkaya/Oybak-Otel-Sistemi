@@ -23,7 +23,7 @@ public class Resepsiyon extends Personel{
 				secilenOda.musteriEkle(yeniMusteri);//odaya musterı eklıyoruz
 				secilenOda.setOdaDurumu(OdaDurumu.DOLU); //odanın durumunu dolu yapıyoruz
 				
-				System.out.println("İşlem Başarılı "+yeniMusteri.name+"İsimli Müşteri"+secilenOda.getOdaNumarası()+"Numaralı Odaya Giriş Yaptı");
+				System.out.println("İşlem Başarılı "+yeniMusteri.getName()+"İsimli Müşteri"+secilenOda.getOdaNumarası()+"Numaralı Odaya Giriş Yaptı");
 				System.out.println("Odada şu an "+secilenOda.getKisiSayisi()+"Kişi Kalıyor..");
 			}else {
 	            System.out.println("İşlem Başarısız: " + secilenOda.getOdaNumarası() + " numaralı oda şu anda " + secilenOda.getOdaDurumu() + "!");
@@ -47,7 +47,7 @@ public class Resepsiyon extends Personel{
 	public void odemeAl(Musteri musteri , double alinanMiktar) {
 		if (alinanMiktar>0) {
 			musteri.kasayaKatkiEkle(alinanMiktar);
-			System.out.println(musteri.name + " isimli müşteriden " + alinanMiktar + " TL tahsil edildi.");
+			System.out.println(musteri.getName() + " isimli müşteriden " + alinanMiktar + " TL tahsil edildi.");
             System.out.println("Müşterinin toplam harcaması: " + musteri.getKasayaKatkisi() + " TL oldu.");
 			}
 		
@@ -58,7 +58,7 @@ public class Resepsiyon extends Personel{
                 if(musteri.getKasayaKatkisi() >= iadeMiktari){
                     musteri.kasayaKatkiCikar(iadeMiktari);
                     
-                    System.out.println("İşlem Başarılı: " + musteri.name + " isimli müşteriye " + iadeMiktari + " TL iade edildi.");
+                    System.out.println("İşlem Başarılı: " + musteri.getName() + " isimli müşteriye " + iadeMiktari + " TL iade edildi.");
                     System.out.println("Müşterinin kasada kalan bakiyesi (toplam harcaması): " + musteri.getKasayaKatkisi() + " TL oldu.");
                 } else{
                     System.out.println("Hata: Müşteriye otele ödediği toplam tutardan (" + musteri.getKasayaKatkisi() + " TL) daha fazla iade yapılamaz!");

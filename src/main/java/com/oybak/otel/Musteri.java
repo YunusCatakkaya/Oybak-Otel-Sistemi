@@ -10,19 +10,24 @@ package com.oybak.otel;
  */                              //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
 
 public class Musteri extends Person {
+         
+	private String cinsiyet;
+	private int yas;
 	private int kaldigiOdaNo;
 	private double kasayaKatkisi;
 	
-	public Musteri(String name, String lastName, long tcNo, String cinsiyet, int yas, int kaldigiOdaNo) {
+	public Musteri(String name, String lastName, long tcNo) {
 			
-			super(name, lastName, tcNo, cinsiyet, yas);
+			super(name, lastName, tcNo);              
+			this.cinsiyet=cinsiyet;
+			this.yas=yas;
 			this.kaldigiOdaNo = kaldigiOdaNo;
 			this.kasayaKatkisi = 0.0;//ilk giriste katki 0 
 			
 	}
 	@Override
     public void bilgileriYazdir() {
-  	  System.out.println("Müsteri İsim ve Soyisim"+name+lastName+"Tc No"+tcNo+"TC"+"Cinsiyet"+cinsiyet+"Yaş"+yas);
+  	  System.out.println("Müsteri İsim ve Soyisim" + getName() + getLastName()+"Tc No"+getTcNo()+"TC"+"Cinsiyet"+cinsiyet+"Yaş"+yas);
   	  System.out.println("Kaldığı Oda"+kaldigiOdaNo+"Kasaya Katkısı"+kasayaKatkisi+"TL");
   	  
     }

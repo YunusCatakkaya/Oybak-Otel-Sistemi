@@ -9,20 +9,40 @@ package com.oybak.otel;
  * @author Yunus
  */
 public abstract class Person {
-	protected String name;
-	protected String lastName;
-	protected long tcNo ; 
-	protected String cinsiyet;
-	protected int yas;
+	private String name;
+	private String lastName;
+	private long tcNo ;
 	
-	public Person(String name , String lastName,long tcNo,String cinsiyet,int yas ) {
+	public Person(String name , String lastName,long tcNo) {
 		
 			this.name=name;
 			this.lastName=lastName;
 			this.tcNo=tcNo;
-			this.cinsiyet=cinsiyet;
-			this.yas=yas;
 	}
 	public abstract void bilgileriYazdir();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public long getTcNo() {
+        return tcNo;
+    }
+
+    public void setTcNo(long tcNo) {
+        this.tcNo = tcNo;
+    }
 	
 }

@@ -5,14 +5,8 @@
 package com.oybakotel.GUI;
 
 import com.oybak.otel.GUIMusteri.MusteriSayfasi;
-import com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa;
-import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
-import com.oybak.otel.GUIYonetim.YonetimEkran;
 import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.MUSTERI;
-import static com.oybak.otel.enums.UserRole.RESEPSIYON;
-import static com.oybak.otel.enums.UserRole.TEKNIKPERSONEL;
-import static com.oybak.otel.enums.UserRole.YONETIM;
 
 //vıaaa
 /**
@@ -42,9 +36,7 @@ public class Anasayfa extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         Musteri = new javax.swing.JButton();
-        resepsiyon = new javax.swing.JButton();
-        müdüriyet = new javax.swing.JButton();
-        teknikPeronel = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,47 +48,30 @@ public class Anasayfa extends javax.swing.JFrame {
         Musteri.setText("Müşteri Girişi");
         Musteri.addActionListener(this::MusteriActionPerformed);
 
-        resepsiyon.setBackground(new java.awt.Color(51, 51, 255));
-        resepsiyon.setForeground(new java.awt.Color(255, 255, 255));
-        resepsiyon.setText("Resepsiyon Girişi");
-        resepsiyon.addActionListener(this::resepsiyonActionPerformed);
-
-        müdüriyet.setBackground(new java.awt.Color(51, 51, 255));
-        müdüriyet.setForeground(new java.awt.Color(255, 255, 255));
-        müdüriyet.setText("Müdüriyet Girişi");
-        müdüriyet.addActionListener(this::müdüriyetActionPerformed);
-
-        teknikPeronel.setBackground(new java.awt.Color(51, 51, 255));
-        teknikPeronel.setForeground(new java.awt.Color(255, 255, 255));
-        teknikPeronel.setText("Teknik Peronel Girişi");
-        teknikPeronel.addActionListener(this::teknikPeronelActionPerformed);
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Otel Giriş");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(260, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(teknikPeronel, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(Musteri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(resepsiyon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(müdüriyet, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(263, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(244, 244, 244)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Musteri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(279, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(165, Short.MAX_VALUE)
                 .addComponent(Musteri, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(resepsiyon, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(müdüriyet, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(teknikPeronel, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -121,29 +96,11 @@ public class Anasayfa extends javax.swing.JFrame {
         this.dispose(); // Anasayfayı kapat        /
     }//GEN-LAST:event_MusteriActionPerformed
 
-    private void resepsiyonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resepsiyonActionPerformed
-        aktifRol = RESEPSIYON;
-        ResepsiyonSayfa r = new ResepsiyonSayfa();
-        r.setLocationRelativeTo(null);
-        r.setVisible(true);
-        this.dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_resepsiyonActionPerformed
-
-    private void müdüriyetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_müdüriyetActionPerformed
-        aktifRol = YONETIM;
-        YonetimEkran y = new YonetimEkran();
-        y.setLocationRelativeTo(null);
-        y.setVisible(true);
-        this.dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_müdüriyetActionPerformed
-
-    private void teknikPeronelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teknikPeronelActionPerformed
-        aktifRol = TEKNIKPERSONEL;
-        TeknikPersonelSayfasi t = new TeknikPersonelSayfasi();
-        t.setLocationRelativeTo(null);
-        t.setVisible(true);
-        this.dispose();            // TODO add your handling code here:
-    }//GEN-LAST:event_teknikPeronelActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        GirisPopopGUI popup = new GirisPopopGUI(); 
+        popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
+        popup.setVisible(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,9 +137,7 @@ public class Anasayfa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Musteri;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton müdüriyet;
-    private javax.swing.JButton resepsiyon;
-    private javax.swing.JButton teknikPeronel;
     // End of variables declaration//GEN-END:variables
 }
