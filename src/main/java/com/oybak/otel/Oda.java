@@ -16,27 +16,27 @@ import java.util.List;
 
 public class Oda {
 	private int odaNumarası;   //Örn:3002
+        private int tekKisilikYatak;
+        private int ciftKisilikYatak;
+        private boolean denizManzarası;
+        private boolean minibar;
+        private boolean jakuzi;
 	private OdaDurumu odaDurumu;  // Bakımda  Müsait Dolu
-	private String odaTipi;  //Tek kişilik  Çift Kişilik   
-	public List<OdaOzelligi>ekOzellikler; // Deniz Manzararlı  
+        private String bakımSebebi;
 	private List<Musteri> odadakiMusteriler;
         private int kapasite;//odanın kapasitresinii belirlemek için
-        private String bakım;
         
 	
 	public Oda(int odaNumarası, OdaDurumu odaDurumu, String odaTipi, String ekOzellikler,int kapasite) { //oda constructor 
 		this.odaNumarası = odaNumarası;
 		this.odaDurumu = odaDurumu;
-		this.odaTipi = odaTipi;
-		this.ekOzellikler = new ArrayList<OdaOzelligi>();
 		this.odadakiMusteriler = new ArrayList<Musteri>();//Odada birden fazla musteri kalması durumunda gerekli
                 this.kapasite=kapasite;
                 
 	}
 
-    public Oda() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        public Oda() {
+        }
 	//odaya musteri ekleme methodu
 	public void musteriEkle(Musteri musteri) {
             if (getKisiSayisi()<kapasite) {//odaya gelen kişilerin sayısı kapasiteden fazla olma hatasını onler
@@ -57,22 +57,6 @@ public class Oda {
 		
 		return odadakiMusteriler.size();
 	}
-        //ozellık ekleme methodu
-	public void ozellikEkle(OdaOzelligi ozellik){
-            if(!ekOzellikler.contains(ozellik)){
-                
-                ekOzellikler.add(ozellik);
-            }
-        }
-        //Odadan ozellık cıkarma methodu
-        public void ozellikCikar(OdaOzelligi ozellik){
-            ekOzellikler.remove(ozellik);
-           }
-        //odanın sahip oldugu ozellıklerı listeleme
-        public List<OdaOzelligi> getEkOzellikler() {
-                 return ekOzellikler;
-            }
-	
 
 	public int getOdaNumarası() {
 		return odaNumarası;
@@ -90,15 +74,7 @@ public class Oda {
 
         public void setOdaDurumu(OdaDurumu odaDurumu) {
                 this.odaDurumu = odaDurumu;
-            }
-        
-	public String getOdaTipi() {
-		return odaTipi;
-	}
-
-	public void setOdaTipi(String odaTipi) {
-		this.odaTipi = odaTipi;
-	}
+        }
 
         public int getKapasite() {
                   return kapasite;

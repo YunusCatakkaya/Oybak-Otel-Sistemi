@@ -4,6 +4,8 @@
  */
 package com.oybakotel.GUI;
 
+import com.oybak.otel.enums.UserRole;
+
 /**
  *
  * @author userxpc666
@@ -15,9 +17,17 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis{
     /**
      * Creates new form YonetimOdalar
      */
-    public OdaSecimEkrani() {
+    
+    private UserRole aktifRol;
+    
+    public OdaSecimEkrani(UserRole rol) {
         initComponents();
+        this.aktifRol = rol;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
+    }
+
+    private OdaSecimEkrani() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -224,102 +234,102 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis{
     }//GEN-LAST:event_textField1ActionPerformed
 
     private void j101ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j101ActionPerformed
-        odalaraGecis(101); 
+        odalaraGecis(101, aktifRol); 
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j101ActionPerformed
 
     private void j103ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j103ActionPerformed
-        odalaraGecis(103);   
+        odalaraGecis(103, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j103ActionPerformed
 
     private void j204ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j204ActionPerformed
-        odalaraGecis(204);       
+        odalaraGecis(204, aktifRol);       
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j204ActionPerformed
 
     private void j102ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j102ActionPerformed
-        odalaraGecis(102);     
+        odalaraGecis(102, aktifRol);     
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j102ActionPerformed
 
     private void j104ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j104ActionPerformed
-        odalaraGecis(104);     
+        odalaraGecis(104, aktifRol);     
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j104ActionPerformed
 
     private void j105ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j105ActionPerformed
-        odalaraGecis(105);    
+        odalaraGecis(105, aktifRol);    
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j105ActionPerformed
 
     private void j201ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j201ActionPerformed
-        odalaraGecis(201);   
+        odalaraGecis(201, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j201ActionPerformed
 
     private void j202ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j202ActionPerformed
-        odalaraGecis(202);   
+        odalaraGecis(202, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j202ActionPerformed
 
     private void j203ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j203ActionPerformed
-        odalaraGecis(203);    
+        odalaraGecis(203, aktifRol);    
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j203ActionPerformed
 
     private void j205ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j205ActionPerformed
-        odalaraGecis(205);    
+        odalaraGecis(205, aktifRol);    
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j205ActionPerformed
 
     private void j301ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j301ActionPerformed
-        odalaraGecis(301);   
+        odalaraGecis(301, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j301ActionPerformed
 
     private void j302ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j302ActionPerformed
-        odalaraGecis(302);   
+        odalaraGecis(302, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j302ActionPerformed
 
     private void j303ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j303ActionPerformed
-        odalaraGecis(303);   
+        odalaraGecis(303, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j303ActionPerformed
 
     private void j304ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j304ActionPerformed
-        odalaraGecis(304);    
+        odalaraGecis(304, aktifRol);    
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j304ActionPerformed
 
     private void j305ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j305ActionPerformed
-        odalaraGecis(305);   
+        odalaraGecis(305, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j305ActionPerformed
 
     private void j401ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j401ActionPerformed
-        odalaraGecis(401);   
+        odalaraGecis(401, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j401ActionPerformed
 
     private void j402ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j402ActionPerformed
-        odalaraGecis(402);   
+        odalaraGecis(402, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j402ActionPerformed
 
     private void j403ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j403ActionPerformed
-        odalaraGecis(403);    
+        odalaraGecis(403, aktifRol);    
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j403ActionPerformed
 
     private void j404ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j404ActionPerformed
-        odalaraGecis(404);   
+        odalaraGecis(404, aktifRol);   
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j404ActionPerformed
 
     private void j405ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j405ActionPerformed
-        odalaraGecis(405);    
+        odalaraGecis(405, aktifRol);    
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j405ActionPerformed
 

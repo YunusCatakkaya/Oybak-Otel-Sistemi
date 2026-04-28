@@ -5,6 +5,7 @@
 package com.oybak.otel.GUIYonetim;
 
 import com.oybak.otel.GUIYonetim.YonetimMusteriArama;
+import com.oybak.otel.enums.UserRole;
 
 /**
  *
@@ -16,10 +17,17 @@ public class YonetimEkran extends javax.swing.JFrame {
 
     /**
      * Creates new form YonetimEkran
-     */
-    public YonetimEkran() {
+     */    
+    private UserRole aktifRol;
+    
+    public YonetimEkran(UserRole rol) {
+        this.aktifRol = rol;
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
+    }
+
+    private YonetimEkran() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
                       
@@ -85,7 +93,7 @@ public class YonetimEkran extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani();
+        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(aktifRol);
         
         odaEkrani.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed

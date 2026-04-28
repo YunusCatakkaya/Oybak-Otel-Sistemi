@@ -4,6 +4,8 @@
  */
 package com.oybak.otel.GUIResepsiyon;
 
+import com.oybak.otel.enums.UserRole;
+
 /**
  *
  * @author ahmet
@@ -14,9 +16,16 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
 
     /**
      * Creates new form ResepsiyonSayfa
-     */
-    public ResepsiyonSayfa() {
+     */    
+    private UserRole aktifRol;
+    
+    public ResepsiyonSayfa(UserRole rol) {
+        this.aktifRol = rol;
         initComponents();
+    }
+
+    private ResepsiyonSayfa() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -106,7 +115,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani();
+        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(aktifRol);
         
         odaEkrani.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed

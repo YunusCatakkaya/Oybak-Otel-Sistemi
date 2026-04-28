@@ -5,6 +5,7 @@
 package com.oybak.otel.GUITeknikEkip;
 
 import com.oybak.otel.OdaSecim;
+import com.oybak.otel.enums.UserRole;
 
 /**
  *
@@ -16,10 +17,17 @@ public class TeknikPersonelSayfasi extends javax.swing.JFrame implements OdaSeci
 
     /**
      * Creates new form NewJFrame
-     */
-    public TeknikPersonelSayfasi() {
+     */    
+    private UserRole aktifRol;
+    
+    public TeknikPersonelSayfasi(UserRole rol) {
+        this.aktifRol = rol;
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+    }
+
+    private TeknikPersonelSayfasi() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -82,12 +90,13 @@ public class TeknikPersonelSayfasi extends javax.swing.JFrame implements OdaSeci
     }// </editor-fold>//GEN-END:initComponents
 
     private void odalarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odalarActionPerformed
-        odaSecim();
+        odaSecim(aktifRol);
         this.dispose();
     }//GEN-LAST:event_odalarActionPerformed
 
     private void bakımIslemiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bakımIslemiActionPerformed
-        odaSecim();
+        aktifRol = UserRole.BAKIM;
+        odaSecim(aktifRol);
         this.dispose();
     }//GEN-LAST:event_bakımIslemiActionPerformed
 

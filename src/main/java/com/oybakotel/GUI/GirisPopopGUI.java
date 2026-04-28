@@ -153,19 +153,19 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabanı{
         
         switch(aktifRol){
             case RESEPSIYON -> {
-                ResepsiyonSayfa r = new ResepsiyonSayfa();
+                ResepsiyonSayfa r = new ResepsiyonSayfa(aktifRol);
                 r.setLocationRelativeTo(null);
                 r.setVisible(true);
                 this.dispose();
             }
             case YONETIM -> {
-                YonetimEkran y = new YonetimEkran();
+                YonetimEkran y = new YonetimEkran(aktifRol);
                 y.setLocationRelativeTo(null);
                 y.setVisible(true);
                 this.dispose();
             }
             case TEKNIKPERSONEL -> {
-                TeknikPersonelSayfasi t = new TeknikPersonelSayfasi();
+                TeknikPersonelSayfasi t = new TeknikPersonelSayfasi(aktifRol);
                 t.setLocationRelativeTo(null);
                 t.setVisible(true);
                 this.dispose();

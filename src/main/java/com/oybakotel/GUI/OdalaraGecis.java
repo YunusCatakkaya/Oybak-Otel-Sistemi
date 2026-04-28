@@ -4,13 +4,15 @@
  */
 package com.oybakotel.GUI;
 
+import com.oybak.otel.enums.UserRole;
+
 /**
  *
  * @author ahmet
  */
 public interface OdalaraGecis {
-    public default void odalaraGecis(int odaNo){
-        OdaGUI t = new OdaGUI(odaNo);
+    public default void odalaraGecis(int odaNo, UserRole rol){
+        OdaGUI t = new OdaGUI(odaNo, rol);
         t.setLocationRelativeTo(null);
         t.setVisible(true);
     }

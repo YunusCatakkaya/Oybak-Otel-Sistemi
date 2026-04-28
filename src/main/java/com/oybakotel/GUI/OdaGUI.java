@@ -5,12 +5,14 @@
 package com.oybakotel.GUI;
 
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
+import com.oybak.otel.VeriTabanı;
+import com.oybak.otel.enums.UserRole;
 
 /**
  *
  * @author ahmet
  */
-public class OdaGUI extends javax.swing.JFrame {
+public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(OdaGUI.class.getName());
 
@@ -18,16 +20,18 @@ public class OdaGUI extends javax.swing.JFrame {
      * Creates new form OdaGUI
      */
     private int secilenOda;
+    private UserRole aktifRol;
 
     // Parametreli Constructor: Bu ekran açılırken bir Oda nesnesi bekler
-    public OdaGUI(int oda) {
+    public OdaGUI(int oda, UserRole rol) {
         this.secilenOda = oda; // Gelen oda bilgisini kaydet
+        this.aktifRol = rol;
         initComponents();    // Verileri arayüze bas
         setLocationRelativeTo(null);
     }
-    
-    public OdaGUI() {
-        initComponents();
+
+    private OdaGUI() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     /**
@@ -68,6 +72,7 @@ public class OdaGUI extends javax.swing.JFrame {
         BakimAl.addActionListener(this::BakimAlActionPerformed);
 
         BakımdanCikar.setText("Bakımdan Çıkar");
+        BakımdanCikar.addActionListener(this::BakımdanCikarActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -227,6 +232,10 @@ public class OdaGUI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void BakımdanCikarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BakımdanCikarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BakımdanCikarActionPerformed
 
     /**
      * @param args the command line arguments

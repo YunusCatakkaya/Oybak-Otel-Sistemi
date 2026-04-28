@@ -12,7 +12,6 @@ import com.oybak.otel.enums.OdaOzelligi;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
 
 public class TeknikEkip extends Personel implements OdaGoruntuleme{
@@ -40,16 +39,22 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
     public static void odaBakimAl(int oda, String sebep) {
         String url = VeriTabanı.URL;
-        String sql = "UPDATE odalar SET durum = 'BAKIMDA', ek_ozellikler = ? WHERE oda_no = ?";
+        String sql = "UPDATE odalar SET durum = 'BAKIMDA', bakım_sebebi = ? WHERE oda_no = ?";
     
         try (Connection conn = DriverManager.getConnection(url);
-            PreparedStatement pstmt = conn.prepareCall(sql)) {
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
         
             pstmt.setString(1, sebep);
             pstmt.setInt(2, oda);
         
-            pstmt.executeUpdate();
-            System.out.println(oda + " numaralı oda güncellendi.");    
+            int etkilenenSatir = pstmt.executeUpdate();
+            if ((etkilenenSatir > 0) && (etkilenenSatir < 2)) {
+                System.out.println(oda + " numaralı oda bakımda olarak güncellendi.");
+            } else if(etkilenenSatir == 0){
+                System.out.println("Veritabanında hiçbir oda etkilenmedi.");
+            }else{
+                System.out.println("Veritabanında çok sayıda oda etkilendi.");
+            }
         } catch (Exception e) {
             System.out.println("Hata: " + e.getMessage());
         }

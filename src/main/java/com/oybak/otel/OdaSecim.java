@@ -4,6 +4,7 @@
  */
 package com.oybak.otel;
 
+import com.oybak.otel.enums.UserRole;
 import com.oybakotel.GUI.OdaSecimEkrani;
 
 /**
@@ -12,8 +13,8 @@ import com.oybakotel.GUI.OdaSecimEkrani;
  */
 public interface OdaSecim {
     
-    public default void odaSecim(){
-        OdaSecimEkrani t = new OdaSecimEkrani();
+    public default void odaSecim(UserRole rol){
+        OdaSecimEkrani t = new OdaSecimEkrani(rol);
         t.setLocationRelativeTo(null);
         t.setVisible(true);
     }

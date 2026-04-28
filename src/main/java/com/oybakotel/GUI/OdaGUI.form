@@ -155,6 +155,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Bak&#x131;mdan &#xc7;&#x131;kar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Bak&#x131;mdanCikarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
