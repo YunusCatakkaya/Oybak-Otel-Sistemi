@@ -5,7 +5,6 @@
 package com.oybak.otel;
 
 import com.oybak.otel.enums.UserRole;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,29 +18,41 @@ public interface VeriTabanı {
     
     static final String URL = "jdbc:sqlite:veritabani_dosyan.db";
     
-    public default Oda odaBilgileri(int oda_no){
-        Oda bulunanOda = new Oda(); // Verileri dolduracağımız boş bir kova
-        String odaNo = null;
-        String sql = "SELECT * FROM odalar WHERE oda_no = '" + odaNo + "'";
+    public default Oda odaBilgileri(int oda_no) {
+        Oda bulunanOda = null; // Başlangıçta boş bırakıyoruz
+        String sql = "SELECT * FROM odalar WHERE oda_no = ?";
 
-        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(URL);
-             java.sql.Statement stmt = conn.createStatement();
-             java.sql.ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection conn = DriverManager.getConnection(URL);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            // 1. Parametre olarak gelen oda_no'yu sorguya yerleştiriyoruz
+            pstmt.setInt(1, oda_no);
 
-            if (rs.next()) {
-                // Veritabanından gelenleri nesneye doldur
-                bulunanOda.setOdaNumarası(rs.getInt("oda_no"));
-                bulunanOda.setOdaDurumu(com.oybak.otel.enums.OdaDurumu.valueOf(rs.getString("durum")));
-                // Diğer set işlemlerini buraya ekle (tipi, ek özellikler vb.)
-                System.out.println(odaNo + " verileri veritabanından çekildi.");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    bulunanOda = new Oda(); // Oda bulundu, nesneyi oluştur
+                
+                    // 2. Veritabanındaki sütun isimlerine göre verileri çekip nesneye doldur
+                    bulunanOda.setOdaNumarası(rs.getInt("oda_no"));
+                
+                    // 3. Durum bilgisini Enum'a çevirirken hata payını azaltmak için büyük harf yapıyoruz
+                    String durumString = rs.getString("durum");
+                    if (durumString != null) {
+                        bulunanOda.setOdaDurumu(com.oybak.otel.enums.OdaDurumu.valueOf(durumString.toUpperCase().trim()));
+                    }
+                
+                    // Varsa diğer alanları da buraya ekleyebilirsin:
+                    // bulunanOda.setOdaTipi(rs.getString("oda_tipi"));
+                
+                    System.out.println(oda_no + " numaralı oda verileri çekildi.");
+                }
             }
         } catch (Exception e) {
-            System.out.println("Sorgu hatası: " + e.getMessage());
+            System.out.println("Oda sorgulama hatası: " + e.getMessage());
         }
-        
-        return bulunanOda; // Dolu nesneyi geri gönder
-    }
-    
+        return bulunanOda; // Oda bulunamazsa null, bulunursa dolu nesne döner
+    }   
+ 
     public default UserRole calısanBilgileri(String tc, String parola){
         String sql = "SELECT is_tipi FROM calisanlar WHERE tc_no = ? AND Parola = ?";
     
