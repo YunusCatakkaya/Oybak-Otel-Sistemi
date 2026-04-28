@@ -8,7 +8,7 @@ package com.oybakotel.GUI;
  *
  * @author userxpc666
  */
-public class OdaSecimEkrani extends javax.swing.JFrame {
+public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(OdaSecimEkrani.class.getName());
 
@@ -30,6 +30,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
     private void initComponents() {
 
         textField1 = new java.awt.TextField();
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         j101 = new javax.swing.JButton();
         j102 = new javax.swing.JButton();
@@ -51,10 +52,10 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
         j403 = new javax.swing.JButton();
         j404 = new javax.swing.JButton();
         j405 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         Filtreleme = new javax.swing.JComboBox<>();
         Geri = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         textField1.setText("textField1");
         textField1.addActionListener(this::textField1ActionPerformed);
@@ -62,6 +63,9 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
 
+        jPanel2.setBackground(new java.awt.Color(51, 102, 255));
+
+        jPanel1.setBackground(new java.awt.Color(51, 102, 255));
         jPanel1.setLayout(new java.awt.GridLayout(4, 6, 10, 10));
 
         j101.setLabel("101");
@@ -69,6 +73,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
         jPanel1.add(j101);
 
         j102.setLabel("102");
+        j102.addActionListener(this::j102ActionPerformed);
         jPanel1.add(j102);
 
         j103.setLabel("103");
@@ -76,18 +81,23 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
         jPanel1.add(j103);
 
         j104.setLabel("104");
+        j104.addActionListener(this::j104ActionPerformed);
         jPanel1.add(j104);
 
         j105.setLabel("105");
+        j105.addActionListener(this::j105ActionPerformed);
         jPanel1.add(j105);
 
         j201.setText("201");
+        j201.addActionListener(this::j201ActionPerformed);
         jPanel1.add(j201);
 
         j202.setText("202");
+        j202.addActionListener(this::j202ActionPerformed);
         jPanel1.add(j202);
 
         j203.setText("203");
+        j203.addActionListener(this::j203ActionPerformed);
         jPanel1.add(j203);
 
         j204.setText("204");
@@ -95,89 +105,115 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
         jPanel1.add(j204);
 
         j205.setText("205");
+        j205.addActionListener(this::j205ActionPerformed);
         jPanel1.add(j205);
 
         j301.setText("301");
+        j301.addActionListener(this::j301ActionPerformed);
         jPanel1.add(j301);
 
         j302.setText("302");
         j302.setToolTipText("");
+        j302.addActionListener(this::j302ActionPerformed);
         jPanel1.add(j302);
 
         j303.setText("303");
+        j303.addActionListener(this::j303ActionPerformed);
         jPanel1.add(j303);
 
         j304.setText("304");
+        j304.addActionListener(this::j304ActionPerformed);
         jPanel1.add(j304);
 
         j305.setText("305");
         j305.setMaximumSize(new java.awt.Dimension(50, 50));
         j305.setMinimumSize(new java.awt.Dimension(50, 50));
         j305.setPreferredSize(new java.awt.Dimension(50, 50));
+        j305.addActionListener(this::j305ActionPerformed);
         jPanel1.add(j305);
 
         j401.setText("401");
+        j401.addActionListener(this::j401ActionPerformed);
         jPanel1.add(j401);
 
         j402.setText("402");
+        j402.addActionListener(this::j402ActionPerformed);
         jPanel1.add(j402);
 
         j403.setText("403");
+        j403.addActionListener(this::j403ActionPerformed);
         jPanel1.add(j403);
 
         j404.setText("404");
+        j404.addActionListener(this::j404ActionPerformed);
         jPanel1.add(j404);
 
         j405.setText("405");
+        j405.addActionListener(this::j405ActionPerformed);
         jPanel1.add(j405);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ODA SEÇİNİZ");
-        jLabel1.setPreferredSize(new java.awt.Dimension(100, 100));
 
         Filtreleme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hepsi", "1 Kişilik", "2 Kişilik", "3 Kişilik", "4 Kişilik" }));
 
         Geri.setText("GERİ");
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("FİLTRELEME");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("ODA SEÇİNİZ");
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 100));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(Geri)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Filtreleme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(112, 112, 112))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(Filtreleme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Geri, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(Geri)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Filtreleme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(46, 46, 46))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Geri, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Filtreleme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -188,16 +224,104 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
     }//GEN-LAST:event_textField1ActionPerformed
 
     private void j101ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j101ActionPerformed
-        // TODO add your handling code here:
+        odalaraGecis(101); 
+        this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j101ActionPerformed
 
     private void j103ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j103ActionPerformed
-        // TODO add your handling code here:
+        odalaraGecis(103);   
+        this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j103ActionPerformed
 
     private void j204ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j204ActionPerformed
-        // TODO add your handling code here:
+        odalaraGecis(204);       
+        this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j204ActionPerformed
+
+    private void j102ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j102ActionPerformed
+        odalaraGecis(102);     
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j102ActionPerformed
+
+    private void j104ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j104ActionPerformed
+        odalaraGecis(104);     
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j104ActionPerformed
+
+    private void j105ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j105ActionPerformed
+        odalaraGecis(105);    
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j105ActionPerformed
+
+    private void j201ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j201ActionPerformed
+        odalaraGecis(201);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j201ActionPerformed
+
+    private void j202ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j202ActionPerformed
+        odalaraGecis(202);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j202ActionPerformed
+
+    private void j203ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j203ActionPerformed
+        odalaraGecis(203);    
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j203ActionPerformed
+
+    private void j205ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j205ActionPerformed
+        odalaraGecis(205);    
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j205ActionPerformed
+
+    private void j301ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j301ActionPerformed
+        odalaraGecis(301);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j301ActionPerformed
+
+    private void j302ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j302ActionPerformed
+        odalaraGecis(302);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j302ActionPerformed
+
+    private void j303ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j303ActionPerformed
+        odalaraGecis(303);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j303ActionPerformed
+
+    private void j304ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j304ActionPerformed
+        odalaraGecis(304);    
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j304ActionPerformed
+
+    private void j305ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j305ActionPerformed
+        odalaraGecis(305);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j305ActionPerformed
+
+    private void j401ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j401ActionPerformed
+        odalaraGecis(401);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j401ActionPerformed
+
+    private void j402ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j402ActionPerformed
+        odalaraGecis(402);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j402ActionPerformed
+
+    private void j403ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j403ActionPerformed
+        odalaraGecis(403);    
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j403ActionPerformed
+
+    private void j404ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j404ActionPerformed
+        odalaraGecis(404);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j404ActionPerformed
+
+    private void j405ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_j405ActionPerformed
+        odalaraGecis(405);    
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_j405ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,6 +374,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private java.awt.TextField textField1;
     // End of variables declaration//GEN-END:variables
 

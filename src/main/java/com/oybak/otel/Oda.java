@@ -25,7 +25,6 @@ public class Oda {
         
 	
 	public Oda(int odaNumarası, OdaDurumu odaDurumu, String odaTipi, String ekOzellikler,int kapasite) { //oda constructor 
-		super();
 		this.odaNumarası = odaNumarası;
 		this.odaDurumu = odaDurumu;
 		this.odaTipi = odaTipi;
@@ -34,6 +33,10 @@ public class Oda {
                 this.kapasite=kapasite;
                 
 	}
+
+    public Oda() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 	//odaya musteri ekleme methodu
 	public void musteriEkle(Musteri musteri) {
             if (getKisiSayisi()<kapasite) {//odaya gelen kişilerin sayısı kapasiteden fazla olma hatasını onler

@@ -9,8 +9,10 @@ import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
 import static com.oybak.otel.enums.OdaDurumu.DOLU;
 import static com.oybak.otel.enums.OdaDurumu.MUSAİT;
 import com.oybak.otel.enums.OdaOzelligi;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.List;
-import java.util.Scanner;
 
 public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
@@ -20,8 +22,6 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
         super(name, lastName, tcNo, cinsiyet, yas, maas, "TeknikEkip");
         this.uzmanlikAlanı = uzmanlikAlanı;
     }
-    
-    Scanner scan = new Scanner(System.in);
     
     /**
      * @param odaNumarası
@@ -37,27 +37,23 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
         System.out.println("Bakım sebebi"+ bakım);
     }
     
-    public void odaBakimAl(Oda oda) {
-        switch(oda.getOdaDurumu()){
-            case BAKIMDA:
-                System.out.println("Oda zaten bakımda.");
-            case DOLU:
-                System.out.println("İşlemi iptal etmek için 1 \n İşleme devam etmek için 2'yi tuşlayınız.");
-                int secim = scan.nextInt();
-                switch(secim){
-                    case 1 -> System.out.println("İşlem iptal ediliyor.");
-                    case 2 -> {
-                        System.out.println("İşlem gerçekleştiriliyor.");
-                        oda.setOdaDurumu(OdaDurumu.BAKIMDA);
-                        System.out.println("İşlem gerçekleşti.");
-                }
-                    default -> System.out.println("Geçersiz tuşlama yapıldı işlem iptal ediliyor.");
+    public static void odaBakimAl(int oda, String sebep) {
+        String url = "jdbc:sqlite:otel_otomasyon.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            Statement stmt = conn.createStatement();
+            
+            // Burada oda.getOdaNo() yerine doğrudan parametre olan odaNo'yu kullanıyoruz
+            String sql = "UPDATE odalar SET durum = 'BAKIMDA', ek_ozellikler = '" + sebep + "' WHERE oda_no = " + oda;
+            
+            stmt.executeUpdate(sql);
+            System.out.println(oda + " numaralı oda için veritabanı güncellendi.");
+            
+            // NOT: Burada oda.setOdaDurumu diyemezsin çünkü elimizde nesne yok, sadece sayı var.
+            // Nesneyi zaten GUI tarafında interface kullanarak güncelledik.
+            
+        } catch (Exception e) {
+            System.out.println("Hata: " + e.getMessage());
         }
-            case MUSAİT:
-                System.out.println("İşlem gerçekleştiriliyor.");
-                oda.setOdaDurumu(OdaDurumu.BAKIMDA);
-                System.out.println("İşlem gerçekleşti.");        
-        }  
     }
     
     public void OdaBakimCikar(Oda oda){

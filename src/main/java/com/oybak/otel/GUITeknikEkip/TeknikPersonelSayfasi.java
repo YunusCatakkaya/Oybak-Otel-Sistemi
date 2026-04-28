@@ -4,14 +4,13 @@
  */
 package com.oybak.otel.GUITeknikEkip;
 
-import com.oybakotel.GUI.OdaGUI;
-import com.oybakotel.GUI.OdaSecimEkrani;
+import com.oybak.otel.OdaSecim;
 
 /**
  *
  * @author ahmet
  */
-public class TeknikPersonelSayfasi extends javax.swing.JFrame {
+public class TeknikPersonelSayfasi extends javax.swing.JFrame implements OdaSecim{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TeknikPersonelSayfasi.class.getName());
 
@@ -83,16 +82,12 @@ public class TeknikPersonelSayfasi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void odalarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odalarActionPerformed
-        OdaSecimEkrani t = new OdaSecimEkrani();
-        t.setLocationRelativeTo(null);
-        t.setVisible(true);
+        odaSecim();
         this.dispose();
     }//GEN-LAST:event_odalarActionPerformed
 
     private void bakımIslemiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bakımIslemiActionPerformed
-        OdaGUI t = new OdaGUI();
-        t.setLocationRelativeTo(null);
-        t.setVisible(true);
+        odaSecim();
         this.dispose();
     }//GEN-LAST:event_bakımIslemiActionPerformed
 
