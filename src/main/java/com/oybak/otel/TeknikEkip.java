@@ -11,6 +11,7 @@ import static com.oybak.otel.enums.OdaDurumu.MUSAİT;
 import com.oybak.otel.enums.OdaOzelligi;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
@@ -38,19 +39,17 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
     }
     
     public static void odaBakimAl(int oda, String sebep) {
-        String url = "jdbc:sqlite:otel_otomasyon.db";
-        try (Connection conn = DriverManager.getConnection(url)) {
-            Statement stmt = conn.createStatement();
-            
-            // Burada oda.getOdaNo() yerine doğrudan parametre olan odaNo'yu kullanıyoruz
-            String sql = "UPDATE odalar SET durum = 'BAKIMDA', ek_ozellikler = '" + sebep + "' WHERE oda_no = " + oda;
-            
-            stmt.executeUpdate(sql);
-            System.out.println(oda + " numaralı oda için veritabanı güncellendi.");
-            
-            // NOT: Burada oda.setOdaDurumu diyemezsin çünkü elimizde nesne yok, sadece sayı var.
-            // Nesneyi zaten GUI tarafında interface kullanarak güncelledik.
-            
+        String url = VeriTabanı.URL;
+        String sql = "UPDATE odalar SET durum = 'BAKIMDA', ek_ozellikler = ? WHERE oda_no = ?";
+    
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareCall(sql)) {
+        
+            pstmt.setString(1, sebep);
+            pstmt.setInt(2, oda);
+        
+            pstmt.executeUpdate();
+            System.out.println(oda + " numaralı oda güncellendi.");    
         } catch (Exception e) {
             System.out.println("Hata: " + e.getMessage());
         }
