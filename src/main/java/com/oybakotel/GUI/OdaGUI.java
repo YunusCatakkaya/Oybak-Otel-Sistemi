@@ -5,8 +5,11 @@
 package com.oybakotel.GUI;
 
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
+import com.oybak.otel.Oda;
 import com.oybak.otel.VeriTabanı;
+import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
 import com.oybak.otel.enums.UserRole;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -224,9 +227,14 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
     }// </editor-fold>//GEN-END:initComponents
 
     private void BakimAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BakimAlActionPerformed
-        BakımSebebiPopupGUI popup = new BakımSebebiPopupGUI(this, true, secilenOda); 
-        popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
-        popup.setVisible(true);        // TODO add your handling code here:
+        Oda geciciOda = odaBilgileri(this.secilenOda);
+        if(geciciOda.getOdaDurumu() == BAKIMDA){
+            JOptionPane.showMessageDialog(this, "Oda zaten bakımda!");
+        }else{
+            BakımSebebiPopupGUI popup = new BakımSebebiPopupGUI(this, true, secilenOda); 
+            popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
+            popup.setVisible(true);
+        }// TODO add your handling code here:
     }//GEN-LAST:event_BakimAlActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

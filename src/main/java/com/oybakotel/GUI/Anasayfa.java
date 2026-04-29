@@ -8,6 +8,16 @@ import com.oybak.otel.GUIMusteri.MusteriSayfasi;
 import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.MUSTERI;
 
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.application.Platform;
+import java.io.File;
+import java.awt.BorderLayout;
+
 //vıaaa
 /**
  *
@@ -23,7 +33,53 @@ public class Anasayfa extends javax.swing.JFrame {
      */
     public Anasayfa() {
         initComponents();
-    }  
+        videoBaslat("C:\\Users\\ahmet\\Documents\\NetBeansProjects\\Oybak-Otel-Sistemi\\src\\main\\java\\images\\O.mp4");
+    }
+    
+    private void videoBaslat(String dosyaYolu) {
+    // 1. JFXPanel oluştur (Swing ile FX arasındaki köprü)
+    final JFXPanel jfxPanel = new JFXPanel();
+    
+    // 2. videoPanel içine ekle
+    videoPanel.removeAll(); // Varsa eski içeriği temizle
+    videoPanel.add(jfxPanel, BorderLayout.CENTER);
+    videoPanel.revalidate();
+    videoPanel.repaint();
+
+    // 3. JavaFX Thread'ini başlat
+        Platform.runLater(() -> {
+            try {
+                File file = new File(dosyaYolu);
+                String url = file.toURI().toString();
+        
+                Media media = new Media(url);
+                MediaPlayer mediaPlayer = new MediaPlayer(media);
+                MediaView mediaView = new MediaView(mediaPlayer);
+
+                // 1. Bir StackPane oluştur (JavaFX Layout bileşeni)
+                // StackPane, içine konulan bileşeni otomatik olarak merkeze yerleştirir.
+                javafx.scene.layout.StackPane root = new javafx.scene.layout.StackPane();
+                root.getChildren().add(mediaView);
+                
+                // 2. Sahneyi (Scene) bu root panel ile oluştur
+                Scene scene = new Scene(root);
+
+                // 3. HATA ALDIĞIN YER: 
+                // JFXPanel yerine doğrudan Sahne'nin (Scene) genişliğine bağla.
+                mediaView.fitWidthProperty().bind(scene.widthProperty());
+                mediaView.fitHeightProperty().bind(scene.heightProperty());
+        
+                // Oranı korumak istersen true, tam sığsın istersen false yap
+                mediaView.setPreserveRatio(true); 
+
+                jfxPanel.setScene(scene);
+                mediaPlayer.play();
+        
+            } catch (Exception e) {
+                System.err.println("Hata: " + e.getMessage());
+            }
+        });
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,6 +93,7 @@ public class Anasayfa extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         Musteri = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        videoPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,25 +110,32 @@ public class Anasayfa extends javax.swing.JFrame {
         jButton1.setText("Otel Giriş");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        videoPanel.setLayout(new java.awt.BorderLayout());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(244, Short.MAX_VALUE)
+                .addComponent(videoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Musteri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(279, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
-                .addComponent(Musteri, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(videoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Musteri, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)))
+                .addGap(0, 49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,5 +203,6 @@ public class Anasayfa extends javax.swing.JFrame {
     private javax.swing.JButton Musteri;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel videoPanel;
     // End of variables declaration//GEN-END:variables
 }
