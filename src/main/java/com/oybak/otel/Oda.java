@@ -25,6 +25,7 @@ public class Oda {
         private String bakımSebebi;
 	private List<Musteri> odadakiMusteriler;
         private int kapasite;//odanın kapasitresinii belirlemek için
+        private double fiyat;
         
 	
 	public Oda(int odaNumarası, OdaDurumu odaDurumu, String odaTipi, String ekOzellikler,int kapasite) { //oda constructor 
@@ -87,6 +88,16 @@ public class Oda {
         public List<Musteri> getOdadakiMusteriler() {
                  return odadakiMusteriler;
         }
+        
+        public double getFiyat() {
+                 return fiyat;
+        }
+        
+        public void setFiyat(double fiyat) {
+        if (fiyat >= 0) {
+                this.fiyat = fiyat;
+        }
+}
 
          
 

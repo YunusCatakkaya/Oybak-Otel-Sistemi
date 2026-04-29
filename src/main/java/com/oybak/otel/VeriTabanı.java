@@ -4,11 +4,14 @@
  */
 package com.oybak.otel;
 
+import com.oybak.otel.enums.OdaDurumu;
 import com.oybak.otel.enums.UserRole;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 //jjjj
 /**
  *
@@ -77,4 +80,27 @@ public interface VeriTabanı {
         }
         return null; // Kullanıcı bulunamadıysa boş dön
     }
+    
+    public default List<Oda> doluOdaListesi() {
+    List<Oda> doluOdalar = new ArrayList<>();
+    String sql = "SELECT * FROM odalar WHERE durum = 'DOLU'";
+    
+    try (Connection conn = DriverManager.getConnection(URL);
+         PreparedStatement pstmt = conn.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
+        
+        while (rs.next()) {
+            Oda oda = new Oda();
+            oda.setOdaNumarası(rs.getInt("oda_no"));
+            oda.setOdaDurumu(OdaDurumu.DOLU);
+            oda.setFiyat(rs.getDouble("fiyat")); // Yeni eklenen fiyat sütunu
+            doluOdalar.add(oda);
+        }
+    } catch (Exception e) {
+        System.out.println("Hata: " + e.getMessage());
+    }
+    return doluOdalar;
 }
+}   
+    
+    

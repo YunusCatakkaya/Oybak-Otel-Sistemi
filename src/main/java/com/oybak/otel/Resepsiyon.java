@@ -78,30 +78,29 @@ public class Resepsiyon extends Personel{
         }
     }
         
-        public void odemeAl(Musteri musteri, double alinanMiktar) {
-        if (alinanMiktar > 0) {
-            
-            musteri.kasayaKatkiEkle(alinanMiktar);
-            
+        // Resepsiyon.java içinde revize edilmiş hali
+    public void odemeAl(Musteri musteri, Oda secilenOda) {
+    double odaFiyatı = secilenOda.getFiyat(); // Fiyatı odadan çekiyoruz
+    
+        if (odaFiyatı > 0) {
+            musteri.kasayaKatkiEkle(odaFiyatı);
+        
             String url = VeriTabanı.URL;
-            // Müşteriler tablosunda ilgili müşterinin 'kasaya_katkisi' sütununu güncelleyecek SQL sorgusu
             String sql = "UPDATE musteriler SET kasaya_katkisi = ? WHERE tc_no = ?";
-            
+        
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                
-                // 1. soru işareti: Müşterinin güncel (arttırılmış) toplam kasaya katkısı
-                pstmt.setDouble(1, musteri.getKasayaKatkisi());
-                // 2. soru işareti: Hangi müşteri olduğunu belirlemek için TC Kimlik Numarası
-                pstmt.setLong(2, musteri.getTcNo());
-                pstmt.executeUpdate();
-                
-                System.out.println(musteri.getName() + " isimli müşteriden " + alinanMiktar + " TL tahsil edildi.");
-            } catch (Exception e) {
-                System.out.println("Veritabanı Hatası (Ödeme): " + e.getMessage());
-            }
+            
+                 pstmt.setDouble(1, musteri.getKasayaKatkisi());
+                 pstmt.setLong(2, musteri.getTcNo());
+                 pstmt.executeUpdate();
+            
+                 System.out.println(secilenOda.getOdaNumarası() + " nolu oda ücreti olan " + odaFiyatı + " TL tahsil edildi.");
+          } catch (Exception e) {
+            System.out.println("Hata: " + e.getMessage());
         }
     }
+}
         
 	public void paraIadeEt(Musteri musteri, double iadeMiktari) {
         if (iadeMiktari > 0 && musteri.getKasayaKatkisi() >= iadeMiktari) {
