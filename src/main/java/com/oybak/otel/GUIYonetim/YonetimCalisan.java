@@ -4,23 +4,25 @@
  */
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.enums.UserRole;
+
 /**
  *
  * @author userxpc666
  */
-public class YonetimMusteriArama extends javax.swing.JFrame {
+public class YonetimCalisan extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimMusteriArama.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimCalisan.class.getName());
 
     /**
-     * Creates new form YonetimMusteriArama
+     * Creates new form YonetimCalisan
      */
     private UserRole aktifRol;
     
-    public YonetimMusteriArama(UserRole rol) {
+    public YonetimCalisan(UserRole rol) {
         initComponents();
-        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
         this.aktifRol=rol;
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
+        
     }
 
     /**
@@ -36,43 +38,77 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setExtendedState(MAXIMIZED_BOTH);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setText("Güncel Müşteri");
+        jButton1.setText("Çalışan Ekle");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipady = 56;
-        gridBagConstraints.insets = new java.awt.Insets(103, 68, 103, 0);
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 19;
+        gridBagConstraints.ipady = 35;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(75, 90, 213, 0);
         getContentPane().add(jButton1, gridBagConstraints);
 
-        jButton2.setText("Geçmiş Müşteri");
+        jButton2.setText("Çalışan Çıkar");
+        jButton2.setMaximumSize(new java.awt.Dimension(116, 23));
+        jButton2.setMinimumSize(new java.awt.Dimension(116, 23));
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipady = 56;
-        gridBagConstraints.insets = new java.awt.Insets(103, 42, 103, 71);
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipady = 35;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(75, 46, 213, 0);
         getContentPane().add(jButton2, gridBagConstraints);
 
-        jButton3.setText("Geri");
+        jButton3.setLabel("Geri");
         jButton3.addActionListener(this::jButton3ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         getContentPane().add(jButton3, gridBagConstraints);
+
+        jButton5.setText("Maaş Düzenle");
+        jButton5.setActionCommand("Maaş Düzenle");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipady = 35;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(75, 60, 213, 61);
+        getContentPane().add(jButton5, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimEkran Ekran = new com.oybak.otel.GUIYonetim.YonetimEkran(aktifRol);
+         com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(aktifRol);
        
-       Ekran.setVisible(true);
+       Genel.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         com.oybak.otel.GUIYonetim.CalisanEkle Ekle = new com.oybak.otel.GUIYonetim.CalisanEkle(aktifRol);
+       
+       Ekle.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        com.oybak.otel.GUIYonetim.CalisanCikar Cikar = new com.oybak.otel.GUIYonetim.CalisanCikar(aktifRol);
+       
+       Cikar.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        com.oybak.otel.GUIYonetim.MaasDuzenleme Duzenleme = new com.oybak.otel.GUIYonetim.MaasDuzenleme(aktifRol);
+       
+       Duzenleme.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -96,8 +132,10 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(() -> {
-    new YonetimMusteriArama(UserRole.YONETIM).setVisible(true); 
+    // UserRole.ADMIN örnektir, kendi enum değerine göre değiştir
+    new YonetimCalisan(UserRole.YONETIM).setVisible(true); 
 });
     }
 
@@ -105,5 +143,6 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
     // End of variables declaration//GEN-END:variables
 }

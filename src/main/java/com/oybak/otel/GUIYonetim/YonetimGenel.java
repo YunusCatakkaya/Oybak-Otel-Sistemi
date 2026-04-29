@@ -8,21 +8,23 @@ import com.oybak.otel.enums.UserRole;
  *
  * @author userxpc666
  */
-public class YonetimMusteriArama extends javax.swing.JFrame {
+public class YonetimGenel extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimMusteriArama.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimGenel.class.getName());
 
     /**
-     * Creates new form YonetimMusteriArama
+     * Creates new form YonetimGenel
      */
+    
     private UserRole aktifRol;
     
-    public YonetimMusteriArama(UserRole rol) {
+    public YonetimGenel(UserRole rol) {
         initComponents();
-        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
         this.aktifRol=rol;
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
-
+    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,23 +40,27 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setExtendedState(MAXIMIZED_BOTH);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setText("Güncel Müşteri");
+        jButton1.setText("Oda Düzenleme");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipady = 56;
-        gridBagConstraints.insets = new java.awt.Insets(103, 68, 103, 0);
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 33;
+        gridBagConstraints.insets = new java.awt.Insets(78, 57, 121, 0);
         getContentPane().add(jButton1, gridBagConstraints);
 
-        jButton2.setText("Geçmiş Müşteri");
+        jButton2.setText("Çalışan İşlemleri");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipady = 56;
-        gridBagConstraints.insets = new java.awt.Insets(103, 42, 103, 71);
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 33;
+        gridBagConstraints.insets = new java.awt.Insets(78, 53, 121, 57);
         getContentPane().add(jButton2, gridBagConstraints);
 
         jButton3.setText("Geri");
@@ -62,16 +68,27 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(20, 21, 0, 0);
         getContentPane().add(jButton3, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimEkran Ekran = new com.oybak.otel.GUIYonetim.YonetimEkran(aktifRol);
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         com.oybak.otel.GUIYonetim.YonetimCalisan Calisan = new com.oybak.otel.GUIYonetim.YonetimCalisan(aktifRol);
        
-       Ekran.setVisible(true);
+       Calisan.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    com.oybak.otel.GUIYonetim.YonetimEkran Ekran = new com.oybak.otel.GUIYonetim.YonetimEkran(aktifRol);
+       
+       Ekran.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -96,8 +113,10 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+       
         java.awt.EventQueue.invokeLater(() -> {
-    new YonetimMusteriArama(UserRole.YONETIM).setVisible(true); 
+    
+    new YonetimGenel(UserRole.YONETIM).setVisible(true); 
 });
     }
 
