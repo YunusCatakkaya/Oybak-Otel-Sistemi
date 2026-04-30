@@ -39,7 +39,7 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
     public static void odaBakimAl(int oda, String sebep) {
         String url = VeriTabanı.URL;
-        String sql = "UPDATE odalar SET durum = 'BAKIMDA', bakım_sebebi = ? WHERE oda_no = ?";
+        String sql = "UPDATE odalar SET durum = 'BAKIMDA', bakim_sebebi = ? WHERE oda_no = ?";
     
         try (Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql)) {

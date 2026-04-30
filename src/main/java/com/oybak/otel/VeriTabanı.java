@@ -37,15 +37,17 @@ public interface VeriTabanı {
                 
                     // 2. Veritabanındaki sütun isimlerine göre verileri çekip nesneye doldur
                     bulunanOda.setOdaNumarası(rs.getInt("oda_no"));
+                    bulunanOda.setTekKisilikYatak(rs.getInt("tek_kisilik_yatak"));
+                    bulunanOda.setCiftKisilikYatak(rs.getInt("cift_kisilik_yatak"));
+                    bulunanOda.setDenizManzarasi(rs.getBoolean("deniz_manzarasi"));
+                    bulunanOda.setMinibar(rs.getBoolean("minibar"));
+                    bulunanOda.setJakuzi(rs.getBoolean("jakuzi"));
                 
                     // 3. Durum bilgisini Enum'a çevirirken hata payını azaltmak için büyük harf yapıyoruz
                     String durumString = rs.getString("durum");
                     if (durumString != null) {
-                        bulunanOda.setOdaDurumu(com.oybak.otel.enums.OdaDurumu.valueOf(durumString.toUpperCase().trim()));
+                        bulunanOda.setOdaDurumu(OdaDurumu.valueOf(durumString.toUpperCase().trim()));
                     }
-                
-                    // Varsa diğer alanları da buraya ekleyebilirsin:
-                    // bulunanOda.setOdaTipi(rs.getString("oda_tipi"));
                 
                     System.out.println(oda_no + " numaralı oda verileri çekildi.");
                 }

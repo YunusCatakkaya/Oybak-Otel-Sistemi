@@ -39,12 +39,12 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
         // Eğer aktif rol TEKNIKPERSONEL değilse, bakım işlemlerini ve panellerini tamamen gizle
         if (this.aktifRol != UserRole.TEKNIKPERSONEL) {
             // Butonları tek tek gizlemek yerine, onları tutan panelleri komple kapatıyoruz
-            jPanel2.setVisible(false); // Bakıma Al / Bakımdan Çıkar butonlarını tutan paneli gizler
-            jPanel3.setVisible(false); // "Bakım sebebi" yazısını tutan paneli gizler
+            teknikPersonelPaneli.setVisible(false); // Bakıma Al / Bakımdan Çıkar butonlarını tutan paneli gizler
+            bakimSebebiPaneli.setVisible(false); // "Bakım sebebi" yazısını tutan paneli gizler
         }
         
         if (this.aktifRol != UserRole.RESEPSIYON) {
-            jPanel5.setVisible(false); // Müşteri ekle butonunu tutan paneli komple gizler
+            musteriEklemePaneli.setVisible(false); // Müşteri ekle butonunu tutan paneli komple gizler
         }
     }
 
@@ -65,15 +65,15 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
         SabitMetin = new javax.swing.JLabel();
         OdaNo = new javax.swing.JLabel();
         Ozellikler = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        teknikPersonelPaneli = new javax.swing.JPanel();
         BakimAl = new javax.swing.JButton();
         BakımdanCikar = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        bakimSebebiPaneli = new javax.swing.JPanel();
         BakımSebebi = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        musteriBilgileriPaneli = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Bilgiler = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        musteriEklemePaneli = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -92,20 +92,20 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
         BakımdanCikar.setText("Bakımdan Çıkar");
         BakımdanCikar.addActionListener(this::BakımdanCikarActionPerformed);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout teknikPersonelPaneliLayout = new javax.swing.GroupLayout(teknikPersonelPaneli);
+        teknikPersonelPaneli.setLayout(teknikPersonelPaneliLayout);
+        teknikPersonelPaneliLayout.setHorizontalGroup(
+            teknikPersonelPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teknikPersonelPaneliLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(teknikPersonelPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(BakımdanCikar)
                     .addComponent(BakimAl, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        teknikPersonelPaneliLayout.setVerticalGroup(
+            teknikPersonelPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teknikPersonelPaneliLayout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(BakimAl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -115,18 +115,18 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
 
         BakımSebebi.setText("Bakım sebebi");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout bakimSebebiPaneliLayout = new javax.swing.GroupLayout(bakimSebebiPaneli);
+        bakimSebebiPaneli.setLayout(bakimSebebiPaneliLayout);
+        bakimSebebiPaneliLayout.setHorizontalGroup(
+            bakimSebebiPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bakimSebebiPaneliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(BakımSebebi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        bakimSebebiPaneliLayout.setVerticalGroup(
+            bakimSebebiPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bakimSebebiPaneliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(BakımSebebi)
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -138,22 +138,22 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
 
         Bilgiler.setText("Bilgiler");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout musteriBilgileriPaneliLayout = new javax.swing.GroupLayout(musteriBilgileriPaneli);
+        musteriBilgileriPaneli.setLayout(musteriBilgileriPaneliLayout);
+        musteriBilgileriPaneliLayout.setHorizontalGroup(
+            musteriBilgileriPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(musteriBilgileriPaneliLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(musteriBilgileriPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(musteriBilgileriPaneliLayout.createSequentialGroup()
                         .addComponent(Bilgiler, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 17, Short.MAX_VALUE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        musteriBilgileriPaneliLayout.setVerticalGroup(
+            musteriBilgileriPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(musteriBilgileriPaneliLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -164,18 +164,18 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
         jButton2.setText("Müşteri ekle");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout musteriEklemePaneliLayout = new javax.swing.GroupLayout(musteriEklemePaneli);
+        musteriEklemePaneli.setLayout(musteriEklemePaneliLayout);
+        musteriEklemePaneliLayout.setHorizontalGroup(
+            musteriEklemePaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(musteriEklemePaneliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        musteriEklemePaneliLayout.setVerticalGroup(
+            musteriEklemePaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(musteriEklemePaneliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap())
@@ -197,12 +197,12 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
                             .addComponent(Ozellikler))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(musteriEklemePaneli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(musteriBilgileriPaneli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bakimSebebiPaneli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(teknikPersonelPaneli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -211,11 +211,11 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(musteriBilgileriPaneli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(teknikPersonelPaneli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(bakimSebebiPaneli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(OdaNo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -223,7 +223,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Ozellikler)))
                 .addGap(27, 27, 27)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(musteriEklemePaneli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -293,12 +293,12 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
     private javax.swing.JLabel OdaNo;
     private javax.swing.JLabel Ozellikler;
     private javax.swing.JLabel SabitMetin;
+    private javax.swing.JPanel bakimSebebiPaneli;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel musteriBilgileriPaneli;
+    private javax.swing.JPanel musteriEklemePaneli;
+    private javax.swing.JPanel teknikPersonelPaneli;
     // End of variables declaration//GEN-END:variables
 }

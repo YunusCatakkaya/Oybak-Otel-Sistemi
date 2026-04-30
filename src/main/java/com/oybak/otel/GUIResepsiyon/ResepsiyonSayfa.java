@@ -108,6 +108,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.aktifRol = UserRole.MUSTERİEKLEME;
         com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri rezervasyonEkrani = new com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri();
  
         rezervasyonEkrani.setLocationRelativeTo(null);
