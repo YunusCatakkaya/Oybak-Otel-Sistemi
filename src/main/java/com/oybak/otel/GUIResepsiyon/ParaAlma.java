@@ -10,7 +10,7 @@ import com.oybak.otel.Yonetim;
  *
  * @author onuro
  */
-public class ParaAlma extends javax.swing.JFrame implements VeriTabani {
+public class ParaAlma extends javax.swing.JFrame implements VeriTabani { //.
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ParaAlma.class.getName());
 
@@ -70,6 +70,7 @@ private double odenenMiktariGetir(int odaNo) {
         odaComboBox = new javax.swing.JComboBox<>();
         fiyatText = new javax.swing.JLabel();
         odemeAl = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,6 +81,8 @@ private double odenenMiktariGetir(int odaNo) {
 
         odemeAl.setText("Ödeme Al");
         odemeAl.addActionListener(this::odemeAlActionPerformed);
+
+        jLabel1.setText("Ödeme Alacağınız Odayı Seçiniz");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,15 +95,20 @@ private double odenenMiktariGetir(int odaNo) {
                     .addComponent(odemeAl, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(odaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(156, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(odaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(fiyatText)
-                .addGap(53, 53, 53)
+                .addGap(37, 37, 37)
                 .addComponent(odemeAl, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
@@ -182,6 +190,7 @@ private double odenenMiktariGetir(int odaNo) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel fiyatText;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JComboBox<String> odaComboBox;
     private javax.swing.JButton odemeAl;
     // End of variables declaration//GEN-END:variables
