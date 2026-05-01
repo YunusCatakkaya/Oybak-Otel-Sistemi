@@ -5,12 +5,16 @@
 package com.oybakotel.GUI;
 
 import com.oybak.otel.enums.UserRole;
-
+import java.awt.Color;
+import com.oybak.otel.VeriTabani;
+import com.oybak.otel.Yonetim;
+import com.oybak.otel.Oda;
+    
 /**
  *
  * @author userxpc666
  */
-public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis{
+public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, VeriTabani{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(OdaSecimEkrani.class.getName());
 
@@ -24,11 +28,10 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis{
         initComponents();
         this.aktifRol = rol;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
+        
+        odalariRenklendir(); 
     }
 
-    private OdaSecimEkrani() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -355,7 +358,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis{
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new OdaSecimEkrani().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new OdaSecimEkrani(com.oybak.otel.enums.UserRole.RESEPSIYON).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -404,6 +407,51 @@ public void filtreyiUygula(int kapasite) {
         // jButton1.setVisible(false);
     }
 }
- 
+private void odalariRenklendir() {
+        javax.swing.JButton[] odaButonlari = {
+            j101, j102, j103, j104, j105, 
+            j201, j202, j203, j204, j205,
+            j301, j302, j303, j304, j305,
+            j401, j402, j403, j404, j405
+        };
 
+        for (javax.swing.JButton buton : odaButonlari) {
+            if (buton == null || buton.getText() == null || buton.getText().trim().isEmpty()) continue;
+
+            try {
+                int odaNo = Integer.parseInt(buton.getText().trim()); 
+                Oda oda = odaBilgileri(odaNo); 
+
+                if (oda != null && oda.getOdaDurumu() != null) {
+                    // Renklerin görünmesi için gereken standart ayarlar
+                    buton.setContentAreaFilled(true);
+                    buton.setOpaque(true);
+                    buton.setBorderPainted(true);
+
+                    switch (oda.getOdaDurumu()) {
+                        case MUSAİT -> {
+                            buton.setBackground(new Color(46, 204, 113)); // Yeşil
+                            buton.setForeground(Color.WHITE);
+                            buton.setEnabled(true);
+                        }
+                        case DOLU -> {
+                            buton.setBackground(new Color(231, 76, 60)); // Kırmızı
+                            buton.setForeground(Color.WHITE);
+                            buton.setEnabled(true); // Gri olmaması için true bıraktık
+                        }
+                        case BAKIMDA -> {
+                            buton.setBackground(new Color(241, 196, 15)); // Sarı
+                            buton.setForeground(Color.BLACK);
+                            buton.setEnabled(true); // Gri olmaması için true bıraktık
+                        }
+                        default -> buton.setBackground(Color.LIGHT_GRAY);
+                    }
+                } else {
+                    buton.setBackground(Color.LIGHT_GRAY);
+                }
+            } catch (Exception e) {
+                // Hata durumunda buton varsayılan renginde kalsın
+            }
+        }
+    }
 }
