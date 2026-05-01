@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIYonetim;
+import com.oybak.otel.Yonetim;
 import com.oybak.otel.enums.UserRole;
+import javax.swing.JOptionPane;
+import com.oybak.otel.Personel;
 /**
  *
  * @author userxpc666
@@ -16,12 +19,63 @@ public class CalisanEkle extends javax.swing.JFrame {
      * Creates new form CalisanEkle
      */
     private UserRole aktifRol;
+    private String teknikUzmanlik = "";
     
     public CalisanEkle(UserRole rol) {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
         this.aktifRol=rol;
     }
+    
+    // CalisanEkle.java dosyasının içinde bir yere:
+
+private void personelKaydet(String uzmanlikAlani) {
+    try {
+        // 1. Alanların boş olup olmadığını kontrol et
+        if (jTextPane1.getText().trim().isEmpty() || jTextPane2.getText().trim().isEmpty() || 
+            jTextPane3.getText().trim().isEmpty() || jTextPane4.getText().trim().isEmpty()) {
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen Bilgileri Eksiksiz Giriniz!", "Eksik Bilgi", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; 
+        }
+
+        // 2. TC 11 hane kontrolü
+        String tcText = jTextPane4.getText().trim();
+        if (tcText.length() != 11) {
+            javax.swing.JOptionPane.showMessageDialog(this, "TC Kimlik Numarası 11 haneli olmalıdır!");
+            return;
+        }
+
+        long tc = Long.parseLong(tcText);
+        
+        // 3. MÜKERRER TC KONTROLÜ (YENİ KISIM)
+        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, "Yonetim"); //
+        if (yonetici.tcVarMi(tc)) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Bu TC numarası ile zaten bir kayıt bulunmaktadır!", 
+                "Mükerrer Kayıt Hatası", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return; // Aynı TC varsa işlemi burada kes
+        }
+
+        // 4. Bilgileri al ve nesneyi oluştur
+        String ad = jTextPane1.getText().trim();
+        String soyad = jTextPane2.getText().trim();
+        double maas = Double.parseDouble(jTextPane3.getText().trim());
+
+        Personel yeniPersonel = new Personel(ad, soyad, tc, maas, uzmanlikAlani); //
+
+        // 5. Veritabanına kaydet
+        yonetici.personelEkle(yeniPersonel);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Kayıt Başarıyla Tamamlandı.");
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Maaş ve TC alanlarına sadece sayı giriniz!");
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,6 +98,12 @@ public class CalisanEkle extends javax.swing.JFrame {
         jTextPane2 = new javax.swing.JTextPane();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTextPane3 = new javax.swing.JTextPane();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jTextPane4 = new javax.swing.JTextPane();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -53,9 +113,9 @@ public class CalisanEkle extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridwidth = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 157);
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
         jButton1.setText("Geri");
@@ -64,29 +124,34 @@ public class CalisanEkle extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(11, 6, 0, 0);
         getContentPane().add(jButton1, gridBagConstraints);
 
-        jLabel2.setText("İsim ve Soyisim Giriniz");
+        jLabel2.setText("İsim Giriniz");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 26, 0, 0);
         getContentPane().add(jLabel2, gridBagConstraints);
 
-        jLabel3.setText("TC Giriniz");
+        jLabel3.setText("Soy İsim Giriniz");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.insets = new java.awt.Insets(15, 26, 0, 0);
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 29, 0, 0);
         getContentPane().add(jLabel3, gridBagConstraints);
 
-        jLabel4.setText("Maaş Giriniz");
+        jLabel4.setText("Maaş Giriniz (TL)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 26, 0, 0);
         getContentPane().add(jLabel4, gridBagConstraints);
 
@@ -95,13 +160,14 @@ public class CalisanEkle extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 174;
-        gridBagConstraints.ipady = 6;
+        gridBagConstraints.ipadx = 358;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 26, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 26, 0, 6);
         getContentPane().add(jScrollPane4, gridBagConstraints);
 
         jScrollPane5.setViewportView(jTextPane2);
@@ -109,13 +175,14 @@ public class CalisanEkle extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 174;
-        gridBagConstraints.ipady = 6;
+        gridBagConstraints.ipadx = 358;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 26, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 26, 0, 6);
         getContentPane().add(jScrollPane5, gridBagConstraints);
 
         jScrollPane6.setViewportView(jTextPane3);
@@ -123,14 +190,66 @@ public class CalisanEkle extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 174;
-        gridBagConstraints.ipady = 6;
+        gridBagConstraints.ipadx = 358;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 26, 68, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 26, 0, 6);
         getContentPane().add(jScrollPane6, gridBagConstraints);
+
+        jLabel5.setText("İş Tipi Seçiniz");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 34, 0, 0);
+        getContentPane().add(jLabel5, gridBagConstraints);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seçiniz", "Yönetici", "Teknik Personel", "Resepsiyon" }));
+        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 26, 0, 0);
+        getContentPane().add(jComboBox1, gridBagConstraints);
+
+        jLabel6.setText("TC Giriniz");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 26, 0, 0);
+        getContentPane().add(jLabel6, gridBagConstraints);
+
+        jScrollPane7.setViewportView(jTextPane4);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 358;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(6, 26, 0, 6);
+        getContentPane().add(jScrollPane7, gridBagConstraints);
+
+        jButton2.setText("Kaydet");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 59, 27, 0);
+        getContentPane().add(jButton2, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -140,6 +259,63 @@ public class CalisanEkle extends javax.swing.JFrame {
        
        Calisan.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+   String secilenIs = jComboBox1.getSelectedItem().toString();
+
+    if (secilenIs.equals("Seçiniz")) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen bir iş tipi seçiniz!");
+        return;
+    }
+
+    if (secilenIs.equals("Teknik Personel")) {
+        // Pop-up ile uzmanlık alanını alıyoruz
+        String input = javax.swing.JOptionPane.showInputDialog(this, 
+                "Teknik Personelin Uzmanlık Alanını Giriniz:", 
+                "Uzmanlık Bilgisi", 
+                javax.swing.JOptionPane.QUESTION_MESSAGE);
+
+        if (input != null && !input.trim().isEmpty()) {
+            this.teknikUzmanlik = input; // Alınan bilgiyi değişkene kaydediyoruz
+        } else {
+            // İptal edilirse seçimi sıfırla
+            jComboBox1.setSelectedIndex(0);
+            this.teknikUzmanlik = "";
+        }
+    } else {
+        // Teknik personel dışındakiler için uzmanlık bilgisini temizle
+        this.teknikUzmanlik = "";
+    }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    String secilenIs = jComboBox1.getSelectedItem().toString();
+
+    // 1. İş tipi seçilmemişse veya "Seçiniz"de kalmışsa
+    if (secilenIs.equals("Seçiniz")) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "Lütfen Bilgileri Eksiksiz Giriniz!", 
+                "Eksik Bilgi", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // 2. Teknik personel seçilmiş ama pop-up'a cevap verilmemişse
+    if (secilenIs.equals("Teknik Personel") && (teknikUzmanlik == null || teknikUzmanlik.isEmpty())) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "Lütfen Bilgileri Eksiksiz Giriniz!", 
+                "Eksik Bilgi", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Her şey tamamsa kayıt metodunu çağır
+    if (secilenIs.equals("Teknik Personel")) {
+        personelKaydet(teknikUzmanlik);
+    } else {
+        personelKaydet(secilenIs);
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,15 +346,21 @@ java.awt.EventQueue.invokeLater(() -> {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JTextPane jTextPane3;
+    private javax.swing.JTextPane jTextPane4;
     // End of variables declaration//GEN-END:variables
 }

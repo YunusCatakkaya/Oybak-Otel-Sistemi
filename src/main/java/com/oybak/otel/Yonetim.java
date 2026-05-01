@@ -14,8 +14,8 @@ import java.sql.PreparedStatement;
  */
 public class Yonetim extends Personel implements VeriTabani{
 
-    public Yonetim(String name, String lastName, long tcNo, String cinsiyet, int yas, double maas, String isTipi) {
-        super(name, lastName, tcNo, cinsiyet, yas, maas, "Yonetim");
+    public Yonetim(String name, String lastName, long tcNo, double maas, String isTipi) {
+        super(name,lastName,tcNo,maas,"Yonetim");
     }
     
     
@@ -26,7 +26,7 @@ public class Yonetim extends Personel implements VeriTabani{
      */
     public void personelEkle(Personel yeniPersonel) {
         // SQL sorgusunu hazırlıyoruz
-        String sql = "INSERT INTO calisanlar (ad, soyad, tc_no, cinsiyet, yas, maas, is_tipi) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO calisanlar (ad, soyad, tc_no, maas, is_tipi) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         // VeriTabanı interface'indeki URL'yi kullanıyoruz: image_693573.png
         try (Connection conn = DriverManager.getConnection(VeriTabani.URL); 
@@ -36,8 +36,6 @@ public class Yonetim extends Personel implements VeriTabani{
             pstmt.setString(1, yeniPersonel.getName());
             pstmt.setString(2, yeniPersonel.getLastName());
             pstmt.setLong(3, yeniPersonel.getTcNo());
-            pstmt.setString(4, yeniPersonel.getCinsiyet());
-            pstmt.setInt(5, yeniPersonel.getYas());
             pstmt.setDouble(6, yeniPersonel.getMaas());
             pstmt.setString(7, yeniPersonel.getIsTipi());
 

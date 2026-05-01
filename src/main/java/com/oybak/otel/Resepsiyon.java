@@ -17,8 +17,8 @@ import java.sql.SQLException;
 
 public class Resepsiyon extends Personel{
 
-	public Resepsiyon(String name, String lastName, long tcNo, String cinsiyet, int yas, double maas, String isTipi) {
-		super(name, lastName, tcNo, cinsiyet, yas, maas, "Resepsiyon");
+	public Resepsiyon(String name, String lastName, long tcNo, double maas, String isTipi) {
+		super(name, lastName, tcNo, maas, "Resepsiyon");
 	}
         
         public void musteriGirisYap(Oda secilenOda, Musteri yeniMusteri) {

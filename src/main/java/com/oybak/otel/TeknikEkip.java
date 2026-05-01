@@ -18,8 +18,8 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
     private String uzmanlikAlanı;
 
-    public TeknikEkip(String uzmanlikAlani, String name, String lastName, long tcNo, String cinsiyet, int yas, double maas, String isTipi) {
-        super(name, lastName, tcNo, cinsiyet, yas, maas, "TeknikEkip");
+    public TeknikEkip(String uzmanlikAlani, String name, String lastName, long tcNo, double maas, String isTipi) {
+        super(name, lastName, tcNo, maas, "TeknikEkip");
         this.uzmanlikAlanı = uzmanlikAlanı;
     }
     
