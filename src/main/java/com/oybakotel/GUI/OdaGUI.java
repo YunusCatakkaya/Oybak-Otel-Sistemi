@@ -6,16 +6,16 @@ package com.oybakotel.GUI;
 
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
 import com.oybak.otel.Oda;
-import com.oybak.otel.VeriTabanı;
 import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
+import com.oybak.otel.VeriTabani;
 
 /**
  *
  * @author ahmet
  */
-public class OdaGUI extends javax.swing.JFrame implements VeriTabanı{
+public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(OdaGUI.class.getName());
 

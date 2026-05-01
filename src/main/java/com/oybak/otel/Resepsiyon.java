@@ -29,7 +29,7 @@ public class Resepsiyon extends Personel{
             secilenOda.setOdaDurumu(OdaDurumu.DOLU);
             
             
-            String url = VeriTabanı.URL;
+            String url = VeriTabani.URL;
             String sql = "UPDATE odalar SET durum = 'DOLU' WHERE oda_no = ?";
             
             try (Connection conn = DriverManager.getConnection(url);
@@ -56,7 +56,7 @@ public class Resepsiyon extends Personel{
             secilenOda.setOdaDurumu(OdaDurumu.MUSAİT);
             // Odadaki müşteri listesini tamamen temizler
             secilenOda.musterileriTemizle();
-            String url = VeriTabanı.URL;
+            String url = VeriTabani.URL;
             // Odalar tablosundaki ilgili odanın durumunu 'MUSAİT' yapacak SQL sorgusu
             String sql = "UPDATE odalar SET durum = 'MUSAİT' WHERE oda_no = ?";
             
@@ -85,7 +85,7 @@ public class Resepsiyon extends Personel{
         if (odaFiyatı > 0) {
             musteri.kasayaKatkiEkle(odaFiyatı);
         
-            String url = VeriTabanı.URL;
+            String url = VeriTabani.URL;
             String sql = "UPDATE musteriler SET kasaya_katkisi = ? WHERE tc_no = ?";
         
             try (Connection conn = DriverManager.getConnection(url);
@@ -107,7 +107,7 @@ public class Resepsiyon extends Personel{
             
             musteri.kasayaKatkiCikar(iadeMiktari);
             
-            String url = VeriTabanı.URL;
+            String url = VeriTabani.URL;
             String sql = "UPDATE musteriler SET kasaya_katkisi = ? WHERE tc_no = ?";
             
             try (Connection conn = DriverManager.getConnection(url);

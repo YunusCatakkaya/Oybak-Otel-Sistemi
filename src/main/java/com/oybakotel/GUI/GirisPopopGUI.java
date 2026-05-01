@@ -8,15 +8,15 @@ import com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa;
 import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
 import com.oybak.otel.GUIYonetim.YonetimEkran;
 import com.oybak.otel.Hatalar;
-import com.oybak.otel.VeriTabanı;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
+import com.oybak.otel.VeriTabani;
 
 /**
  *
  * @author ahmet
  */
-public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabanı, Hatalar{
+public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hatalar{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GirisPopopGUI.class.getName());
 

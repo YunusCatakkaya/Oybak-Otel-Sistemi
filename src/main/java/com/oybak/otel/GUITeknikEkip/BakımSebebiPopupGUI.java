@@ -6,17 +6,17 @@ package com.oybak.otel.GUITeknikEkip;
 
 import com.oybak.otel.Oda;
 import com.oybak.otel.TeknikEkip;
-import com.oybak.otel.VeriTabanı;
 import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
 import static com.oybak.otel.enums.OdaDurumu.DOLU;
 import static com.oybak.otel.enums.OdaDurumu.MUSAİT;
 import javax.swing.JOptionPane;
+import com.oybak.otel.VeriTabani;
 
 /**
  *
  * @author ahmet
  */
-public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTabanı{
+public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTabani{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BakımSebebiPopupGUI.class.getName());
     private int oda;
