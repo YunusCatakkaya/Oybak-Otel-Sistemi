@@ -36,7 +36,7 @@ public interface VeriTabani {
                     bulunanOda = new Oda(); // Oda bulundu, nesneyi oluştur
                 
                     // 2. Veritabanındaki sütun isimlerine göre verileri çekip nesneye doldur
-                    bulunanOda.setOdaNumarası(rs.getInt("oda_no"));
+                    bulunanOda.setOdaNumarasi(rs.getInt("oda_no"));
                     bulunanOda.setTekKisilikYatak(rs.getInt("tek_kisilik_yatak"));
                     bulunanOda.setCiftKisilikYatak(rs.getInt("cift_kisilik_yatak"));
                     bulunanOda.setDenizManzarasi(rs.getBoolean("deniz_manzarasi"));
@@ -93,7 +93,7 @@ public interface VeriTabani {
         
         while (rs.next()) {
             Oda oda = new Oda();
-            oda.setOdaNumarası(rs.getInt("oda_no"));
+            oda.setOdaNumarasi(rs.getInt("oda_no"));
             oda.setOdaDurumu(OdaDurumu.DOLU);
             oda.setFiyat(rs.getDouble("fiyat")); // Yeni eklenen fiyat sütunu
             doluOdalar.add(oda);
