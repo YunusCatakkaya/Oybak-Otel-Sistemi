@@ -27,7 +27,7 @@ private void doluOdalariYukle() {
     odaComboBox.removeAllItems(); // Önce eski verileri temizle
     
     // VeriTabani interface'ini implemente eden bir sınıf nesnesi (örneğin Resepsiyon)
-    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem"); 
+    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem",""); 
     
     // Sadece durumu DOLU olan odaları getirir
     java.util.List<Oda> doluOdalar = vt.doluOdaListesi(); 
@@ -122,7 +122,7 @@ private double odenenMiktariGetir(int odaNo) {
     if (secilenOdaNoStr != null) {
         int odaNo = Integer.parseInt(secilenOdaNoStr);
         
-        VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem");
+        VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem","");
         Oda secilenOda = vt.odaBilgileri(odaNo); // Odanın veritabanındaki tüm bilgilerini çeker
         
         if (secilenOda != null) {
@@ -141,7 +141,7 @@ private double odenenMiktariGetir(int odaNo) {
     }
 
     int odaNo = Integer.parseInt(secilenOdaNoStr);
-    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem");
+    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem","");
     Oda secilenOda = vt.odaBilgileri(odaNo);
     
     double odenmisTutar = odenenMiktariGetir(odaNo);

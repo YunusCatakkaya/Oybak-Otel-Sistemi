@@ -7,11 +7,12 @@ import com.oybak.otel.Yonetim;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.Personel;
+import com.oybak.otel.Hatalar;
 /**
  *
  * @author userxpc666
  */
-public class CalisanEkle extends javax.swing.JFrame {
+public class CalisanEkle extends javax.swing.JFrame implements Hatalar {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CalisanEkle.class.getName());
 
@@ -31,59 +32,50 @@ public class CalisanEkle extends javax.swing.JFrame {
 
 private void personelKaydet(String uzmanlikAlani) {
     try {
-        // 1. Verileri jTextPane'lerden çekiyoruz
-        // Sıralama: 1:İsim, 2:Soyisim, 3:Maaş, 4:TC, 5:Şifre
+        // 1. GUI'den verileri çek
         String ad = jTextPane1.getText().trim();
         String soyad = jTextPane2.getText().trim();
         String maasStr = jTextPane3.getText().trim();
         String tcStr = jTextPane4.getText().trim();
-        String sifre = jTextPane5.getText().trim();
 
-        // 2. Boşluk Kontrolü
-        if (ad.isEmpty() || soyad.isEmpty() || maasStr.isEmpty() || tcStr.isEmpty() || sifre.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları eksiksiz doldurunuz!", "Eksik Bilgi", 2);
+        // 2. Boşluk ve TC Kontrolü (Hatalar Interface'inden)
+        if (ad.isEmpty() || soyad.isEmpty() || maasStr.isEmpty() || tcStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları doldurun!", "Eksik Bilgi", 2);
             return;
         }
 
-        // 3. TC Hane ve Tip Kontrolü (Long)
-        if (tcStr.length() != 11) {
-            javax.swing.JOptionPane.showMessageDialog(this, "TC Kimlik No 11 haneli olmalıdır!", "Hata", 0);
-            return;
-        }
-        long tc = Long.parseLong(tcStr); // 11 hane için long şart
-
-        // 4. Mükerrer Kayıt Kontrolü (UNIQUE kısıtlaması için ön kontrol)
-        // Not: Yonetim sınıfındaki tcVarMi metodunu kullandığını varsayıyoruz.
-        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, "Yonetim");
-        if (yonetici.tcVarMi(tc)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Bu TC numarası veritabanında zaten kayıtlı!", "Mükerrer Kayıt", 0);
-            return;
+        if (!tcKontrol(tcStr)) { 
+            return; 
         }
 
-        // 5. Maaş Dönüşümü
+        long tc = Long.parseLong(tcStr);
         double maas = Double.parseDouble(maasStr);
 
-        // 6. Personel Nesnesini Oluşturma
-        // Constructor sırası: ad, soyad, tc, maas, uzmanlikAlani
-        Personel yeniKisi = new Personel(ad, soyad, tc, maas, uzmanlikAlani);
+        // 3. Veritabanı Kontrolü (Mükerrer Kayıt)
+        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, "Yonetim","");
+        if (yonetici.tcVarMi(tc)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Bu TC zaten kayıtlı!", "Hata", 0);
+            return;
+        }
 
-        // 7. Veritabanına Kayıt (yonetici içindeki personelEkle metodunu çağırıyoruz)
-        // Eğer veritabanında şifreyi de ayrı tutuyorsan, metoduna şifreyi de eklemelisin.
-        yonetici.personelEkle(yeniKisi); 
-
-        // 8. Başarı Mesajı ve Formu Temizleme
-        javax.swing.JOptionPane.showMessageDialog(this, "Personel başarıyla kaydedildi!");
+        // 4. Personel Nesnesi Oluştur (Uzmanlık alanı parametre olarak geçiliyor)
+        // Not: Personel sınıfınızda bu 5 parametreli constructor'ın olduğundan emin olun.
+        String isTipi = jComboBox1.getSelectedItem().toString();
         
-        jTextPane1.setText("");
-        jTextPane2.setText("");
-        jTextPane3.setText("");
-        jTextPane4.setText("");
-        jTextPane5.setText("");
+        Personel yeniKisi = new Personel(ad, soyad, tc, maas,isTipi, uzmanlikAlani);
+        
+        // 5. Kayıt İşlemi
+        yonetici.personelEkle(yeniKisi);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Personel ve Uzmanlık Bilgisi Kaydedildi.");
+        
+        // Formu temizle
+        jTextPane1.setText(""); jTextPane2.setText(""); jTextPane3.setText(""); jTextPane4.setText("");
 
     } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "TC ve Maaş alanlarına sadece sayı girmelisiniz!", "Format Hatası", 0);
+        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen sayısal alanlara geçerli değerler girin!", "Format Hatası", 0);
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Beklenmedik bir hata oluştu: " + e.getMessage(), "Hata", 0);
+        javax.swing.JOptionPane.showMessageDialog(this, "Beklenmedik Hata: " + e.getMessage());
     }
 }
 

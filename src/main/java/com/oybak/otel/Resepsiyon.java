@@ -18,8 +18,8 @@ import java.sql.ResultSet;
 
 public class Resepsiyon extends Personel{
 
-	public Resepsiyon(String name, String lastName, long tcNo, double maas, String isTipi) {
-		super(name, lastName, tcNo, maas, "Resepsiyon");
+	public Resepsiyon(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani) {
+		super(name, lastName, tcNo, maas, "Resepsiyon",uzmanlikAlani);
 	}
         
         public void musteriGirisYap(Oda secilenOda, Musteri yeniMusteri) {
