@@ -20,7 +20,7 @@ public class Yonetim extends Personel implements VeriTabani{
     public Yonetim(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani,String parola) {
         super(name,lastName,tcNo,maas,"Yonetim",uzmanlikAlani,parola);
     }
-    
+    //aaaa
     
     /**
      * Sadece Yönetici sınıfına özel personel ekleme fonksiyonu.
