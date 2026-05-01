@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 
 /**
  * 
@@ -35,17 +36,17 @@ public class Resepsiyon extends Personel{
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 
-                pstmt.setInt(1, secilenOda.getOdaNumarası());
+                pstmt.setInt(1, secilenOda.getOdaNumarasi());
                 pstmt.executeUpdate();
                 
-                System.out.println("İşlem Başarılı: " + yeniMusteri.getName() + " isimli müşteri " + secilenOda.getOdaNumarası() + " numaralı odaya giriş yaptı.");
+                System.out.println("İşlem Başarılı: " + yeniMusteri.getName() + " isimli müşteri " + secilenOda.getOdaNumarasi() + " numaralı odaya giriş yaptı.");
                 System.out.println("Odada şu an " + secilenOda.getKisiSayisi() + " kişi kalıyor.");
                 
             } catch (Exception e) {
                 System.out.println("Veritabanı Hatası (Giriş): " + e.getMessage());
             }
         } else {
-            System.out.println("İşlem Başarısız: " + secilenOda.getOdaNumarası() + " numaralı oda müsait değil!");
+            System.out.println("İşlem Başarısız: " + secilenOda.getOdaNumarasi() + " numaralı oda müsait değil!");
         }
     }        
 		
@@ -64,11 +65,11 @@ public class Resepsiyon extends Personel{
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 
                 // SQL sorgusundaki '?' yerine çıkış yapılan odanın numarasını yerleştirir
-                pstmt.setInt(1, secilenOda.getOdaNumarası());
+                pstmt.setInt(1, secilenOda.getOdaNumarasi());
                 // Sorguyu çalıştırarak veritabanındaki oda durumunu günceller
                 pstmt.executeUpdate();
                 
-                System.out.println(secilenOda.getOdaNumarası() + " numaralı odanın çıkış işlemi yapıldı. Oda artık Müsait.");
+                System.out.println(secilenOda.getOdaNumarasi() + " numaralı odanın çıkış işlemi yapıldı. Oda artık Müsait.");
             } catch (Exception e) {
                 System.out.println("Veritabanı Hatası (Çıkış): " + e.getMessage());
             }
@@ -95,7 +96,7 @@ public class Resepsiyon extends Personel{
                  pstmt.setLong(2, musteri.getTcNo());
                  pstmt.executeUpdate();
             
-                 System.out.println(secilenOda.getOdaNumarası() + " nolu oda ücreti olan " + odaFiyatı + " TL tahsil edildi.");
+                 System.out.println(secilenOda.getOdaNumarasi() + " nolu oda ücreti olan " + odaFiyatı + " TL tahsil edildi.");
           } catch (Exception e) {
             System.out.println("Hata: " + e.getMessage());
         }
@@ -128,7 +129,52 @@ public class Resepsiyon extends Personel{
             System.out.println("Hata: Geçersiz iade miktarı veya yetersiz bakiye!");
         }
     }
-}
+        public void musteriArama(String musteriIsmi) {
+        String url = VeriTabani.URL;
+        
+        // İsmin bir kısmı girilse bile bulabilmesi için LIKE ve % kullanıyoruz
+        String sql = "SELECT * FROM guncel_musteriler WHERE ad_soyad LIKE ?";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            // Girilen ismin sağına ve soluna % ekleyerek içerenleri bulmasını sağlıyoruz
+            pstmt.setString(1, "%" + musteriIsmi + "%");
+            ResultSet rs = pstmt.executeQuery();
+            
+            boolean bulundu = false;
+            System.out.println("--- Müşteri Arama Sonuçları ---");
+            
+            while (rs.next()) {
+                bulundu = true;
+                // Veritabanı tablonuzdaki sütun isimleriyle eşleşen verileri çekiyoruz
+                String adSoyad = rs.getString("ad_soyad");
+                String tcNo = rs.getString("tc_no");
+                String odaNo = rs.getString("oda_no");
+                String girisTarihi = rs.getString("giris_tarihi");
+                String cikisTarihi = rs.getString("cikis_tarihi");
+                int kasaKatki = rs.getInt("kasa_katki");
+                
+                // Konsola (veya isterseniz GUI'ye) basılacak çıktı
+                System.out.println("Ad Soyad: " + adSoyad + 
+                                   " | TC: " + tcNo + 
+                                   " | Oda No: " + odaNo + 
+                                   " | Giriş: " + girisTarihi + 
+                                   " | Çıkış: " + cikisTarihi + 
+                                   " | Kasaya Katkı: " + kasaKatki + " TL");
+            }
+            
+            if (!bulundu) {
+                System.out.println("Sistemde '" + musteriIsmi + "' isminde güncel bir müşteri bulunamadı.");
+            }
+            System.out.println("-------------------------------");
+            
+        } catch (SQLException e) {
+            System.out.println("Veritabanı Hatası (Müşteri Arama): " + e.getMessage());
+        }
+    }
+}       
+        
 	
 
 

@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author ahmet
  */
-public interface VeriTabani {
+public interface VeriTabanı {
     
     static final String URL = "jdbc:sqlite:veritabani_dosyan.db";
     
@@ -82,45 +82,6 @@ public interface VeriTabani {
         }
         return null; // Kullanıcı bulunamadıysa boş dön
     }
-    
-    public default List<Oda> doluOdaListesi() {
-    List<Oda> doluOdalar = new ArrayList<>();
-    String sql = "SELECT * FROM odalar WHERE durum = 'DOLU'";
-    
-    try (Connection conn = DriverManager.getConnection(URL);
-         PreparedStatement pstmt = conn.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
-        
-        while (rs.next()) {
-            Oda oda = new Oda();
-            oda.setOdaNumarasi(rs.getInt("oda_no"));
-            oda.setOdaDurumu(OdaDurumu.DOLU);
-            oda.setFiyat(rs.getDouble("fiyat")); // Yeni eklenen fiyat sütunu
-            doluOdalar.add(oda);
-        }
-    } catch (Exception e) {
-        System.out.println("Hata: " + e.getMessage());
-    }
-    return doluOdalar;
-}
-    //çalışan eklerken aynı tc ile birden fazla kişi eklenmesin diye yazdım
-    public default boolean tcVarMi(long tcNo) {
-    String sql = "SELECT COUNT(*) FROM calisanlar WHERE tc_no = ?";
-    try (Connection conn = DriverManager.getConnection(URL);
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        
-        pstmt.setLong(1, tcNo);
-        ResultSet rs = pstmt.executeQuery();
-        
-        if (rs.next()) {
-            return rs.getInt(1) > 0; // Eğer sonuç 0'dan büyükse bu TC kayıtlıdır
-        }
-    } catch (Exception e) {
-        System.out.println("TC kontrol hatası: " + e.getMessage());
-    }
-    return false;
-}
-    
 }   
     
     

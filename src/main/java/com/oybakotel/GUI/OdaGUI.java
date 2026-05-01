@@ -36,16 +36,18 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     }
     
     private void rolleriAyarla() {
-        // Eğer aktif rol TEKNIKPERSONEL değilse, bakım işlemlerini ve panellerini tamamen gizle
-        if (this.aktifRol != UserRole.TEKNIKPERSONEL) {
-            // Butonları tek tek gizlemek yerine, onları tutan panelleri komple kapatıyoruz
-            teknikPersonelPaneli.setVisible(false); // Bakıma Al / Bakımdan Çıkar butonlarını tutan paneli gizler
-            bakimSebebiPaneli.setVisible(false); // "Bakım sebebi" yazısını tutan paneli gizler
-        }
-        
-        if (this.aktifRol != UserRole.RESEPSIYON) {
-            musteriEklemePaneli.setVisible(false); // Müşteri ekle butonunu tutan paneli komple gizler
-        }
+        // Önce tüm özel panelleri gizle (Varsayılan durum)
+    teknikPersonelPaneli.setVisible(false);
+    bakimSebebiPaneli.setVisible(false);
+    musteriEklemePaneli.setVisible(false);
+
+    // Rol bazlı görünürlükleri aç
+    if (this.aktifRol == UserRole.TEKNIKPERSONEL) {
+        teknikPersonelPaneli.setVisible(true);
+        bakimSebebiPaneli.setVisible(true); // Bakım sebebi yazısını da görmeleri gerekir
+    } else if (this.aktifRol == UserRole.RESEPSIYON) {
+        musteriEklemePaneli.setVisible(true);
+    }
     }
 
     private OdaGUI() {
