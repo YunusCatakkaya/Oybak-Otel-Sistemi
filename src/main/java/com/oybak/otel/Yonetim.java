@@ -24,6 +24,28 @@ public class Yonetim extends Personel implements VeriTabani{
      * Bu metod VeriTabanı interface'inde tanımlı değildir, 
      * bu yüzden sadece Yonetim nesneleri üzerinden erişilebilir.
      */
+    
+   public boolean tcVarMi(long kontrolTc) {
+    boolean sonuc = false;
+    // Veritabanı yolun (image_4bac41.jpg'deki yolun aynısı)
+    String url = "jdbc:sqlite:C:/Users/onuro/OneDrive/Belgeler/NetBeansProjects/Oybak-Otel-Sistemi/veritabani_dosyan.db";
+    String sql = "SELECT tc_no FROM calisanlar WHERE tc_no = ?"; 
+    
+    try (Connection conn = java.sql.DriverManager.getConnection(url);
+         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        pstmt.setLong(1, kontrolTc);
+        java.sql.ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            sonuc = true; 
+        }
+    } catch (java.sql.SQLException e) {
+        System.out.println("TC Sorgulama Hatası: " + e.getMessage());
+    }
+    return sonuc;
+}
+    
     public void personelEkle(Personel yeniPersonel) {
         // SQL sorgusunu hazırlıyoruz
         String sql = "INSERT INTO calisanlar (ad, soyad, tc_no, maas, is_tipi) VALUES (?, ?, ?, ?, ?, ?, ?)";
