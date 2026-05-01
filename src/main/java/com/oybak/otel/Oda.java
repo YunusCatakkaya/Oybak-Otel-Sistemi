@@ -53,11 +53,11 @@ public class Oda {
 	return odadakiMusteriler.size();
     }
 
-    public int getOdaNumarası() {
+    public int getOdaNumarasi() {
 	return odaNumarası;
     }
 
-    public void setOdaNumarası(int odaNumarası) {
+    public void setOdaNumarasi(int odaNumarası) {
 	if (odaNumarası>0) { //oda numarası "0"dan küçük olamaz
             this.odaNumarası = odaNumarası;
 	}
@@ -79,7 +79,7 @@ public class Oda {
         this.ciftKisilikYatak = ciftKisilikYatak;
     }
 
-    public boolean isDenizManzarası() {
+    public boolean isDenizManzarasi() {
         return denizManzarası;
     }
 
@@ -103,11 +103,11 @@ public class Oda {
         this.jakuzi = jakuzi;
     }
 
-    public String getBakımSebebi() {
+    public String getBakimSebebi() {
         return bakımSebebi;
     }
 
-    public void setBakımSebebi(String bakımSebebi) {
+    public void setBakimSebebi(String bakımSebebi) {
         this.bakımSebebi = bakımSebebi;
     }
         

@@ -35,17 +35,17 @@ public class Resepsiyon extends Personel{
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 
-                pstmt.setInt(1, secilenOda.getOdaNumarası());
+                pstmt.setInt(1, secilenOda.getOdaNumarasi());
                 pstmt.executeUpdate();
                 
-                System.out.println("İşlem Başarılı: " + yeniMusteri.getName() + " isimli müşteri " + secilenOda.getOdaNumarası() + " numaralı odaya giriş yaptı.");
+                System.out.println("İşlem Başarılı: " + yeniMusteri.getName() + " isimli müşteri " + secilenOda.getOdaNumarasi() + " numaralı odaya giriş yaptı.");
                 System.out.println("Odada şu an " + secilenOda.getKisiSayisi() + " kişi kalıyor.");
                 
             } catch (Exception e) {
                 System.out.println("Veritabanı Hatası (Giriş): " + e.getMessage());
             }
         } else {
-            System.out.println("İşlem Başarısız: " + secilenOda.getOdaNumarası() + " numaralı oda müsait değil!");
+            System.out.println("İşlem Başarısız: " + secilenOda.getOdaNumarasi() + " numaralı oda müsait değil!");
         }
     }        
 		
@@ -64,11 +64,11 @@ public class Resepsiyon extends Personel{
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 
                 // SQL sorgusundaki '?' yerine çıkış yapılan odanın numarasını yerleştirir
-                pstmt.setInt(1, secilenOda.getOdaNumarası());
+                pstmt.setInt(1, secilenOda.getOdaNumarasi());
                 // Sorguyu çalıştırarak veritabanındaki oda durumunu günceller
                 pstmt.executeUpdate();
                 
-                System.out.println(secilenOda.getOdaNumarası() + " numaralı odanın çıkış işlemi yapıldı. Oda artık Müsait.");
+                System.out.println(secilenOda.getOdaNumarasi() + " numaralı odanın çıkış işlemi yapıldı. Oda artık Müsait.");
             } catch (Exception e) {
                 System.out.println("Veritabanı Hatası (Çıkış): " + e.getMessage());
             }
@@ -95,7 +95,7 @@ public class Resepsiyon extends Personel{
                  pstmt.setLong(2, musteri.getTcNo());
                  pstmt.executeUpdate();
             
-                 System.out.println(secilenOda.getOdaNumarası() + " nolu oda ücreti olan " + odaFiyatı + " TL tahsil edildi.");
+                 System.out.println(secilenOda.getOdaNumarasi() + " nolu oda ücreti olan " + odaFiyatı + " TL tahsil edildi.");
           } catch (Exception e) {
             System.out.println("Hata: " + e.getMessage());
         }

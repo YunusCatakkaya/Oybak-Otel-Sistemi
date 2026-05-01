@@ -3,12 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIResepsiyon;
-
+import com.oybak.otel.Oda;
+import com.oybak.otel.VeriTabani;
+import com.oybak.otel.Yonetim;
 /**
  *
  * @author onuro
  */
-public class ParaAlma extends javax.swing.JFrame {
+public class ParaAlma extends javax.swing.JFrame implements VeriTabani {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ParaAlma.class.getName());
 
@@ -17,8 +19,45 @@ public class ParaAlma extends javax.swing.JFrame {
      */
     public ParaAlma() {
         initComponents();
+        doluOdalariYukle();
     }
+    
+    // Sınıfınızın içinde uygun bir yere bu metodu ekleyin:
+private void doluOdalariYukle() {
+    odaComboBox.removeAllItems(); // Önce eski verileri temizle
+    
+    // VeriTabani interface'ini implemente eden bir sınıf nesnesi (örneğin Resepsiyon)
+    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem"); 
+    
+    // Sadece durumu DOLU olan odaları getirir
+    java.util.List<Oda> doluOdalar = vt.doluOdaListesi(); 
 
+    for (Oda oda : doluOdalar) {
+        // ComboBox'a oda numarasını ekliyoruz
+        odaComboBox.addItem(String.valueOf(oda.getOdaNumarasi()));
+    }
+}
+
+private double odenenMiktariGetir(int odaNo) {
+    double odenen = 0.0;
+    // guncel_musteriler tablosundan bu odaya ait kasa_katki değerini çekiyoruz
+    String sql = "SELECT kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
+    
+    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL);
+         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        // Veritabanında oda_no TEXT olarak tutulduğu için String'e çeviriyoruz[cite: 1]
+        pstmt.setString(1, String.valueOf(odaNo)); 
+        java.sql.ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            odenen = rs.getDouble("kasa_katki");
+        }
+    } catch (Exception e) {
+        System.out.println("Ödeme Sorgu Hatası: " + e.getMessage());
+    }
+    return odenen;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,48 +68,92 @@ public class ParaAlma extends javax.swing.JFrame {
     private void initComponents() {
 
         odaComboBox = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        onaylaButon = new javax.swing.JButton();
+        fiyatText = new javax.swing.JLabel();
+        odemeAl = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         odaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         odaComboBox.addActionListener(this::odaComboBoxActionPerformed);
 
-        jLabel1.setText("    Fiyat: 0.0 TL");
+        fiyatText.setText("     Fiyat: 0.0 TL");
 
-        onaylaButon.setText("Ödeme Al");
+        odemeAl.setText("Ödeme Al");
+        odemeAl.addActionListener(this::odemeAlActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(odaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(onaylaButon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fiyatText, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(odemeAl, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(odaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(odaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addComponent(onaylaButon, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addGap(39, 39, 39)
+                .addComponent(odaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(fiyatText)
+                .addGap(53, 53, 53)
+                .addComponent(odemeAl, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void odaComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odaComboBoxActionPerformed
-        // TODO add your handling code here:
+        String secilenOdaNoStr = (String) odaComboBox.getSelectedItem();
+    
+    if (secilenOdaNoStr != null) {
+        int odaNo = Integer.parseInt(secilenOdaNoStr);
+        
+        VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem");
+        Oda secilenOda = vt.odaBilgileri(odaNo); // Odanın veritabanındaki tüm bilgilerini çeker
+        
+        if (secilenOda != null) {
+            // Odanın fiyatını çekip Label'a yazdırıyoruz
+            fiyatText.setText("Fiyat: " + secilenOda.getFiyat() + " TL"); 
+        }
+    }
     }//GEN-LAST:event_odaComboBoxActionPerformed
+
+    private void odemeAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odemeAlActionPerformed
+    String secilenOdaNoStr = (String) odaComboBox.getSelectedItem();
+    
+    if (secilenOdaNoStr == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen işlem yapmak için bir oda seçiniz!");
+        return;
+    }
+
+    int odaNo = Integer.parseInt(secilenOdaNoStr);
+    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem");
+    Oda secilenOda = vt.odaBilgileri(odaNo);
+    
+    double odenmisTutar = odenenMiktariGetir(odaNo);
+    
+    // Eğer müşterinin kasaya katkısı odanın fiyatına eşit veya büyükse işlemi kesiyoruz
+    if (odenmisTutar >= secilenOda.getFiyat()) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "İşlem Başarısız: Bu oda için zaten ödeme alınmış!", 
+            "Uyarı", 
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return; // return komutu, aşağıdaki ödeme alma kodlarının çalışmasını engeller
+    }
+    
+    javax.swing.JOptionPane.showMessageDialog(this, 
+        odaNo + " Nolu odanın " + secilenOda.getFiyat() + " TL tutarındaki ödemesi başarıyla alındı.");
+
+    if(fiyatText != null) {
+        fiyatText.setText("0.0 TL");
+    }
+    }//GEN-LAST:event_odemeAlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -98,8 +181,8 @@ public class ParaAlma extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel fiyatText;
     private javax.swing.JComboBox<String> odaComboBox;
-    private javax.swing.JButton onaylaButon;
+    private javax.swing.JButton odemeAl;
     // End of variables declaration//GEN-END:variables
 }

@@ -36,7 +36,7 @@ public interface VeriTabanı {
                     bulunanOda = new Oda(); // Oda bulundu, nesneyi oluştur
                 
                     // 2. Veritabanındaki sütun isimlerine göre verileri çekip nesneye doldur
-                    bulunanOda.setOdaNumarası(rs.getInt("oda_no"));
+                    bulunanOda.setOdaNumarasi(rs.getInt("oda_no"));
                     bulunanOda.setTekKisilikYatak(rs.getInt("tek_kisilik_yatak"));
                     bulunanOda.setCiftKisilikYatak(rs.getInt("cift_kisilik_yatak"));
                     bulunanOda.setDenizManzarasi(rs.getBoolean("deniz_manzarasi"));
@@ -82,27 +82,6 @@ public interface VeriTabanı {
         }
         return null; // Kullanıcı bulunamadıysa boş dön
     }
-    
-    public default List<Oda> doluOdaListesi() {
-    List<Oda> doluOdalar = new ArrayList<>();
-    String sql = "SELECT * FROM odalar WHERE durum = 'DOLU'";
-    
-    try (Connection conn = DriverManager.getConnection(URL);
-         PreparedStatement pstmt = conn.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
-        
-        while (rs.next()) {
-            Oda oda = new Oda();
-            oda.setOdaNumarası(rs.getInt("oda_no"));
-            oda.setOdaDurumu(OdaDurumu.DOLU);
-            oda.setFiyat(rs.getDouble("fiyat")); // Yeni eklenen fiyat sütunu
-            doluOdalar.add(oda);
-        }
-    } catch (Exception e) {
-        System.out.println("Hata: " + e.getMessage());
-    }
-    return doluOdalar;
-}
 }   
     
     
