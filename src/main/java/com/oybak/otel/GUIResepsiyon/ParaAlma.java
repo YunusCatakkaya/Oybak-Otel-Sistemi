@@ -10,7 +10,7 @@ import com.oybak.otel.Yonetim;
  *
  * @author onuro
  */
-public class ParaAlma extends javax.swing.JFrame implements VeriTabani { //.
+public class ParaAlma extends javax.swing.JFrame implements VeriTabani { //..
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ParaAlma.class.getName());
 
