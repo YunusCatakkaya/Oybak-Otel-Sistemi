@@ -71,7 +71,6 @@
     <Component class="javax.swing.JButton" name="jButton5">
       <Properties>
         <Property name="text" type="java.lang.String" value="Maa&#x15f; D&#xfc;zenle"/>
-        <Property name="actionCommand" type="java.lang.String" value="Maa&#x15f; D&#xfc;zenle"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>

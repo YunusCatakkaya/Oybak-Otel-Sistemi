@@ -12,12 +12,16 @@ package com.oybak.otel;
 public class Personel extends Person{
     private double maas;
     private String isTipi;
+    private String uzmanlikAlani;
+    private String parola;
     
 	
-    public Personel(String name, String lastName, long tcNo, double maas, String isTipi) {
+    public Personel(String name, String lastName, long tcNo, double maas, String isTipi, String uzmanlikAlani,String parola) {
         super(name, lastName, tcNo);
         this.maas = maas;
         this.isTipi = isTipi;
+        this.uzmanlikAlani= uzmanlikAlani;
+        this.parola=parola;
        
     }
     
@@ -40,6 +44,20 @@ public class Personel extends Person{
 		public void setIsTipi(String isTipi) {
 			this.isTipi = isTipi;
 		}
+                public String getUzmanlikAlani() {
+			return uzmanlikAlani;
+		}
+		public void setUzmanlikAlani(String uzmanlikAlani) {
+			this.uzmanlikAlani=uzmanlikAlani;
+		}
+                public String getParola() {
+			return parola;
+		}
+		public void setParola(String parola) {
+			this.parola = parola;
+                }
+
+                
                 
 		
 

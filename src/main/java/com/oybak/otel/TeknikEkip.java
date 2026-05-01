@@ -16,11 +16,10 @@ import java.util.List;
 
 public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
-    private String uzmanlikAlanı;
 
-    public TeknikEkip(String uzmanlikAlani, String name, String lastName, long tcNo, double maas, String isTipi) {
-        super(name, lastName, tcNo, maas, "TeknikEkip");
-        this.uzmanlikAlanı = uzmanlikAlanı;
+    public TeknikEkip(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani,String parola) {
+        super(name, lastName, tcNo, maas, "TeknikEkip",uzmanlikAlani,parola);
+        
     }
     
     /**
@@ -73,11 +72,5 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
         }
     }
 
-    public String getUzmanlikAlanı() {
-        return uzmanlikAlanı;
-    }
-
-    public void setUzmanlikAlanı(String uzmanlikAlanı) {
-        this.uzmanlikAlanı = uzmanlikAlanı;
-    }
+    
 }

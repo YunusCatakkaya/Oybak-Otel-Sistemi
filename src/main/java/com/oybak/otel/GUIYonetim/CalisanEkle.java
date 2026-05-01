@@ -7,11 +7,12 @@ import com.oybak.otel.Yonetim;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.Personel;
+import com.oybak.otel.Hatalar;
 /**
  *
  * @author userxpc666
  */
-public class CalisanEkle extends javax.swing.JFrame {
+public class CalisanEkle extends javax.swing.JFrame implements Hatalar {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CalisanEkle.class.getName());
 
@@ -31,47 +32,58 @@ public class CalisanEkle extends javax.swing.JFrame {
 
 private void personelKaydet(String uzmanlikAlani) {
     try {
-        // 1. Alanların boş olup olmadığını kontrol et
-        if (jTextPane1.getText().trim().isEmpty() || jTextPane2.getText().trim().isEmpty() || 
-            jTextPane3.getText().trim().isEmpty() || jTextPane4.getText().trim().isEmpty()) {
-            
-            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen Bilgileri Eksiksiz Giriniz!", "Eksik Bilgi", javax.swing.JOptionPane.WARNING_MESSAGE);
-            return; 
-        }
+        // 1. GUI'den verileri çekiyoruz
+        String ad = jTextPane1.getText().trim();
+        String soyad = jTextPane2.getText().trim();
+        String maasStr = jTextPane3.getText().trim();
+        String tcStr = jTextPane4.getText().trim();
+        String parola = jTextPane5.getText().trim(); // Parola alanını çektik
 
-        // 2. TC 11 hane kontrolü
-        String tcText = jTextPane4.getText().trim();
-        if (tcText.length() != 11) {
-            javax.swing.JOptionPane.showMessageDialog(this, "TC Kimlik Numarası 11 haneli olmalıdır!");
+        // 2. Boşluk Kontrolü (Parola dahil)
+        if (ad.isEmpty() || soyad.isEmpty() || maasStr.isEmpty() || tcStr.isEmpty() || parola.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları (şifre dahil) eksiksiz doldurunuz!", "Eksik Bilgi", 2);
             return;
         }
 
-        long tc = Long.parseLong(tcText);
-        
-        // 3. MÜKERRER TC KONTROLÜ (YENİ KISIM)
-        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, "Yonetim"); //
-        if (yonetici.tcVarMi(tc)) {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Bu TC numarası ile zaten bir kayıt bulunmaktadır!", 
-                "Mükerrer Kayıt Hatası", 
-                javax.swing.JOptionPane.ERROR_MESSAGE);
-            return; // Aynı TC varsa işlemi burada kes
+        // 3. TC Kontrolü (Hatalar Interface'indeki gelişmiş algoritma)
+        if (!tcKontrol(tcStr)) { 
+            return; // Geçersiz TC ise işlem durur
         }
 
-        // 4. Bilgileri al ve nesneyi oluştur
-        String ad = jTextPane1.getText().trim();
-        String soyad = jTextPane2.getText().trim();
-        double maas = Double.parseDouble(jTextPane3.getText().trim());
+        // 4. Sayısal Dönüşümler
+        long tc = Long.parseLong(tcStr);
+        double maas = Double.parseDouble(maasStr);
 
-        Personel yeniPersonel = new Personel(ad, soyad, tc, maas, uzmanlikAlani); //
+        // 5. İş Tipi ve Uzmanlık Alanı Mantığı
+        String secilenIsTipi = jComboBox1.getSelectedItem().toString();
+        // Eğer teknik personel değilse uzmanlık alanını veritabanına boş gönderiyoruz
+        if (!secilenIsTipi.equals("TEKNİKPERSONEL")) {
+            uzmanlikAlani = ""; 
+        }
 
-        // 5. Veritabanına kaydet
-        yonetici.personelEkle(yeniPersonel);
+        // 6. Veritabanı Mükerrer Kayıt Kontrolü
+        // Yonetim nesnesini 7 parametreli yeni constructor ile oluşturuyoruz
+        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, "Yonetim", "", "123");
+        if (yonetici.tcVarMi(tc)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Bu TC numarası zaten kayıtlı!", "Mükerrer Kayıt", 0);
+            return;
+        }
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Kayıt Başarıyla Tamamlandı.");
+        // 7. Personel Nesnesi Oluşturma (7 Parametre: ad, soyad, tc, maas, isTipi, uzmanlik, parola)
+        Personel yeniKisi = new Personel(ad, soyad, tc, maas, secilenIsTipi, uzmanlikAlani, parola);
+        
+        // 8. Veritabanına Kayıt
+        yonetici.personelEkle(yeniKisi);
+
+        // 9. Başarılı İşlem Bildirimi ve Temizlik
+        javax.swing.JOptionPane.showMessageDialog(this, "Personel ve şifre bilgileri başarıyla kaydedildi.");
+        
+        // Formu temizle
+        jTextPane1.setText(""); jTextPane2.setText(""); jTextPane3.setText(""); 
+        jTextPane4.setText(""); jTextPane5.setText("");
 
     } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Maaş ve TC alanlarına sadece sayı giriniz!");
+        javax.swing.JOptionPane.showMessageDialog(this, "Maaş alanına geçerli bir sayı giriniz!", "Format Hatası", 0);
     } catch (Exception e) {
         javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
     }
@@ -104,6 +116,9 @@ private void personelKaydet(String uzmanlikAlani) {
         jScrollPane7 = new javax.swing.JScrollPane();
         jTextPane4 = new javax.swing.JTextPane();
         jButton2 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTextPane5 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -113,9 +128,9 @@ private void personelKaydet(String uzmanlikAlani) {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 8;
+        gridBagConstraints.gridwidth = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(2, 32, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
         jButton1.setText("Geri");
@@ -125,7 +140,7 @@ private void personelKaydet(String uzmanlikAlani) {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
         getContentPane().add(jButton1, gridBagConstraints);
 
         jLabel2.setText("İsim Giriniz");
@@ -141,18 +156,18 @@ private void personelKaydet(String uzmanlikAlani) {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 29, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 26, 0, 0);
         getContentPane().add(jLabel3, gridBagConstraints);
 
         jLabel4.setText("Maaş Giriniz (TL)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 26, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 26, 0, 0);
         getContentPane().add(jLabel4, gridBagConstraints);
 
         jScrollPane4.setViewportView(jTextPane1);
@@ -160,14 +175,14 @@ private void personelKaydet(String uzmanlikAlani) {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 358;
-        gridBagConstraints.ipady = 4;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 26, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(6, 26, 0, 0);
         getContentPane().add(jScrollPane4, gridBagConstraints);
 
         jScrollPane5.setViewportView(jTextPane2);
@@ -175,46 +190,46 @@ private void personelKaydet(String uzmanlikAlani) {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 358;
-        gridBagConstraints.ipady = 4;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 26, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(6, 26, 0, 0);
         getContentPane().add(jScrollPane5, gridBagConstraints);
 
         jScrollPane6.setViewportView(jTextPane3);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 358;
-        gridBagConstraints.ipady = 4;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 26, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(6, 26, 0, 0);
         getContentPane().add(jScrollPane6, gridBagConstraints);
 
         jLabel5.setText("İş Tipi Seçiniz");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 34, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 26, 0, 0);
         getContentPane().add(jLabel5, gridBagConstraints);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seçiniz", "Yönetici", "Teknik Personel", "Resepsiyon" }));
         jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridwidth = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 26, 0, 0);
         getContentPane().add(jComboBox1, gridBagConstraints);
@@ -222,34 +237,58 @@ private void personelKaydet(String uzmanlikAlani) {
         jLabel6.setText("TC Giriniz");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 26, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 26, 0, 0);
         getContentPane().add(jLabel6, gridBagConstraints);
 
         jScrollPane7.setViewportView(jTextPane4);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 358;
-        gridBagConstraints.ipady = 4;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 26, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(6, 26, 0, 0);
         getContentPane().add(jScrollPane7, gridBagConstraints);
 
         jButton2.setText("Kaydet");
         jButton2.addActionListener(this::jButton2ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 59, 27, 0);
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(49, 27, 8, 6);
         getContentPane().add(jButton2, gridBagConstraints);
+
+        jLabel7.setText("Çalışanın Şifresini Giriniz");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 26, 0, 0);
+        getContentPane().add(jLabel7, gridBagConstraints);
+
+        jScrollPane8.setViewportView(jTextPane5);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 48;
+        gridBagConstraints.ipady = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(12, 26, 0, 0);
+        getContentPane().add(jScrollPane8, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -284,6 +323,7 @@ private void personelKaydet(String uzmanlikAlani) {
         }
     } else {
         // Teknik personel dışındakiler için uzmanlık bilgisini temizle
+        
         this.teknikUzmanlik = "";
     }
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -354,13 +394,16 @@ java.awt.EventQueue.invokeLater(() -> {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JTextPane jTextPane3;
     private javax.swing.JTextPane jTextPane4;
+    private javax.swing.JTextPane jTextPane5;
     // End of variables declaration//GEN-END:variables
 }
