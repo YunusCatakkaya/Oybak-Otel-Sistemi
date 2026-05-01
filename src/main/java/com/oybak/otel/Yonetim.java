@@ -17,8 +17,8 @@ import java.sql.SQLException;
  * @author Yunus                       //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
  */
 public class Yonetim extends Personel implements VeriTabani{
-    public Yonetim(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani) {
-        super(name,lastName,tcNo,maas,"Yonetim",uzmanlikAlani);
+    public Yonetim(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani,String parola) {
+        super(name,lastName,tcNo,maas,"Yonetim",uzmanlikAlani,parola);
     }
     
     
@@ -41,7 +41,7 @@ public class Yonetim extends Personel implements VeriTabani{
         pstmt.setLong(2, p.getTcNo());
         pstmt.setDouble(3, p.getMaas());
         pstmt.setString(4, p.getIsTipi());
-        pstmt.setString(5, "123"); // Varsayılan şifre
+        pstmt.setString(5, p.getParola()); // Varsayılan şifre
         pstmt.setString(6, p.getUzmanlikAlani()); // Personel nesnesinden gelen uzmanlık bilgisi
 
         pstmt.executeUpdate();

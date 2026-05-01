@@ -32,50 +32,60 @@ public class CalisanEkle extends javax.swing.JFrame implements Hatalar {
 
 private void personelKaydet(String uzmanlikAlani) {
     try {
-        // 1. GUI'den verileri çek
+        // 1. GUI'den verileri çekiyoruz
         String ad = jTextPane1.getText().trim();
         String soyad = jTextPane2.getText().trim();
         String maasStr = jTextPane3.getText().trim();
         String tcStr = jTextPane4.getText().trim();
+        String parola = jTextPane5.getText().trim(); // Parola alanını çektik
 
-        // 2. Boşluk ve TC Kontrolü (Hatalar Interface'inden)
-        if (ad.isEmpty() || soyad.isEmpty() || maasStr.isEmpty() || tcStr.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları doldurun!", "Eksik Bilgi", 2);
+        // 2. Boşluk Kontrolü (Parola dahil)
+        if (ad.isEmpty() || soyad.isEmpty() || maasStr.isEmpty() || tcStr.isEmpty() || parola.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları (şifre dahil) eksiksiz doldurunuz!", "Eksik Bilgi", 2);
             return;
         }
 
+        // 3. TC Kontrolü (Hatalar Interface'indeki gelişmiş algoritma)
         if (!tcKontrol(tcStr)) { 
-            return; 
+            return; // Geçersiz TC ise işlem durur
         }
 
+        // 4. Sayısal Dönüşümler
         long tc = Long.parseLong(tcStr);
         double maas = Double.parseDouble(maasStr);
 
-        // 3. Veritabanı Kontrolü (Mükerrer Kayıt)
-        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, "Yonetim","");
+        // 5. İş Tipi ve Uzmanlık Alanı Mantığı
+        String secilenIsTipi = jComboBox1.getSelectedItem().toString();
+        // Eğer teknik personel değilse uzmanlık alanını veritabanına boş gönderiyoruz
+        if (!secilenIsTipi.equals("TEKNİKPERSONEL")) {
+            uzmanlikAlani = ""; 
+        }
+
+        // 6. Veritabanı Mükerrer Kayıt Kontrolü
+        // Yonetim nesnesini 7 parametreli yeni constructor ile oluşturuyoruz
+        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, "Yonetim", "", "123");
         if (yonetici.tcVarMi(tc)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Bu TC zaten kayıtlı!", "Hata", 0);
+            javax.swing.JOptionPane.showMessageDialog(this, "Bu TC numarası zaten kayıtlı!", "Mükerrer Kayıt", 0);
             return;
         }
 
-        // 4. Personel Nesnesi Oluştur (Uzmanlık alanı parametre olarak geçiliyor)
-        // Not: Personel sınıfınızda bu 5 parametreli constructor'ın olduğundan emin olun.
-        String isTipi = jComboBox1.getSelectedItem().toString();
+        // 7. Personel Nesnesi Oluşturma (7 Parametre: ad, soyad, tc, maas, isTipi, uzmanlik, parola)
+        Personel yeniKisi = new Personel(ad, soyad, tc, maas, secilenIsTipi, uzmanlikAlani, parola);
         
-        Personel yeniKisi = new Personel(ad, soyad, tc, maas,isTipi, uzmanlikAlani);
-        
-        // 5. Kayıt İşlemi
+        // 8. Veritabanına Kayıt
         yonetici.personelEkle(yeniKisi);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Personel ve Uzmanlık Bilgisi Kaydedildi.");
+        // 9. Başarılı İşlem Bildirimi ve Temizlik
+        javax.swing.JOptionPane.showMessageDialog(this, "Personel ve şifre bilgileri başarıyla kaydedildi.");
         
         // Formu temizle
-        jTextPane1.setText(""); jTextPane2.setText(""); jTextPane3.setText(""); jTextPane4.setText("");
+        jTextPane1.setText(""); jTextPane2.setText(""); jTextPane3.setText(""); 
+        jTextPane4.setText(""); jTextPane5.setText("");
 
     } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen sayısal alanlara geçerli değerler girin!", "Format Hatası", 0);
+        javax.swing.JOptionPane.showMessageDialog(this, "Maaş alanına geçerli bir sayı giriniz!", "Format Hatası", 0);
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Beklenmedik Hata: " + e.getMessage());
+        javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
     }
 }
 

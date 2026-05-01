@@ -17,8 +17,8 @@ import java.util.List;
 public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
 
-    public TeknikEkip(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani) {
-        super(name, lastName, tcNo, maas, "TeknikEkip",uzmanlikAlani);
+    public TeknikEkip(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani,String parola) {
+        super(name, lastName, tcNo, maas, "TeknikEkip",uzmanlikAlani,parola);
         
     }
     
