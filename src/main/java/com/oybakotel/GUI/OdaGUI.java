@@ -36,17 +36,24 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     }
     
     private void rolleriAyarla() {
-        // Önce tüm özel panelleri gizle (Varsayılan durum)
+    // 1. Önce tüm özel panelleri gizle (Varsayılan durum)
     teknikPersonelPaneli.setVisible(false);
     bakimSebebiPaneli.setVisible(false);
     musteriEklemePaneli.setVisible(false);
 
-    // Rol bazlı görünürlükleri aç
-    if (this.aktifRol == UserRole.TEKNIKPERSONEL) {
-        teknikPersonelPaneli.setVisible(true);
-        bakimSebebiPaneli.setVisible(true); // Bakım sebebi yazısını da görmeleri gerekir
-    } else if (this.aktifRol == UserRole.RESEPSIYON) {
-        musteriEklemePaneli.setVisible(true);
+    // 2. Aktif role göre panelleri görünür yap
+    switch (this.aktifRol) {
+        case TEKNIKPERSONEL, BAKIM -> {
+            teknikPersonelPaneli.setVisible(true);
+            bakimSebebiPaneli.setVisible(true); // Bakım sebebi yazısını da görmeleri gerekir
+        }
+        case RESEPSIYON -> {
+            musteriEklemePaneli.setVisible(true);
+        }
+        // Diğer roller (YÖNETİM, MÜŞTERİ vb.) için paneller kapalı kalmaya devam eder
+        default -> {
+            // İsteğe bağlı: Varsayılan bir işlem buraya eklenebilir
+        }
     }
     }
 
