@@ -117,17 +117,23 @@ private double odenenMiktariGetir(int odaNo) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void odaComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odaComboBoxActionPerformed
-        String secilenOdaNoStr = (String) odaComboBox.getSelectedItem();
+    // Combo boxtan seçilen elemanı al
+    Object secilen = odaComboBox.getSelectedItem();
     
-    if (secilenOdaNoStr != null) {
-        int odaNo = Integer.parseInt(secilenOdaNoStr);
-        
-        VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem","","");
-        Oda secilenOda = vt.odaBilgileri(odaNo); // Odanın veritabanındaki tüm bilgilerini çeker
-        
-        if (secilenOda != null) {
-            // Odanın fiyatını çekip Label'a yazdırıyoruz
-            fiyatText.setText("Fiyat: " + secilenOda.getFiyat() + " TL"); 
+    if (secilen != null) {
+        try {
+            // Seçilen değeri integer olan oda numarasına çevir
+            int odaNo = Integer.parseInt(secilen.toString());
+            
+            // OdaBilgileri metodu ile veritabanından odanın tüm özelliklerini (fiyat dahil) çek
+            Oda secilenOda = odaBilgileri(odaNo);
+            
+            // Eğer oda bulunduysa fiyat label'ını güncelle
+            if (secilenOda != null) {
+                fiyatText.setText("Fiyat: " + secilenOda.getFiyat() + " TL");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Oda no dönüştürme hatası: " + e.getMessage());
         }
     }
     }//GEN-LAST:event_odaComboBoxActionPerformed

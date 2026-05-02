@@ -33,7 +33,7 @@ public class Anasayfa extends javax.swing.JFrame {
      */
     public Anasayfa() {
         initComponents();
-        videoBaslat("C:\\Users\\ahmet\\Documents\\NetBeansProjects\\Oybak-Otel-Sistemi\\src\\main\\java\\images\\O.mp4");
+        videoBaslat("C:\\Users\\Yunus\\Documents\\NetBeansProjects\\OybakOtel\\src\\main\\java\\images\\O.mp4");
     }
     
     private void videoBaslat(String dosyaYolu) {

@@ -42,6 +42,7 @@ public interface VeriTabani {
                     bulunanOda.setDenizManzarasi(rs.getBoolean("deniz_manzarasi"));
                     bulunanOda.setMinibar(rs.getBoolean("minibar"));
                     bulunanOda.setJakuzi(rs.getBoolean("jakuzi"));
+                    bulunanOda.setFiyat(rs.getDouble("fiyat"));
                 
                     // 3. Durum bilgisini Enum'a çevirirken hata payını azaltmak için büyük harf yapıyoruz
                     String durumString = rs.getString("durum");
