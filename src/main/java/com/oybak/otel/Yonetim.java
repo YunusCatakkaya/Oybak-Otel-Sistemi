@@ -32,7 +32,7 @@ public class Yonetim extends Personel implements VeriTabani{
     
   public void personelEkle(Personel p) {
     // Sorguya uzmanlik_alanı eklendi (Toplam 6 adet '?' oldu)
-    String sql = "INSERT INTO calisanlar(ad_soyad, tc_no, maas, is_tipi, Parola, uzmanlik_alanı) VALUES(?,?,?,?,?,?)";
+    String sql = "INSERT INTO calisanlar(ad_soyad, tc_no, maas, is_tipi, Parola, uzmanlik_alani) VALUES(?,?,?,?,?,?)";
     
     try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
          java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -41,12 +41,14 @@ public class Yonetim extends Personel implements VeriTabani{
         pstmt.setLong(2, p.getTcNo());
         pstmt.setDouble(3, p.getMaas());
         pstmt.setString(4, p.getIsTipi());
-        pstmt.setString(5, p.getParola()); // Varsayılan şifre
+        pstmt.setString(5, p.getParola()); 
         pstmt.setString(6, p.getUzmanlikAlani()); // Personel nesnesinden gelen uzmanlık bilgisi
 
         pstmt.executeUpdate();
     } catch (java.sql.SQLException e) {
-        System.out.println("Kayıt Hatası: " + e.getMessage());
+        javax.swing.JOptionPane.showMessageDialog(null, "Veritabanı Hatası: " + e.getMessage());
+    e.printStackTrace();
+        
     }
 }
 }

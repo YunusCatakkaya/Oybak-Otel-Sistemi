@@ -57,7 +57,7 @@ private void personelKaydet(String uzmanlikAlani) {
         // 5. İş Tipi ve Uzmanlık Alanı Mantığı
         String secilenIsTipi = jComboBox1.getSelectedItem().toString();
         // Eğer teknik personel değilse uzmanlık alanını veritabanına boş gönderiyoruz
-        if (!secilenIsTipi.equals("TEKNİKPERSONEL")) {
+        if (!secilenIsTipi.equals("Teknik Personel")) {
             uzmanlikAlani = ""; 
         }
 
