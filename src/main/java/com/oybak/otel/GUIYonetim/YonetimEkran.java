@@ -62,6 +62,7 @@ public class YonetimEkran extends javax.swing.JFrame {
         getContentPane().add(jButton1, gridBagConstraints);
 
         jButton2.setText("Para İşlemleri");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -106,10 +107,16 @@ public class YonetimEkran extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(aktifRol);
+       com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(aktifRol);
        
        Genel.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(aktifRol);
+       
+       Kasa.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
