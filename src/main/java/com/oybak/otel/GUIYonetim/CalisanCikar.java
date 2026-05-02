@@ -9,7 +9,7 @@ import com.oybak.otel.enums.UserRole;
  *
  * @author userxpc666
  */
-public class CalisanCikar extends javax.swing.JFrame {
+public class CalisanCikar extends javax.swing.JFrame implements com.oybak.otel.Hatalar {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CalisanCikar.class.getName());
 
@@ -41,6 +41,10 @@ public class CalisanCikar extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextPane3 = new javax.swing.JTextPane();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -60,12 +64,12 @@ public class CalisanCikar extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 15, 0, 96);
+        gridBagConstraints.insets = new java.awt.Insets(18, 15, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
-        jLabel2.setText("İsim ve Soy İsim Giriniz");
+        jLabel2.setText("İsim Giriniz");
         jLabel2.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -80,9 +84,9 @@ public class CalisanCikar extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 354;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -93,25 +97,58 @@ public class CalisanCikar extends javax.swing.JFrame {
         jLabel3.setText("TC Giriniz");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 30, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 30, 0, 0);
         getContentPane().add(jLabel3, gridBagConstraints);
 
         jScrollPane2.setViewportView(jTextPane2);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 354;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 30, 96, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 30, 0, 0);
         getContentPane().add(jScrollPane2, gridBagConstraints);
+
+        jButton2.setText("Kaydet");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(27, 18, 6, 0);
+        getContentPane().add(jButton2, gridBagConstraints);
+
+        jScrollPane3.setViewportView(jTextPane3);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 354;
+        gridBagConstraints.ipady = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(6, 30, 0, 0);
+        getContentPane().add(jScrollPane3, gridBagConstraints);
+
+        jLabel4.setText("Soy İsim Giriniz");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 30, 0, 0);
+        getContentPane().add(jLabel4, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -121,6 +158,44 @@ public class CalisanCikar extends javax.swing.JFrame {
        
        Calisan.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    try {
+        // 1. Verileri al
+        String isim = jTextPane1.getText().trim();
+        String soyisim = jTextPane3.getText().trim();
+        String tcNoStr = jTextPane2.getText().trim();
+
+        // 2. Boşluk kontrolü ve Pop-up
+        if (isim.isEmpty() || soyisim.isEmpty() || tcNoStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Hata: İsim, Soyisim veya TC alanlarından biri boş!");
+            return;
+        }
+
+        // 3. TC Kontrolü (Hatalar interface'inden geliyor)
+        if (!tcKontrol(tcNoStr)) {
+            return;
+        }
+
+        // 4. İsim ve Soyismi birleştir
+        String tamAdSoyad = isim + " " + soyisim;
+
+        // 5. Silme işlemini başlat
+        com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", "", 0, 0, "Yonetim", "", "");
+        yonetici.personelSil(tamAdSoyad, tcNoStr);
+        
+        // 6. Başarılıysa alanları temizle
+        jTextPane1.setText("");
+        jTextPane2.setText("");
+        jTextPane3.setText("");
+
+    
+    } catch (Exception e) {
+        // Diğer (beklenmedik) teknik hatalar için burası çalışır
+        javax.swing.JOptionPane.showMessageDialog(this, "Bir hata oluştu: " + e.getMessage());
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,12 +227,16 @@ public class CalisanCikar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
+    private javax.swing.JTextPane jTextPane3;
     // End of variables declaration//GEN-END:variables
 }

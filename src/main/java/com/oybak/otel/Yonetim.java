@@ -18,7 +18,7 @@ import java.sql.SQLException;
  */
 public class Yonetim extends Personel implements VeriTabani{
     public Yonetim(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani,String parola) {
-        super(name,lastName,tcNo,maas,"Yonetim",uzmanlikAlani,parola);
+        super(name,lastName,tcNo,maas,"YONETIM",uzmanlikAlani,parola);
     }
     //aaaa
     
@@ -51,6 +51,31 @@ public class Yonetim extends Personel implements VeriTabani{
         
     }
 }
+  
+  public void personelSil(String adSoyad, String tcNoStr) {
+    long tcNo = Long.parseLong(tcNoStr);
+    String sql = "DELETE FROM calisanlar WHERE ad_soyad = ? AND tc_no = ?";
+
+    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
+         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setString(1, adSoyad);
+        pstmt.setLong(2, tcNo);
+
+        int sonuc = pstmt.executeUpdate();
+
+        if (sonuc > 0) {
+            javax.swing.JOptionPane.showMessageDialog(null, "BAŞARILI: " + adSoyad + " sistemden silindi.");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "UYARI: Girilen bilgilerle eşleşen kimse bulunamadı!");
+        }
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(null, "VERİTABANI HATASI: " + e.getMessage());
+    }
+}
+  
+  
+  
 }
     
     

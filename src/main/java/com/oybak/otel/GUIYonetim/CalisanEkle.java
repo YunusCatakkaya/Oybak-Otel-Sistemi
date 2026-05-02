@@ -57,7 +57,7 @@ private void personelKaydet(String uzmanlikAlani) {
         // 5. İş Tipi ve Uzmanlık Alanı Mantığı
         String secilenIsTipi = jComboBox1.getSelectedItem().toString();
         // Eğer teknik personel değilse uzmanlık alanını veritabanına boş gönderiyoruz
-        if (!secilenIsTipi.equals("Teknik Personel")) {
+        if (!secilenIsTipi.equals("TEKNIKPERSONEL")) {
             uzmanlikAlani = ""; 
         }
 
@@ -224,7 +224,7 @@ private void personelKaydet(String uzmanlikAlani) {
         gridBagConstraints.insets = new java.awt.Insets(12, 26, 0, 0);
         getContentPane().add(jLabel5, gridBagConstraints);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seçiniz", "Yönetici", "Teknik Personel", "Resepsiyon" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seçiniz", "YONETIM", "TEKNIKPERSONEL", "RESEPSIYON" }));
         jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -307,7 +307,7 @@ private void personelKaydet(String uzmanlikAlani) {
         return;
     }
 
-    if (secilenIs.equals("Teknik Personel")) {
+    if (secilenIs.equals("TEKNIKPERSONEL")) {
         // Pop-up ile uzmanlık alanını alıyoruz
         String input = javax.swing.JOptionPane.showInputDialog(this, 
                 "Teknik Personelin Uzmanlık Alanını Giriniz:", 
@@ -341,7 +341,7 @@ private void personelKaydet(String uzmanlikAlani) {
     }
 
     // 2. Teknik personel seçilmiş ama pop-up'a cevap verilmemişse
-    if (secilenIs.equals("Teknik Personel") && (teknikUzmanlik == null || teknikUzmanlik.isEmpty())) {
+    if (secilenIs.equals("TEKNIKPERSONEL") && (teknikUzmanlik == null || teknikUzmanlik.isEmpty())) {
         javax.swing.JOptionPane.showMessageDialog(this, 
                 "Lütfen Bilgileri Eksiksiz Giriniz!", 
                 "Eksik Bilgi", 
@@ -350,7 +350,7 @@ private void personelKaydet(String uzmanlikAlani) {
     }
 
     // Her şey tamamsa kayıt metodunu çağır
-    if (secilenIs.equals("Teknik Personel")) {
+    if (secilenIs.equals("TEKNIKPERSONEL")) {
         personelKaydet(teknikUzmanlik);
     } else {
         personelKaydet(secilenIs);
