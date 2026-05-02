@@ -74,7 +74,35 @@ public class Yonetim extends Personel implements VeriTabani{
     }
 }
   
-  
+  public void maasGuncelle(String adSoyad, String tcNoStr, String yeniMaasStr) {
+   try {
+        long tcNo = Long.parseLong(tcNoStr);
+        // Veritabanı integer olduğu için tam sayıya çeviriyoruz
+        int yeniMaas = Integer.parseInt(yeniMaasStr);
+
+        String sql = "UPDATE calisanlar SET maas = ? WHERE ad_soyad = ? AND tc_no = ?";
+
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, yeniMaas); // Integer olarak gönderiyoruz
+            pstmt.setString(2, adSoyad);
+            pstmt.setLong(3, tcNo);
+
+            int etkilenenSatir = pstmt.executeUpdate();
+
+            if (etkilenenSatir > 0) {
+                javax.swing.JOptionPane.showMessageDialog(null, "BAŞARILI: " + adSoyad + " isimli çalışanın maaşı " + yeniMaas + " TL olarak güncellendi.");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "HATA: Girilen isim ve TC numarasıyla eşleşen bir kayıt bulunamadı!\nLütfen bilgileri kontrol ediniz.");
+            }
+        }
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(null, "HATA: Maaş alanına lütfen sadece tam sayı giriniz (Örn: 35000).");
+    } catch (java.sql.SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(null, "VERİTABANI HATASI: " + e.getMessage());
+    }
+}
   
 }
     
