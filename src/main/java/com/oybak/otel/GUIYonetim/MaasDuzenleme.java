@@ -8,7 +8,7 @@ import com.oybak.otel.enums.UserRole;
  *
  * @author userxpc666
  */
-public class MaasDuzenleme extends javax.swing.JFrame {
+public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.Hatalar{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MaasDuzenleme.class.getName());
 
@@ -43,6 +43,10 @@ public class MaasDuzenleme extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextPane3 = new javax.swing.JTextPane();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextPane4 = new javax.swing.JTextPane();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -52,7 +56,7 @@ public class MaasDuzenleme extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(17, 15, 0, 0);
         getContentPane().add(jButton1, gridBagConstraints);
@@ -62,16 +66,16 @@ public class MaasDuzenleme extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 15, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(18, 15, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
-        jLabel2.setText("İsim ve Soy İsim Giriniz");
+        jLabel2.setText("İsim Giriniz");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 15, 0, 0);
         getContentPane().add(jLabel2, gridBagConstraints);
@@ -81,9 +85,9 @@ public class MaasDuzenleme extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 433;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -94,7 +98,7 @@ public class MaasDuzenleme extends javax.swing.JFrame {
         jLabel3.setText("TC giriniz");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 15, 0, 0);
         getContentPane().add(jLabel3, gridBagConstraints);
@@ -103,10 +107,10 @@ public class MaasDuzenleme extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 433;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -117,8 +121,8 @@ public class MaasDuzenleme extends javax.swing.JFrame {
         jLabel4.setText("Yeni Maaşı Giriniz");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 15, 0, 0);
         getContentPane().add(jLabel4, gridBagConstraints);
@@ -127,16 +131,50 @@ public class MaasDuzenleme extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 433;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 15, 52, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 15, 0, 0);
         getContentPane().add(jScrollPane3, gridBagConstraints);
+
+        jButton2.setText("Kaydet");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(26, 277, 6, 0);
+        getContentPane().add(jButton2, gridBagConstraints);
+
+        jScrollPane4.setViewportView(jTextPane4);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 433;
+        gridBagConstraints.ipady = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(6, 15, 0, 0);
+        getContentPane().add(jScrollPane4, gridBagConstraints);
+
+        jLabel5.setText("Soy İsim Giriniz");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 15, 0, 0);
+        getContentPane().add(jLabel5, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -146,6 +184,44 @@ public class MaasDuzenleme extends javax.swing.JFrame {
        
        Calisan.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      try {
+        // 1. Verileri al (Tasarımındaki sıraya göre eşleşen kutular)
+        String isim = jTextPane1.getText().trim();
+        String soyisim = jTextPane4.getText().trim(); 
+        String tcNoStr = jTextPane2.getText().trim(); 
+        String yeniMaasStr = jTextPane3.getText().trim(); 
+
+        // 2. Boşluk kontrolü
+        if (isim.isEmpty() || soyisim.isEmpty() || tcNoStr.isEmpty() || yeniMaasStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Hata: Tüm alanlar (İsim, Soyisim, TC ve Yeni Maaş) doldurulmalıdır!");
+            return;
+        }
+
+        // 3. TC Geçerlilik Kontrolü
+        if (!tcKontrol(tcNoStr)) {
+            return; 
+        }
+
+        // 4. Veritabanı formatı için birleştirme
+        String tamAdSoyad = isim + " " + soyisim;
+
+        // 5. Yonetim sınıfını çağır
+        com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", "", 0, 0, "YONETIM", "", "");
+        yonetici.maasGuncelle(tamAdSoyad, tcNoStr, yeniMaasStr);
+
+        // 6. Başarılıysa kutuları temizle
+        jTextPane1.setText("");
+        jTextPane2.setText("");
+        jTextPane3.setText("");
+        jTextPane4.setText("");
+
+    } catch (Exception e) {
+        // Beklenmedik bir hata (örneğin harf girişi) durumunda
+        javax.swing.JOptionPane.showMessageDialog(this, "Bir hata oluştu: " + e.getMessage());
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,15 +253,19 @@ public class MaasDuzenleme extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JTextPane jTextPane3;
+    private javax.swing.JTextPane jTextPane4;
     // End of variables declaration//GEN-END:variables
 }
