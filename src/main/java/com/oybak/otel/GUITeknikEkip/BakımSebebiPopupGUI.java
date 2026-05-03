@@ -6,9 +6,6 @@ package com.oybak.otel.GUITeknikEkip;
 
 import com.oybak.otel.Oda;
 import com.oybak.otel.TeknikEkip;
-import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
-import static com.oybak.otel.enums.OdaDurumu.DOLU;
-import static com.oybak.otel.enums.OdaDurumu.MUSAİT;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
 
@@ -137,18 +134,11 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
             JOptionPane.showMessageDialog(this, "Hata: Oda bilgileri veritabanından alınamadı!");
             return;
         }
-
-        switch(geciciOda.getOdaDurumu()){
-            case BAKIMDA -> JOptionPane.showMessageDialog(this, "Oda zaten bakımda!");
-            case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");
-            case MUSAİT -> {
-                TeknikEkip.odaBakimAl(this.oda, sebep);
-                System.out.println("İşlem gerçekleştiriliyor.");
-                System.out.println("İşlem gerçekleşti.");
-                JOptionPane.showMessageDialog(this, oda + " numaralı oda bakıma alındı.");
-                this.dispose();
-            }
-        }
+        
+        TeknikEkip.odaBakimAl(this.oda, sebep);
+        System.out.println("İşlem gerçekleştiriliyor.");
+        JOptionPane.showMessageDialog(this, oda + " numaralı oda bakıma alındı.");
+        System.out.println("İşlem gerçekleşti.");
         this.dispose();
     }//GEN-LAST:event_tamamActionPerformed
 

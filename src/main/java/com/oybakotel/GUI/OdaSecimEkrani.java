@@ -7,8 +7,12 @@ package com.oybakotel.GUI;
 import com.oybak.otel.enums.UserRole;
 import java.awt.Color;
 import com.oybak.otel.VeriTabani;
-import com.oybak.otel.Yonetim;
 import com.oybak.otel.Oda;
+import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
+import static com.oybak.otel.enums.OdaDurumu.DOLU;
+import static com.oybak.otel.enums.OdaDurumu.MUSAIT;
+import static com.oybak.otel.enums.UserRole.MUSTERİEKLEME;
+import javax.swing.JOptionPane;
     
 /**
  *
@@ -168,6 +172,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         Filtreleme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hepsi", "1 Kişilik", "2 Kişilik", "3 Kişilik", "4 Kişilik" }));
 
         Geri.setText("GERİ");
+        Geri.addActionListener(this::GeriActionPerformed);
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("FİLTRELEME");
@@ -336,6 +341,27 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_j405ActionPerformed
 
+    private void GeriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeriActionPerformed
+        switch(aktifRol){
+            case  MUSTERI->{ 
+                JOptionPane.showMessageDialog(this, "Anasayfaya aktarılıyorsunuz.");
+                this.dispose();
+            }
+            case  RESEPSIYON, MUSTERİEKLEME->{ 
+                JOptionPane.showMessageDialog(this, "Resepsiyon anasayfasına aktarılıyorsunuz.");
+                this.dispose();
+            }
+            case  YONETIM->{ 
+                JOptionPane.showMessageDialog(this, "Yonetim anasayfasına aktarılıyorsunuz.");
+                this.dispose();
+            }
+            case  TEKNIKPERSONEL, BAKIM->{ 
+                JOptionPane.showMessageDialog(this, "Teknik perosnel anasayfayasına aktarılıyorsunuz.");
+                this.dispose();
+            }
+        }     // TODO add your handling code here:
+    }//GEN-LAST:event_GeriActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -429,7 +455,7 @@ private void odalariRenklendir() {
                     buton.setBorderPainted(true);
 
                     switch (oda.getOdaDurumu()) {
-                        case MUSAİT -> {
+                        case MUSAIT -> {
                             buton.setBackground(new Color(46, 204, 113)); // Yeşil
                             buton.setForeground(Color.WHITE);
                             buton.setEnabled(true);

@@ -5,9 +5,6 @@
 package com.oybak.otel;
 
 import com.oybak.otel.enums.OdaDurumu;
-import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
-import static com.oybak.otel.enums.OdaDurumu.DOLU;
-import static com.oybak.otel.enums.OdaDurumu.MUSAİT;
 import com.oybak.otel.enums.OdaOzelligi;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -59,16 +56,27 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
         }
     }
     
-    public void OdaBakimCikar(Oda oda){
-        switch(oda.getOdaDurumu()){
-            case BAKIMDA:
-                System.out.println("İşlem gerçekleştiriliyor.");
-                oda.setOdaDurumu(OdaDurumu.MUSAİT);
-                System.out.println("İşlem gerçekleşti.");
-            case DOLU:
-                System.out.println("Oda bakımda değildir.");
-            case MUSAİT:
-                System.out.println("Oda bakımda değildir.");
+    public static void odaBakimdanCikar(int oda){
+        String url = VeriTabani.URL;
+        String sql = "UPDATE odalar SET durum = ?, bakim_sebebi = ? WHERE oda_no = ?";
+    
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+            pstmt.setString(1, "MUSAIT");
+            pstmt.setString(2, "Bakımda değil.");
+            pstmt.setInt(3, oda);
+        
+            int etkilenenSatir = pstmt.executeUpdate();
+            if ((etkilenenSatir > 0) && (etkilenenSatir < 2)) {
+                System.out.println(oda + " numaralı oda bakımda olarak güncellendi.");
+            } else if(etkilenenSatir == 0){
+                System.out.println("Veritabanında hiçbir oda etkilenmedi.");
+            }else{
+                System.out.println("Veritabanında çok sayıda oda etkilendi.");
+            }
+        } catch (Exception e) {
+            System.out.println("Hata: " + e.getMessage());
         }
     }
 

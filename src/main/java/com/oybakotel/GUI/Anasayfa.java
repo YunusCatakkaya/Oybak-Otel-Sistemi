@@ -9,7 +9,6 @@ import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.MUSTERI;
 
 import javafx.embed.swing.JFXPanel;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -33,7 +32,7 @@ public class Anasayfa extends javax.swing.JFrame {
      */
     public Anasayfa() {
         initComponents();
-        videoBaslat("C:\\Users\\Yunus\\Documents\\NetBeansProjects\\OybakOtel\\src\\main\\java\\images\\O.mp4");
+        videoBaslat("C:\\Users\\ahmet\\Documents\\NetBeansProjects\\Oybak-Otel-Sistemi\\src\\main\\java\\images\\O.mp4");
     }
     
     private void videoBaslat(String dosyaYolu) {
@@ -91,8 +90,8 @@ public class Anasayfa extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        Musteri = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        musteri = new javax.swing.JButton();
+        otelGiris = new javax.swing.JButton();
         videoPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,15 +99,15 @@ public class Anasayfa extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        Musteri.setBackground(new java.awt.Color(51, 51, 255));
-        Musteri.setForeground(new java.awt.Color(255, 255, 255));
-        Musteri.setText("Müşteri Girişi");
-        Musteri.addActionListener(this::MusteriActionPerformed);
+        musteri.setBackground(new java.awt.Color(51, 51, 255));
+        musteri.setForeground(new java.awt.Color(255, 255, 255));
+        musteri.setText("Müşteri Girişi");
+        musteri.addActionListener(this::musteriActionPerformed);
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 255));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Otel Giriş");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        otelGiris.setBackground(new java.awt.Color(51, 51, 255));
+        otelGiris.setForeground(new java.awt.Color(255, 255, 255));
+        otelGiris.setText("Otel Giriş");
+        otelGiris.addActionListener(this::otelGirisActionPerformed);
 
         videoPanel.setLayout(new java.awt.BorderLayout());
 
@@ -120,8 +119,8 @@ public class Anasayfa extends javax.swing.JFrame {
                 .addComponent(videoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Musteri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(musteri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(otelGiris, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,9 +130,9 @@ public class Anasayfa extends javax.swing.JFrame {
                     .addComponent(videoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Musteri, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(musteri, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(otelGiris, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)))
                 .addGap(0, 49, Short.MAX_VALUE))
         );
@@ -152,19 +151,20 @@ public class Anasayfa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MusteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MusteriActionPerformed
+    private void musteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musteriActionPerformed
         aktifRol = MUSTERI;
         MusteriSayfasi m = new MusteriSayfasi();
         m.setLocationRelativeTo(null); // Ortada aç
         m.setVisible(true);
         this.dispose(); // Anasayfayı kapat        /
-    }//GEN-LAST:event_MusteriActionPerformed
+    }//GEN-LAST:event_musteriActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void otelGirisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otelGirisActionPerformed
         GirisPopopGUI popup = new GirisPopopGUI(); 
         popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
-        popup.setVisible(true);         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        popup.setVisible(true);
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_otelGirisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,9 +200,9 @@ public class Anasayfa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Musteri;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton musteri;
+    private javax.swing.JButton otelGiris;
     private javax.swing.JPanel videoPanel;
     // End of variables declaration//GEN-END:variables
 }

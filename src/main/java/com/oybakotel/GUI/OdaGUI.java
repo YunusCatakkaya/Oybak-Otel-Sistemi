@@ -6,10 +6,13 @@ package com.oybakotel.GUI;
 
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
 import com.oybak.otel.Oda;
-import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
+import com.oybak.otel.TeknikEkip;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
+import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
+import static com.oybak.otel.enums.OdaDurumu.DOLU;
+import static com.oybak.otel.enums.OdaDurumu.MUSAIT;
 import static com.oybak.otel.enums.UserRole.BAKIM;
 import static com.oybak.otel.enums.UserRole.RESEPSIYON;
 
@@ -262,13 +265,16 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
 
     private void BakimAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BakimAlActionPerformed
         Oda geciciOda = odaBilgileri(this.secilenOda);
-        if(geciciOda.getOdaDurumu() == BAKIMDA){
-            JOptionPane.showMessageDialog(this, "Oda zaten bakımda!");
-        }else{
-            BakımSebebiPopupGUI popup = new BakımSebebiPopupGUI(this, true, secilenOda); 
-            popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
-            popup.setVisible(true);
-        }// TODO add your handling code here:
+        switch(geciciOda.getOdaDurumu()){
+            case BAKIMDA -> JOptionPane.showMessageDialog(this, "Oda zaten bakımda!");
+            case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");
+            case MUSAIT -> {
+                BakımSebebiPopupGUI popup = new BakımSebebiPopupGUI(this, true, secilenOda); 
+                popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
+                popup.setVisible(true);
+                this.dispose();
+            }
+        }   // TODO add your handling code here:
     }//GEN-LAST:event_BakimAlActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -276,7 +282,16 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BakımdanCikarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BakımdanCikarActionPerformed
-        // TODO add your handling code here:
+        Oda geciciOda = odaBilgileri(this.secilenOda);
+        switch(geciciOda.getOdaDurumu()){
+            case BAKIMDA ->{ 
+                TeknikEkip.odaBakimdanCikar(this.secilenOda);
+                JOptionPane.showMessageDialog(this, "Oda bakımdan çıkarıldı.");
+                this.dispose();
+            }
+            case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");
+            case MUSAIT -> JOptionPane.showMessageDialog(this, "Odada bakımda değil.!");
+        }// TODO add your handling code here:
     }//GEN-LAST:event_BakımdanCikarActionPerformed
 
     /**

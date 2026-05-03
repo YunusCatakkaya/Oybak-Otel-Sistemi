@@ -23,7 +23,7 @@ public class Resepsiyon extends Personel{
 	}
         
         public void musteriGirisYap(Oda secilenOda, Musteri yeniMusteri) {
-        if (secilenOda.getOdaDurumu().equals(OdaDurumu.MUSAİT)) {
+        if (secilenOda.getOdaDurumu().equals(OdaDurumu.MUSAIT)) {
             
             // 1. RAM üzerindeki nesne güncellemeleri
             secilenOda.musteriEkle(yeniMusteri);
@@ -53,12 +53,12 @@ public class Resepsiyon extends Personel{
 	public void musteriCıkısYap(Oda secilenOda, Musteri yenMusteri) {
         if (secilenOda.getOdaDurumu().equals(OdaDurumu.DOLU)) {
             
-            // Odanın durumunu sistem hafızasında tekrar 'MUSAİT' yapar
-            secilenOda.setOdaDurumu(OdaDurumu.MUSAİT);
+            // Odanın durumunu sistem hafızasında tekrar 'MUSAIT' yapar
+            secilenOda.setOdaDurumu(OdaDurumu.MUSAIT);
             // Odadaki müşteri listesini tamamen temizler
             secilenOda.musterileriTemizle();
             String url = VeriTabani.URL;
-            // Odalar tablosundaki ilgili odanın durumunu 'MUSAİT' yapacak SQL sorgusu
+            // Odalar tablosundaki ilgili odanın durumunu 'MUSAIT' yapacak SQL sorgusu
             String sql = "UPDATE odalar SET durum = 'MUSAİT' WHERE oda_no = ?";
             
             try (Connection conn = DriverManager.getConnection(url);
