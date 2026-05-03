@@ -4,7 +4,7 @@
  */
 package com.oybak.otel.GUITeknikEkip;
 
-import com.oybak.otel.OdaSecim;
+import com.oybakotel.GUI.OdaSecim;
 import com.oybak.otel.enums.UserRole;
 
 /**
