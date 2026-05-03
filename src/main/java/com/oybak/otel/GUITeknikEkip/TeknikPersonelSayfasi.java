@@ -23,7 +23,6 @@ public class TeknikPersonelSayfasi extends javax.swing.JFrame implements OdaSeci
     public TeknikPersonelSayfasi(UserRole rol) {
         this.aktifRol = rol;
         initComponents();
-        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
     }
 
     private TeknikPersonelSayfasi() {

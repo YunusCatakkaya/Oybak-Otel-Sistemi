@@ -10,6 +10,8 @@ import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
+import static com.oybak.otel.enums.UserRole.BAKIM;
+import static com.oybak.otel.enums.UserRole.RESEPSIYON;
 
 /**
  *
@@ -40,15 +42,23 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     teknikPersonelPaneli.setVisible(false);
     bakimSebebiPaneli.setVisible(false);
     musteriEklemePaneli.setVisible(false);
+    musteriBilgileriPaneli.setVisible(false);
 
     // 2. Aktif role göre panelleri görünür yap
     switch (this.aktifRol) {
-        case TEKNIKPERSONEL, BAKIM -> {
-            teknikPersonelPaneli.setVisible(true);
+        case TEKNIKPERSONEL ->{
             bakimSebebiPaneli.setVisible(true); // Bakım sebebi yazısını da görmeleri gerekir
         }
+        case BAKIM ->{
+            teknikPersonelPaneli.setVisible(true);
+            bakimSebebiPaneli.setVisible(true);
+        }
         case RESEPSIYON -> {
+            musteriBilgileriPaneli.setVisible(false);
+        }
+        case MUSTERİEKLEME -> {
             musteriEklemePaneli.setVisible(true);
+            musteriBilgileriPaneli.setVisible(false);
         }
         // Diğer roller (YÖNETİM, MÜŞTERİ vb.) için paneller kapalı kalmaya devam eder
         default -> {

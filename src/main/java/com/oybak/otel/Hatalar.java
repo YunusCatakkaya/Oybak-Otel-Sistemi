@@ -4,7 +4,12 @@
  */
 package com.oybak.otel;
 
+import static com.oybak.otel.VeriTabani.URL;
 import java.awt.Component;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,4 +45,20 @@ public interface Hatalar {
         }
         return true;
     }
+    public default boolean tcVarMi(long tcNo) {
+    String sql = "SELECT COUNT(*) FROM calisanlar WHERE tc_no = ?";
+    try (Connection conn = DriverManager.getConnection(URL);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        pstmt.setLong(1, tcNo);
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            return rs.getInt(1) > 0; // Eğer sonuç 0'dan büyükse bu TC kayıtlıdır
+        }
+    } catch (Exception e) {
+        System.out.println("TC kontrol hatası: " + e.getMessage());
+    }
+    return false;
+}
 }

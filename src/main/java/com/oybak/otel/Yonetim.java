@@ -16,7 +16,7 @@ import java.sql.SQLException;
  *
  * @author Yunus                       //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
  */
-public class Yonetim extends Personel implements VeriTabani{
+public class Yonetim extends Personel implements VeriTabani, Hatalar{
     public Yonetim(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani,String parola) {
         super(name,lastName,tcNo,maas,"YONETIM",uzmanlikAlani,parola);
     }

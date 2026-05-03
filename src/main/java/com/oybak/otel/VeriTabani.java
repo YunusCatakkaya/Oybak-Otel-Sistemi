@@ -105,23 +105,4 @@ public interface VeriTabani {
     return doluOdalar;
 }
     //çalışan eklerken aynı tc ile birden fazla kişi eklenmesin diye yazdım
-    public default boolean tcVarMi(long tcNo) {
-    String sql = "SELECT COUNT(*) FROM calisanlar WHERE tc_no = ?";
-    try (Connection conn = DriverManager.getConnection(URL);
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        
-        pstmt.setLong(1, tcNo);
-        ResultSet rs = pstmt.executeQuery();
-        
-        if (rs.next()) {
-            return rs.getInt(1) > 0; // Eğer sonuç 0'dan büyükse bu TC kayıtlıdır
-        }
-    } catch (Exception e) {
-        System.out.println("TC kontrol hatası: " + e.getMessage());
-    }
-    return false;
-}
-    
 }   
-    
-    
