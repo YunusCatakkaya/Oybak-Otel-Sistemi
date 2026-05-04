@@ -6,6 +6,7 @@ package com.oybakotel.GUI;
 
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
 import com.oybak.otel.Oda;
+import static com.oybak.otel.OturumKullanicisi.getAktifKullaniciTC;
 import com.oybak.otel.TeknikEkip;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
@@ -62,11 +63,11 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
             bakimSebebiPaneli.setVisible(true);
         }
         case RESEPSIYON -> {
-            musteriBilgileriPaneli.setVisible(false);
+            musteriBilgileriPaneli.setVisible(true);
         }
         case MUSTERİEKLEME -> {
             musteriEklemePaneli.setVisible(true);
-            musteriBilgileriPaneli.setVisible(false);
+            musteriBilgileriPaneli.setVisible(true);
         }
         // Diğer roller (YÖNETİM, MÜŞTERİ vb.) için paneller kapalı kalmaya devam eder
         default -> {
@@ -292,6 +293,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
             case BAKIMDA ->{ 
                 TeknikEkip.odaBakimdanCikar(this.secilenOda);
                 JOptionPane.showMessageDialog(this, "Oda bakımdan çıkarıldı.");
+                logKayit(getAktifKullaniciTC() +" TC'li personel " +secilenOda +" numaralı odayı bakımdan çıkardı.");
                 this.dispose();
             }
             case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");

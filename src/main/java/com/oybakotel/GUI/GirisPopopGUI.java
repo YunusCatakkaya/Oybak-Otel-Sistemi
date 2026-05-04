@@ -8,9 +8,11 @@ import com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa;
 import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
 import com.oybak.otel.GUIYonetim.YonetimEkran;
 import com.oybak.otel.Hatalar;
+import com.oybak.otel.OturumKullanicisi;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
+import javax.swing.JTextField;
 
 /**
  *
@@ -39,9 +41,9 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        TCalanı = new javax.swing.JTextField();
+        TCalani = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        parolaAlanı = new javax.swing.JPasswordField();
+        parolaAlani = new javax.swing.JPasswordField();
         tamam = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
@@ -54,12 +56,12 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Kullanıcı TC:");
 
-        TCalanı.addActionListener(this::TCalanıActionPerformed);
+        TCalani.addActionListener(this::TCalaniActionPerformed);
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Kullanıcı parola:");
 
-        parolaAlanı.addActionListener(this::parolaAlanıActionPerformed);
+        parolaAlani.addActionListener(this::parolaAlaniActionPerformed);
 
         tamam.setText("Tamam");
         tamam.addActionListener(this::tamamActionPerformed);
@@ -77,8 +79,8 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TCalanı)
-                            .addComponent(parolaAlanı, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TCalani)
+                            .addComponent(parolaAlani, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(tamam)
@@ -90,11 +92,11 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
                 .addGap(116, 116, 116)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TCalanı, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TCalani, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(parolaAlanı, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(parolaAlani, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(tamam)
                 .addGap(44, 44, 44))
@@ -136,17 +138,17 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TCalanıActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCalanıActionPerformed
+    private void TCalaniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCalaniActionPerformed
             // TODO add your handling code here:
-    }//GEN-LAST:event_TCalanıActionPerformed
+    }//GEN-LAST:event_TCalaniActionPerformed
 
-    private void parolaAlanıActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parolaAlanıActionPerformed
+    private void parolaAlaniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parolaAlaniActionPerformed
             // TODO add your handling code here:
-    }//GEN-LAST:event_parolaAlanıActionPerformed
+    }//GEN-LAST:event_parolaAlaniActionPerformed
 
     private void tamamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tamamActionPerformed
-        String tc = TCalanı.getText().trim();
-        String parola = parolaAlanı.getText().trim();
+        String tc = TCalani.getText().trim();
+        String parola = parolaAlani.getText().trim();
         
         if (tc.isEmpty() || parola.isEmpty()) {
             JOptionPane.showMessageDialog(this, "TC veya parola boş bırakılamaz!");
@@ -159,6 +161,8 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
             JOptionPane.showMessageDialog(this, "TC No veya Parola hatalı!");
             return;
         }
+        
+        OturumKullanicisi.setAktifKullaniciTC(tc);
         
         switch(aktifRol){
             case RESEPSIYON -> {
@@ -210,13 +214,13 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TCalanı;
+    private javax.swing.JTextField TCalani;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField parolaAlanı;
+    private javax.swing.JPasswordField parolaAlani;
     private javax.swing.JButton tamam;
     // End of variables declaration//GEN-END:variables
 }

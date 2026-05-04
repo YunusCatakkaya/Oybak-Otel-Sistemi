@@ -5,9 +5,11 @@
 package com.oybak.otel.GUITeknikEkip;
 
 import com.oybak.otel.Oda;
+import static com.oybak.otel.OturumKullanicisi.getAktifKullaniciTC;
 import com.oybak.otel.TeknikEkip;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
+import com.oybakotel.GUI.GirisPopopGUI;
 
 /**
  *
@@ -139,6 +141,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
         System.out.println("İşlem gerçekleştiriliyor.");
         JOptionPane.showMessageDialog(this, oda + " numaralı oda bakıma alındı.");
         System.out.println("İşlem gerçekleşti.");
+        logKayit(getAktifKullaniciTC() +" TC'li personel " +oda +" numaralı odayı bakıma aldı.");
         this.dispose();
     }//GEN-LAST:event_tamamActionPerformed
 

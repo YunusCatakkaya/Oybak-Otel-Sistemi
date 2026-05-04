@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 //jjjj
@@ -85,24 +87,44 @@ public interface VeriTabani {
     }
     
     public default List<Oda> doluOdaListesi() {
-    List<Oda> doluOdalar = new ArrayList<>();
-    String sql = "SELECT * FROM odalar WHERE durum = 'DOLU'";
+        List<Oda> doluOdalar = new ArrayList<>();
+        String sql = "SELECT * FROM odalar WHERE durum = 'DOLU'";
     
-    try (Connection conn = DriverManager.getConnection(URL);
-         PreparedStatement pstmt = conn.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = DriverManager.getConnection(URL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
         
-        while (rs.next()) {
-            Oda oda = new Oda();
-            oda.setOdaNumarasi(rs.getInt("oda_no"));
-            oda.setOdaDurumu(OdaDurumu.DOLU);
-            oda.setFiyat(rs.getInt("fiyat")); // Yeni eklenen fiyat sütunu
-            doluOdalar.add(oda);
+            while (rs.next()) {
+                Oda oda = new Oda();
+                oda.setOdaNumarasi(rs.getInt("oda_no"));
+                oda.setOdaDurumu(OdaDurumu.DOLU);
+                oda.setFiyat(rs.getInt("fiyat")); // Yeni eklenen fiyat sütunu
+                doluOdalar.add(oda);
+            }
+        } catch (Exception e) {
+            System.out.println("Hata: " + e.getMessage());
         }
-    } catch (Exception e) {
-        System.out.println("Hata: " + e.getMessage());
+        return doluOdalar;
+    }   
+    
+    public default void logKayit(String islem){
+        String sql = "INSERT INTO log_kayitlar (tarih_saat, aciklama) VALUES (?, ?)";
+    
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
+            java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+            LocalDateTime simdi = LocalDateTime.now();
+            DateTimeFormatter formatci = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formatliSimdi = simdi.format(formatci);
+        
+            pstmt.setString(1, formatliSimdi);
+            pstmt.setString(2, islem);
+
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Log Kayıt Hatası: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-    return doluOdalar;
-}
     //çalışan eklerken aynı tc ile birden fazla kişi eklenmesin diye yazdım
 }   

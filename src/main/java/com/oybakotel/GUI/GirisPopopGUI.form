@@ -83,8 +83,8 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="TCalanı" max="32767" attributes="0"/>
-                                  <Component id="parolaAlanı" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="TCalani" max="32767" attributes="0"/>
+                                  <Component id="parolaAlani" min="-2" pref="120" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
@@ -102,12 +102,12 @@
                       <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="TCalanı" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TCalani" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="parolaAlanı" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="parolaAlani" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="60" max="32767" attributes="0"/>
                       <Component id="tamam" min="-2" max="-2" attributes="0"/>
@@ -125,9 +125,9 @@
                 <Property name="text" type="java.lang.String" value="Kullan&#x131;c&#x131; TC:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="TCalan&#x131;">
+            <Component class="javax.swing.JTextField" name="TCalani">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TCalan&#x131;ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TCalaniActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
@@ -138,9 +138,9 @@
                 <Property name="text" type="java.lang.String" value="Kullan&#x131;c&#x131; parola:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JPasswordField" name="parolaAlan&#x131;">
+            <Component class="javax.swing.JPasswordField" name="parolaAlani">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="parolaAlan&#x131;ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="parolaAlaniActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="tamam">

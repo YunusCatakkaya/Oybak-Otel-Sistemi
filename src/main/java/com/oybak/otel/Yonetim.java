@@ -3,15 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.oybak.otel;
-
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 /**
  *
  * @author Yunus                       //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
@@ -47,7 +38,7 @@ public class Yonetim extends Personel implements VeriTabani, Hatalar{
         pstmt.executeUpdate();
     } catch (java.sql.SQLException e) {
         javax.swing.JOptionPane.showMessageDialog(null, "Veritabanı Hatası: " + e.getMessage());
-    e.printStackTrace();
+        e.printStackTrace();
         
     }
 }
