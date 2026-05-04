@@ -6,12 +6,13 @@ package com.oybak.otel.GUIYonetim;
 
 import com.oybak.otel.GUIYonetim.YonetimMusteriArama;
 import com.oybak.otel.enums.UserRole;
+import com.oybakotel.GUI.OdaSecim;
 
 /**
  *
  * @author userxpc666
  */
-public class YonetimEkran extends javax.swing.JFrame {
+public class YonetimEkran extends javax.swing.JFrame implements OdaSecim{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimEkran.class.getName());
 
@@ -95,9 +96,7 @@ public class YonetimEkran extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(aktifRol);
-        
-        odaEkrani.setVisible(true);
+        odaSecim(aktifRol);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
