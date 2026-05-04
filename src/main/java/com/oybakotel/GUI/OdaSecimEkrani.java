@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, VeriTabani{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(OdaSecimEkrani.class.getName());
+    
 
     /**
      * Creates new form YonetimOdalar
