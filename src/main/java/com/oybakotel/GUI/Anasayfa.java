@@ -152,10 +152,12 @@ public class Anasayfa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void musteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musteriActionPerformed
-        aktifRol = MUSTERI;
-        MusteriSayfasi m = new MusteriSayfasi();
-        m.setLocationRelativeTo(null); // Ortada aç
-        m.setVisible(true);
+          aktifRol = MUSTERI;
+
+        TarihSecimEkrani tarihEkrani = new TarihSecimEkrani(aktifRol);
+        // 3. Ekranı ortala ve görünür yap
+        tarihEkrani.setLocationRelativeTo(null); 
+        tarihEkrani.setVisible(true);
         this.dispose(); // Anasayfayı kapat        /
     }//GEN-LAST:event_musteriActionPerformed
 

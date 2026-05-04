@@ -35,6 +35,11 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
         this.secilenOda = oda; // Gelen oda bilgisini kaydet
         this.aktifRol = rol;
         initComponents();    // Verileri arayüze bas
+ // --- EKLENEN KISIM BAŞLANGICI ---
+        // Ekranda yer alan OdaNo isimli JLabel'a seçilen odayı yazdırıyoruz
+        OdaNo.setText("Oda No: " + this.secilenOda);
+        // --- EKLENEN KISIM BİTİŞİ ---
+
         setLocationRelativeTo(null);
         
         rolleriAyarla();
