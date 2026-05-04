@@ -3,20 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIResepsiyon;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import com.oybak.otel.VeriTabani;
 /**
  *
  * @author onuro
  */
-public class MusteriArama extends javax.swing.JFrame {
+public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MusteriArama.class.getName());
 
     /**
      * Creates new form MusteriArama
      */
+    
+    private com.oybak.otel.enums.UserRole aktifRol; // Mevcut rolü saklamak için
+    
     public MusteriArama() {
         initComponents();
+        // JTextArea'nın (txtSonucAlani) düzenlenmesini engellemek için:
+        txtSonucAlani.setEditable(false);
+        
     }
 
     /**
@@ -28,49 +39,177 @@ public class MusteriArama extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtSonucAlani = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel2.setText("Aranacak müşterinin isim soyismini giriniz:");
+
         jTextField1.setText("İsim Soyisim:");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
-        jLabel1.setText("Aranan müşterinin bilgileri: ");
+        txtSonucAlani.setColumns(20);
+        txtSonucAlani.setLineWrap(true);
+        txtSonucAlani.setRows(5);
+        txtSonucAlani.setText("Aranan Müşterinin Bilgileri:");
+        txtSonucAlani.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtSonucAlaniFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtSonucAlaniFocusLost(evt);
+            }
+        });
+        jScrollPane1.setViewportView(txtSonucAlani);
 
-        jLabel2.setText("Aranacak müşterinin isim soyismini giriniz.");
+        jButton1.setText("Geri");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)))
+                .addContainerGap(81, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(142, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+    String arananIsim = jTextField1.getText().replace("İsim Soyisim:", "").trim();
+    
+    if (arananIsim.isEmpty()) {
+        txtSonucAlani.setText("Lütfen bir isim giriniz.");
+        return;
+    }
+
+    txtSonucAlani.setText(""); // Eski sonuçları temizle
+
+    // Veritabanından tüm bilgileri (TC dahil) çekiyoruz[cite: 1]
+    String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM guncel_musteriler WHERE ad_soyad LIKE ?";
+
+    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(URL);
+         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setString(1, "%" + arananIsim + "%");
+        java.sql.ResultSet rs = pstmt.executeQuery();
+
+        boolean bulundu = false;
+        while (rs.next()) {
+            bulundu = true;
+            StringBuilder sb = new StringBuilder();
+            sb.append("Müşteri Ad Soyad: ").append(rs.getString("ad_soyad")).append("\n");
+
+            // --- YETKİ KONTROLÜ BURADA YAPILIYOR ---
+            // Eğer aktif rol YONETIM ise TC numarasını da ekle[cite: 1]
+            if (aktifRol == com.oybak.otel.enums.UserRole.YONETIM) {
+                sb.append("TC Kimlik No: ").append(rs.getString("tc_no")).append("\n");
+            }
+            // --------------------------------------
+
+            sb.append("Oda Numarası: ").append(rs.getString("oda_no")).append("\n")
+              .append("Giriş Tarihi: ").append(rs.getString("giris_tarihi")).append("\n")
+              .append("Çıkış Tarihi: ").append(rs.getString("cikis_tarihi")).append("\n")
+              .append("Kasaya Katkı: ").append(rs.getInt("kasa_katki")).append(" TL\n")
+              .append("---------------------------------\n");
+
+            txtSonucAlani.append(sb.toString());
+        }
+
+        if (!bulundu) {
+            txtSonucAlani.setText("Sistemde '" + arananIsim + "' isminde bir müşteri bulunamadı.");
+        }
+
+    } catch (java.sql.SQLException e) {
+        txtSonucAlani.setText("Veritabanı hatası: " + e.getMessage());
+    }
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void txtSonucAlaniFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSonucAlaniFocusGained
+    
+    }//GEN-LAST:event_txtSonucAlaniFocusGained
+
+    private void txtSonucAlaniFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSonucAlaniFocusLost
+      
+    }//GEN-LAST:event_txtSonucAlaniFocusLost
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+        // Eğer kutunun içinde varsayılan yazı varsa, kullanıcı tıklayınca içini temizle
+        if (jTextField1.getText().equals("İsim Soyisim:")) {
+        jTextField1.setText("");
+        }
+    }//GEN-LAST:event_jTextField1FocusGained
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        if (jTextField1.getText().isEmpty()) {
+        jTextField1.setText("İsim Soyisim:");
+        }
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      if (aktifRol == com.oybak.otel.enums.UserRole.YONETIM) {
+        // Yönetim sayfasına dön[cite: 1]
+        com.oybak.otel.GUIYonetim.YonetimEkran yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimEkran(aktifRol);
+        yonetimGeri.setVisible(true);
+    } else {
+        // Resepsiyon sayfasına dön[cite: 1]
+        com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa resepsiyonGeri = new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(aktifRol);
+        resepsiyonGeri.setVisible(true);
+    }
+      this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -98,8 +237,11 @@ public class MusteriArama extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea txtSonucAlani;
     // End of variables declaration//GEN-END:variables
 }

@@ -60,6 +60,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(51, 51, 255));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Müşteri Arama");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
         jButton4.setBackground(new java.awt.Color(51, 51, 255));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
@@ -113,12 +114,14 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
  
         rezervasyonEkrani.setLocationRelativeTo(null);
         rezervasyonEkrani.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(aktifRol);
         
         odaEkrani.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -126,7 +129,16 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
         
         paraEkrani.setLocationRelativeTo(null);
         paraEkrani.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        MusteriArama musteriAramaSayfasi = new MusteriArama();
+        musteriAramaSayfasi.setLocationRelativeTo(null);
+        musteriAramaSayfasi.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
