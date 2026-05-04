@@ -7,6 +7,7 @@ import com.oybak.otel.Oda;
 import com.oybak.otel.VeriTabani;
 import com.oybak.otel.Yonetim;
 import javax.swing.JOptionPane;
+import com.oybak.otel.enums.UserRole;
 /**
  *
  * @author onuro
@@ -15,15 +16,18 @@ public class ParaAlma extends javax.swing.JFrame implements VeriTabani { //sd
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ParaAlma.class.getName());
 
-    private com.oybak.otel.enums.UserRole aktifRol; // Mevcut rolü saklamak için
+    //private com.oybak.otel.enums.UserRole aktifRol; // Mevcut rolü saklamak için
     
     /**
      * Creates new form ParaAlma
      */
-    public ParaAlma() {
+    private UserRole aktifRol;
+    
+    public ParaAlma(UserRole aktifRol) {
         initComponents();
         doluOdalariYukle();
         odaComboBoxActionPerformed(null);
+        this.aktifRol=aktifRol;
     }
     
     // Sınıfınızın içinde uygun bir yere bu metodu ekleyin:
@@ -70,6 +74,7 @@ private double odenenMiktariGetir(int odaNo) {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         odaComboBox = new javax.swing.JComboBox<>();
         fiyatText = new javax.swing.JLabel();
@@ -78,56 +83,54 @@ private double odenenMiktariGetir(int odaNo) {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         odaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         odaComboBox.addActionListener(this::odaComboBoxActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 19;
+        gridBagConstraints.ipady = 31;
+        gridBagConstraints.insets = new java.awt.Insets(6, 7, 0, 0);
+        getContentPane().add(odaComboBox, gridBagConstraints);
 
         fiyatText.setText("     Fiyat: 0.0 TL");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 9;
+        gridBagConstraints.insets = new java.awt.Insets(18, 7, 0, 0);
+        getContentPane().add(fiyatText, gridBagConstraints);
 
         odemeAl.setText("Ödeme Al");
         odemeAl.addActionListener(this::odemeAlActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.ipady = 29;
+        gridBagConstraints.insets = new java.awt.Insets(26, 7, 27, 0);
+        getContentPane().add(odemeAl, gridBagConstraints);
 
         jLabel1.setText("Ödeme Alacağınız Odayı Seçiniz");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipady = 33;
+        gridBagConstraints.insets = new java.awt.Insets(12, 48, 0, 46);
+        getContentPane().add(jLabel1, gridBagConstraints);
 
         jButton1.setText("Geri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(odemeAl, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fiyatText, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(odaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(odaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(fiyatText)
-                .addGap(26, 26, 26)
-                .addComponent(odemeAl, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
+        getContentPane().add(jButton1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -218,7 +221,7 @@ private double odenenMiktariGetir(int odaNo) {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (aktifRol == com.oybak.otel.enums.UserRole.YONETIM) {
         // Yönetim sayfasına dön[cite: 1]
-        com.oybak.otel.GUIYonetim.YonetimEkran yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimEkran(aktifRol);
+        com.oybak.otel.GUIYonetim.YonetimKasa yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimKasa(aktifRol);
         yonetimGeri.setVisible(true);
     }   else {
         // Resepsiyon sayfasına dön[cite: 1]
@@ -250,7 +253,10 @@ private double odenenMiktariGetir(int odaNo) {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ParaAlma().setVisible(true));
+                java.awt.EventQueue.invokeLater(() -> {
+    // Test amaçlı varsayılan bir rol (örneğin YONETIM) gönderiyoruz
+    new MusteriArama(com.oybak.otel.enums.UserRole.YONETIM).setVisible(true);
+});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

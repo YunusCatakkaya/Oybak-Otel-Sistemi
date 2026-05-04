@@ -4,11 +4,12 @@
  */
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.enums.UserRole;
+import com.oybak.otel.VeriTabani;
 /**
  *
  * @author userxpc666
  */
-public class ParaIade extends javax.swing.JFrame {
+public class ParaIade extends javax.swing.JFrame implements VeriTabani {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ParaIade.class.getName());
 
@@ -37,12 +38,10 @@ public class ParaIade extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextPane3 = new javax.swing.JTextPane();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -52,8 +51,6 @@ public class ParaIade extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(19, 14, 0, 0);
         getContentPane().add(jButton1, gridBagConstraints);
 
@@ -62,9 +59,9 @@ public class ParaIade extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 14, 0, 6);
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = -22;
+        gridBagConstraints.insets = new java.awt.Insets(6, 14, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
         jScrollPane1.setViewportView(jTextPane1);
@@ -72,11 +69,10 @@ public class ParaIade extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 48;
-        gridBagConstraints.ipady = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.ipadx = 360;
+        gridBagConstraints.ipady = 29;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(6, 24, 0, 0);
@@ -86,41 +82,16 @@ public class ParaIade extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 24, 0, 0);
         getContentPane().add(jLabel2, gridBagConstraints);
-
-        jLabel3.setText("TC Giriniz");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 24, 0, 0);
-        getContentPane().add(jLabel3, gridBagConstraints);
-
-        jScrollPane2.setViewportView(jTextPane2);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 48;
-        gridBagConstraints.ipady = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 24, 0, 0);
-        getContentPane().add(jScrollPane2, gridBagConstraints);
 
         jLabel4.setText("Para Miktarı Giriniz (TL)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(12, 24, 0, 0);
         getContentPane().add(jLabel4, gridBagConstraints);
 
@@ -128,16 +99,23 @@ public class ParaIade extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 48;
-        gridBagConstraints.ipady = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.ipadx = 360;
+        gridBagConstraints.ipady = 29;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 24, 62, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 24, 0, 0);
         getContentPane().add(jScrollPane3, gridBagConstraints);
+
+        jButton2.setText("İade Yap");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.insets = new java.awt.Insets(34, 171, 6, 0);
+        getContentPane().add(jButton2, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -147,6 +125,77 @@ public class ParaIade extends javax.swing.JFrame {
        
        Kasa.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Kullanıcının girdiği verileri alıyoruz
+    String adSoyad = jTextPane1.getText().trim();
+    String iadeMiktariStr = jTextPane3.getText().trim();
+
+    // 1. Boş alan kontrolü
+    if (adSoyad.isEmpty() || iadeMiktariStr.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen isim ve miktar alanlarını doldurunuz!", "Eksik Bilgi", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        // Virgül girilirse noktaya çevirip sayıya dönüştürüyoruz
+        double iadeMiktari = Double.parseDouble(iadeMiktariStr.replace(",", "."));
+        
+        if (iadeMiktari <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "İade miktarı 0'dan büyük olmalıdır!", "Hatalı Miktar", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 2. Kontrol Sorgusu: Müşteri var mı ve bakiyesi yetiyor mu?
+        String kontrolSql = "SELECT kasa_katki FROM guncel_musteriler WHERE ad_soyad = ?";
+        
+        // Yonetim class'ındaki gibi VeriTabani.URL kullanıyoruz
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
+             java.sql.PreparedStatement pstmtKontrol = conn.prepareStatement(kontrolSql)) {
+            
+            pstmtKontrol.setString(1, adSoyad);
+            java.sql.ResultSet rs = pstmtKontrol.executeQuery();
+
+            if (rs.next()) {
+                double mevcutBakiye = rs.getDouble("kasa_katki");
+
+                // 3. Mantıksal Kontrol: Ödenen paradan fazla iade yapılamaz
+                if (iadeMiktari > mevcutBakiye) {
+                    javax.swing.JOptionPane.showMessageDialog(this, 
+                        "HATA: Müşterinin toplam ödemesi " + mevcutBakiye + " TL.\nBundan daha yüksek bir iade yapamazsınız!", 
+                        "Yetersiz Bakiye", javax.swing.JOptionPane.ERROR_MESSAGE);
+                } else {
+                    // 4. Güncelleme Sorgusu: Parayı düşüyoruz
+                    String guncelleSql = "UPDATE guncel_musteriler SET kasa_katki = kasa_katki - ? WHERE ad_soyad = ?";
+                    try (java.sql.PreparedStatement pstmtGuncelle = conn.prepareStatement(guncelleSql)) {
+                        pstmtGuncelle.setDouble(1, iadeMiktari);
+                        pstmtGuncelle.setString(2, adSoyad);
+                        
+                        int sonuc = pstmtGuncelle.executeUpdate();
+                        if (sonuc > 0) {
+                            javax.swing.JOptionPane.showMessageDialog(this, 
+                                "BAŞARILI: " + adSoyad + " isimli müşteriye " + iadeMiktari + " TL iade edildi.\nGüncel Bakiye: " + (mevcutBakiye - iadeMiktari) + " TL", 
+                                "İşlem Tamamlandı", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                            
+                            // Kutuları temizle
+                            jTextPane1.setText("");
+                            jTextPane3.setText("");
+                        }
+                    }
+                }
+            } else {
+                // İsim veritabanında yoksa
+                javax.swing.JOptionPane.showMessageDialog(this, "UYARI: '" + adSoyad + "' isminde güncel bir müşteri kaydı bulunamadı!", "Kayıt Yok", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen miktar alanına geçerli bir sayı giriniz!", "Format Hatası", javax.swing.JOptionPane.ERROR_MESSAGE);
+    } catch (java.sql.SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "VERİTABANI HATASI: " + e.getMessage(), "Hata", javax.swing.JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,15 +227,13 @@ public class ParaIade extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
     private javax.swing.JTextPane jTextPane3;
     // End of variables declaration//GEN-END:variables
 }
