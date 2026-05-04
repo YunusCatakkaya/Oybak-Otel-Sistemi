@@ -30,6 +30,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="G&#xfc;ncel M&#xfc;&#x15f;teri"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
           <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="56" insetsTop="103" insetsLeft="68" insetsBottom="103" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
@@ -40,6 +43,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ge&#xe7;mi&#x15f; M&#xfc;&#x15f;teri"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
           <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="56" insetsTop="103" insetsLeft="42" insetsBottom="103" insetsRight="71" anchor="10" weightX="0.0" weightY="0.0"/>

@@ -125,7 +125,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        com.oybak.otel.GUIResepsiyon.ParaIslemleri paraEkrani = new com.oybak.otel.GUIResepsiyon.ParaIslemleri();
+        com.oybak.otel.GUIResepsiyon.ParaIslemleri paraEkrani = new com.oybak.otel.GUIResepsiyon.ParaIslemleri(aktifRol);
         
         paraEkrani.setLocationRelativeTo(null);
         paraEkrani.setVisible(true);
@@ -134,7 +134,8 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
-        MusteriArama musteriAramaSayfasi = new MusteriArama();
+        // Resepsiyon panelindeki butonun içi
+    MusteriArama musteriAramaSayfasi = new MusteriArama(com.oybak.otel.enums.UserRole.RESEPSIYON);
         musteriAramaSayfasi.setLocationRelativeTo(null);
         musteriAramaSayfasi.setVisible(true);
         this.dispose();

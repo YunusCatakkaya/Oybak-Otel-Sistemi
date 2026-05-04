@@ -4,6 +4,8 @@
  */
 package com.oybak.otel.GUIResepsiyon;
 
+import com.oybak.otel.enums.UserRole;
+
 /**
  *
  * @author onuro
@@ -15,8 +17,11 @@ public class ParaIslemleri extends javax.swing.JFrame {
     /**
      * Creates new form ParaIslemleri
      */
-    public ParaIslemleri() {
+    private UserRole aktifRol;
+    
+    public ParaIslemleri(UserRole aktifRol) {
         initComponents();
+        this.aktifRol=aktifRol;
     }
 
     /**
@@ -88,8 +93,9 @@ public class ParaIslemleri extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
         // ParaAlma JFrame'inden bir nesne oluşturuyoruz
-    ParaAlma paraAlmaEkrani = new ParaAlma(); 
+    ParaAlma paraAlmaEkrani = new ParaAlma(aktifRol); 
     
     // Ekranın bilgisayarın tam ortasında açılmasını sağlar
     paraAlmaEkrani.setLocationRelativeTo(null); 
@@ -137,7 +143,10 @@ public class ParaIslemleri extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ParaIslemleri().setVisible(true));
+       java.awt.EventQueue.invokeLater(() -> {
+    
+    new ParaIslemleri(UserRole.RESEPSIYON).setVisible(true); 
+});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

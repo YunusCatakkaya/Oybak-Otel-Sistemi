@@ -42,6 +42,7 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jButton1.setText("Güncel Müşteri");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -50,6 +51,7 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
         getContentPane().add(jButton1, gridBagConstraints);
 
         jButton2.setText("Geçmiş Müşteri");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -73,6 +75,18 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
        
        Ekran.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        com.oybak.otel.GUIResepsiyon.MusteriArama Ara = new com.oybak.otel.GUIResepsiyon.MusteriArama(aktifRol);
+       
+       Ara.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       com.oybak.otel.GUIYonetim.GecmisMusteriler Gecmis = new com.oybak.otel.GUIYonetim.GecmisMusteriler(aktifRol);
+       
+       Gecmis.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
