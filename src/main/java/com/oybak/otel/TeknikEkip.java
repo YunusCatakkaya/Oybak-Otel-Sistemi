@@ -8,7 +8,7 @@ import com.oybak.otel.enums.OdaDurumu;
 import com.oybak.otel.enums.OdaOzelligi;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.PreparedStatement;//selam
 import java.util.List;
 
 public class TeknikEkip extends Personel implements OdaGoruntuleme{
