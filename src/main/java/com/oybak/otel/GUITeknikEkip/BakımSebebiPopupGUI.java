@@ -9,7 +9,6 @@ import static com.oybak.otel.OturumKullanicisi.getAktifKullaniciTC;
 import com.oybak.otel.TeknikEkip;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
-import com.oybakotel.GUI.GirisPopopGUI;
 
 /**
  *

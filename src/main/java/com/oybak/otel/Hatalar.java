@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author ahmet
  */
 public interface Hatalar {
-    default boolean tcKontrol(String tc){
+    public default boolean tcKontrol(String tc){
         try {
             long sayi = Long.parseLong(tc);
             int sonHane = (int) (sayi%10);
