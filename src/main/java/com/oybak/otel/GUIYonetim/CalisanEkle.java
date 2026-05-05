@@ -69,9 +69,9 @@ private void personelKaydet(String uzmanlikAlani) {
             javax.swing.JOptionPane.showMessageDialog(this, "Bu TC numarası zaten kayıtlı!", "Mükerrer Kayıt", 0);
             return;
         }
-
+        UserRole rol = UserRole.valueOf(secilenIsTipi);
         // 7. Personel Nesnesi Oluşturma (7 Parametre: ad, soyad, tc, maas, isTipi, uzmanlik, parola)
-        Personel yeniKisi = new Personel(ad, tc, maas, secilenIsTipi, uzmanlikAlani, parola);
+        Personel yeniKisi = new Personel(ad, tc, maas, rol, uzmanlikAlani, parola);
         
         // 8. Veritabanına Kayıt
         yonetici.personelEkle(yeniKisi);
