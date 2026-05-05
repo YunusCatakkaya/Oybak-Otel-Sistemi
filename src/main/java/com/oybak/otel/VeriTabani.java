@@ -62,7 +62,8 @@ public interface VeriTabani {
         return bulunanOda; // Oda bulunamazsa null, bulunursa dolu nesne döner
     }   
  
-    public default UserRole calısanBilgileri(String tc, String parola){
+    public default Personel calısanBilgileri(String tc, String parola){
+        Personel calisan = null;
         String sql = "SELECT is_tipi FROM calisanlar WHERE tc_no = ? AND Parola = ?";
     
         try (Connection baglanti = DriverManager.getConnection(URL);
@@ -71,20 +72,19 @@ public interface VeriTabani {
             // 2. Soru işaretlerini dolduruyoruz
             sorgu.setString(1, tc);
             sorgu.setString(2, parola);
-
+            
             // 3. Sorguyu çalıştır ve sonucu al
             ResultSet sonuc = sorgu.executeQuery();
 
             if (sonuc.next()) { // Eğer böyle bir kullanıcı bulunduysa
-                String veri = sonuc.getString("is_tipi"); // Veritabanından gelen yazı (örn: "YONETICI")
-                // 4. Yazıyı Enum tipine çevir ve geri gönder
-                return UserRole.valueOf(veri); 
+                UserRole rol = UserRole.valueOf(sonuc.getString("is_tipi"));
+                calisan = new Personel(sonuc.getString("ad_soyad"), sonuc.getLong("tc_no"), sonuc.getInt("maas"),rol,sonuc.getString("parola"));
             }
 
         } catch (Exception e) {
             System.out.println("Hata oluştu: " + e.getMessage());
-        }
-        return null; // Kullanıcı bulunamadıysa boş dön
+        } // Kullanıcı bulunamadıysa boş dön
+        return calisan;
     }
     
     public default List<Oda> doluOdaListesi() {
@@ -108,7 +108,7 @@ public interface VeriTabani {
         return doluOdalar;
     }   
     
-    public default void logKayit(String islem){
+    public default void logKayit(String kullanici,String islem){
         String sql = "INSERT INTO log_kayitlar (tarih_saat, aciklama) VALUES (?, ?)";
     
         try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
@@ -119,12 +119,11 @@ public interface VeriTabani {
             String formatliSimdi = simdi.format(formatci);
         
             pstmt.setString(1, formatliSimdi);
-            pstmt.setString(2, islem);
+            pstmt.setString(2, kullanici + islem);
 
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Log Kayıt Hatası: " + e.getMessage());
-            e.printStackTrace();
         }
     }
     //çalışan eklerken aynı tc ile birden fazla kişi eklenmesin diye yazdım

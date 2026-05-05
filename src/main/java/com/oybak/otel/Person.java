@@ -9,17 +9,14 @@ package com.oybak.otel;
  * @author Yunus
  */
 public abstract class Person {
-	private String name;
-	private String lastName;
-	private long tcNo ;
+    private String name;
+    private long tcNo ;
 	
-	public Person(String name , String lastName,long tcNo) {
-		
-			this.name=name;
-			this.lastName=lastName;
-			this.tcNo=tcNo;
-	}
-	public abstract void bilgileriYazdir();
+    public Person(String name, long tcNo) {
+        this.name=name;
+        this.tcNo=tcNo;
+    }
+    public abstract String bilgileriYazdir();
 
     public String getName() {
         return name;
@@ -27,14 +24,6 @@ public abstract class Person {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public long getTcNo() {

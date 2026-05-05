@@ -4,6 +4,7 @@
  */
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.enums.UserRole;
+import static com.oybak.otel.enums.UserRole.YONETIM;
 
 /**
  *
@@ -156,7 +157,7 @@ public class CalisanCikar extends javax.swing.JFrame implements com.oybak.otel.H
         String tamAdSoyad = isim + " " + soyisim;
 
         // 5. Silme işlemini başlat
-        com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", "", 0, 0, "Yonetim", "", "");
+        com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", "", 0, 0, YONETIM, "");
         yonetici.personelSil(tamAdSoyad, tcNoStr);
         
         // 6. Başarılıysa alanları temizle

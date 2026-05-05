@@ -4,6 +4,7 @@
  */
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.enums.UserRole;
+import static com.oybak.otel.enums.UserRole.YONETIM;
 /**
  *
  * @author userxpc666
@@ -169,7 +170,7 @@ public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.
         String tamAdSoyad = isim + " " + soyisim;
 
         // 5. Yonetim sınıfını çağır
-        com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", "", 0, 0, "YONETIM", "", "");
+        com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", "", 0, 0, YONETIM, "");
         yonetici.maasGuncelle(tamAdSoyad, tcNoStr, yeniMaasStr);
 
         // 6. Başarılıysa kutuları temizle

@@ -6,8 +6,8 @@ package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Oda;
 import com.oybak.otel.VeriTabani;
 import com.oybak.otel.Yonetim;
-import javax.swing.JOptionPane;
 import com.oybak.otel.enums.UserRole;
+import static com.oybak.otel.enums.UserRole.YONETIM;
 /**
  *
  * @author onuro
@@ -35,7 +35,7 @@ private void doluOdalariYukle() {
     odaComboBox.removeAllItems(); // Önce eski verileri temizle
     
     // VeriTabani interface'ini implemente eden bir sınıf nesnesi (örneğin Resepsiyon)
-    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, "Sistem","",""); 
+    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, YONETIM,""); 
     
     // Sadece durumu DOLU olan odaları getirir
     java.util.List<Oda> doluOdalar = vt.doluOdaListesi(); 

@@ -8,6 +8,7 @@ import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.Personel;
 import com.oybak.otel.Hatalar;
+import static com.oybak.otel.enums.UserRole.YONETIM;
 /**
  *
  * @author userxpc666
@@ -63,14 +64,14 @@ private void personelKaydet(String uzmanlikAlani) {
 
         // 6. Veritabanı Mükerrer Kayıt Kontrolü
         // Yonetim nesnesini 7 parametreli yeni constructor ile oluşturuyoruz
-        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, "Yonetim", "", "123");
+        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, YONETIM, "123");
         if (yonetici.tcVarMi(tc)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Bu TC numarası zaten kayıtlı!", "Mükerrer Kayıt", 0);
             return;
         }
 
         // 7. Personel Nesnesi Oluşturma (7 Parametre: ad, soyad, tc, maas, isTipi, uzmanlik, parola)
-        Personel yeniKisi = new Personel(ad, soyad, tc, maas, secilenIsTipi, uzmanlikAlani, parola);
+        Personel yeniKisi = new Personel(ad, tc, maas, secilenIsTipi, uzmanlikAlani, parola);
         
         // 8. Veritabanına Kayıt
         yonetici.personelEkle(yeniKisi);

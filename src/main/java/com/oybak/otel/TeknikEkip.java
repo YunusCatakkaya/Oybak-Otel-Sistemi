@@ -6,6 +6,8 @@ package com.oybak.otel;
 
 import com.oybak.otel.enums.OdaDurumu;
 import com.oybak.otel.enums.OdaOzelligi;
+import com.oybak.otel.enums.UserRole;
+import static com.oybak.otel.enums.UserRole.TEKNIKPERSONEL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;//selam
@@ -14,8 +16,8 @@ import java.util.List;
 public class TeknikEkip extends Personel implements OdaGoruntuleme{
     
 
-    public TeknikEkip(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani,String parola) {
-        super(name, lastName, tcNo, maas, "TeknikEkip",uzmanlikAlani,parola);
+    public TeknikEkip(String name, String lastName, long tcNo, double maas, UserRole isTipi,String uzmanlikAlani,String parola) {
+        super(name, tcNo, maas, TEKNIKPERSONEL ,uzmanlikAlani,parola);
         
     }
     

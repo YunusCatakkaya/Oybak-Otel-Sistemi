@@ -8,7 +8,7 @@ import com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa;
 import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
 import com.oybak.otel.GUIYonetim.YonetimEkran;
 import com.oybak.otel.Hatalar;
-import com.oybak.otel.OturumKullanicisi;
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
@@ -154,14 +154,14 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
             return;
         }
         
-        UserRole aktifRol = calısanBilgileri(tc, parola);
+        Personel geciciPersonel = calısanBilgileri(tc, parola);
         
-        if (tcKontrol(tc) && aktifRol == null) {
+        if (tcKontrol(tc) && geciciPersonel.getIsTipi() == null) {
             JOptionPane.showMessageDialog(this, "TC No veya Parola hatalı!");
             return;
         }
         
-        OturumKullanicisi.setAktifKullaniciTC(tc);
+        UserRole aktifRol =  geciciPersonel.getIsTipi();
         
         switch(aktifRol){
             case RESEPSIYON -> {

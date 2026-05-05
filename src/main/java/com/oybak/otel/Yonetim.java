@@ -3,13 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.oybak.otel;
+
+import com.oybak.otel.enums.UserRole;
+import static com.oybak.otel.enums.UserRole.YONETIM;
+
 /**
  *
  * @author Yunus                       //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
  */
 public class Yonetim extends Personel implements VeriTabani, Hatalar{
-    public Yonetim(String name, String lastName, long tcNo, double maas, String isTipi,String uzmanlikAlani,String parola) {
-        super(name,lastName,tcNo,maas,"YONETIM",uzmanlikAlani,parola);
+    public Yonetim(String name, String lastName, long tcNo, double maas, UserRole isTipi,String parola) {
+        super(name,tcNo,maas,YONETIM,parola);
     }
     //aaaa
     
@@ -28,10 +32,12 @@ public class Yonetim extends Personel implements VeriTabani, Hatalar{
     try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
          java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
         
-        pstmt.setString(1, p.getName() + " " + p.getLastName());
+        String rol = String.valueOf(p.getIsTipi());
+        
+        pstmt.setString(1, p.getName());
         pstmt.setLong(2, p.getTcNo());
         pstmt.setDouble(3, p.getMaas());
-        pstmt.setString(4, p.getIsTipi());
+        pstmt.setString(4, rol);
         pstmt.setString(5, p.getParola()); 
         pstmt.setString(6, p.getUzmanlikAlani()); // Personel nesnesinden gelen uzmanlık bilgisi
 

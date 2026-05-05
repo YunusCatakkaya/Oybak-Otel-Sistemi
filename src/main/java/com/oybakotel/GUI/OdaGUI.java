@@ -6,7 +6,6 @@ package com.oybakotel.GUI;
 
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
 import com.oybak.otel.Oda;
-import static com.oybak.otel.OturumKullanicisi.getAktifKullaniciTC;
 import com.oybak.otel.TeknikEkip;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
@@ -293,7 +292,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
             case BAKIMDA ->{ 
                 TeknikEkip.odaBakimdanCikar(this.secilenOda);
                 JOptionPane.showMessageDialog(this, "Oda bakımdan çıkarıldı.");
-                logKayit(getAktifKullaniciTC() +" TC'li personel " +secilenOda +" numaralı odayı bakımdan çıkardı.");
+                logKayit(bilgileriYazdir() ," TC'li personel " +secilenOda +" numaralı odayı bakımdan çıkardı.");
                 this.dispose();
             }
             case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");
