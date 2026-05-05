@@ -14,7 +14,6 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     
     private com.toedter.calendar.JDateChooser girisTakvim;
     private com.toedter.calendar.JDateChooser cikisTakvim;
-    private com.oybak.otel.enums.UserRole aktifRol;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TarihSecimEkrani.class.getName());
 

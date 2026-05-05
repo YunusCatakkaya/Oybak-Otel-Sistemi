@@ -5,7 +5,6 @@
 package com.oybakotel.GUI;
 
 import com.oybak.otel.Personel;
-import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.MUSTERI;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -151,8 +150,8 @@ public class Anasayfa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void musteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musteriActionPerformed
-        p.setIsTipi(MUSTERI);
-        TarihSecimEkrani tarihEkrani = new TarihSecimEkrani(p);
+        Personel misafirKullanici = new Personel("Misafir", 0L, 0, MUSTERI, "000");
+        TarihSecimEkrani tarihEkrani = new TarihSecimEkrani(misafirKullanici);
         // 3. Ekranı ortala ve görünür yap
         tarihEkrani.setLocationRelativeTo(null); 
         tarihEkrani.setVisible(true);
