@@ -4,9 +4,9 @@
  */
 package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Oda;
+import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
 import com.oybak.otel.Yonetim;
-import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.YONETIM;
 /**
  *
@@ -21,13 +21,13 @@ public class ParaAlma extends javax.swing.JFrame implements VeriTabani { //sd
     /**
      * Creates new form ParaAlma
      */
-    private UserRole aktifRol;
+    private Personel p;
     
-    public ParaAlma(UserRole aktifRol) {
+    public ParaAlma(Personel p) {
         initComponents();
         doluOdalariYukle();
         odaComboBoxActionPerformed(null);
-        this.aktifRol=aktifRol;
+        this.p = p;
     }
     
     // Sınıfınızın içinde uygun bir yere bu metodu ekleyin:
@@ -35,7 +35,7 @@ private void doluOdalariYukle() {
     odaComboBox.removeAllItems(); // Önce eski verileri temizle
     
     // VeriTabani interface'ini implemente eden bir sınıf nesnesi (örneğin Resepsiyon)
-    VeriTabani vt = new Yonetim("Geçici", "Geçici", 0L, 0.0, YONETIM,""); 
+    VeriTabani vt = new Yonetim("Geçici", 0L, 0.0, YONETIM,""); 
     
     // Sadece durumu DOLU olan odaları getirir
     java.util.List<Oda> doluOdalar = vt.doluOdaListesi(); 
@@ -230,15 +230,7 @@ private double odenenMiktariGetir(int odaNo) {
     }//GEN-LAST:event_odemeAlActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (aktifRol == com.oybak.otel.enums.UserRole.YONETIM) {
-        // Yönetim sayfasına dön[cite: 1]
-        com.oybak.otel.GUIYonetim.YonetimKasa yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimKasa(aktifRol);
-        yonetimGeri.setVisible(true);
-    }   else {
-        // Resepsiyon sayfasına dön[cite: 1]
-        com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa resepsiyonGeri = new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(aktifRol);
-        resepsiyonGeri.setVisible(true);
-    }
+        
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -264,10 +256,11 @@ private double odenenMiktariGetir(int odaNo) {
         //</editor-fold>
 
         /* Create and display the form */
-                java.awt.EventQueue.invokeLater(() -> {
-    // Test amaçlı varsayılan bir rol (örneğin YONETIM) gönderiyoruz
-    new MusteriArama(com.oybak.otel.enums.UserRole.YONETIM).setVisible(true);
-});
+        java.awt.EventQueue.invokeLater(() -> {
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            // Test amaçlı varsayılan bir rol (örneğin YONETIM) gönderiyoruz
+            new MusteriArama(p).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

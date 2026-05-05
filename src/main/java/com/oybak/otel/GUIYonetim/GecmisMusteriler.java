@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIYonetim;
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.VeriTabani;
 
@@ -17,11 +18,11 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani {
     /**
      * Creates new form GecmisMusteriler
      */
-    private UserRole aktifRol;
+    private Personel p;
     
-    public GecmisMusteriler(UserRole aktifRol) {
+    public GecmisMusteriler(Personel p) {
         initComponents();
-        this.aktifRol=aktifRol;
+        this.p=p;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
 
@@ -180,7 +181,7 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani {
     }//GEN-LAST:event_txtSonucAlaniFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimMusteriArama Ara = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(aktifRol);
+        com.oybak.otel.GUIYonetim.YonetimMusteriArama Ara = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(p);
        
        Ara.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -208,8 +209,9 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-    new YonetimMusteriArama(UserRole.YONETIM).setVisible(true); 
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            new YonetimMusteriArama(p).setVisible(true); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

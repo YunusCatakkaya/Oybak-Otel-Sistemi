@@ -4,6 +4,7 @@
  */
 package com.oybak.otel.GUIResepsiyon;
 
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import com.oybakotel.GUI.OdaSecim;
 
@@ -18,10 +19,10 @@ public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
     /**
      * Creates new form ResepsiyonSayfa
      */    
-    private UserRole aktifRol;
+    private Personel p;
     
-    public ResepsiyonSayfa(UserRole rol) {
-        this.aktifRol = rol;
+    public ResepsiyonSayfa(Personel p) {
+        this.p = p;
         initComponents();
     }
 
@@ -110,7 +111,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.aktifRol = UserRole.MUSTERİEKLEME;
+        p.setIsTipi(UserRole.MUSTERİEKLEME);
         com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri rezervasyonEkrani = new com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri();
  
         rezervasyonEkrani.setLocationRelativeTo(null);
@@ -119,11 +120,11 @@ public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        odaSecim(aktifRol);
+        odaSecim(p);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        com.oybak.otel.GUIResepsiyon.ParaIslemleri paraEkrani = new com.oybak.otel.GUIResepsiyon.ParaIslemleri(aktifRol);
+        com.oybak.otel.GUIResepsiyon.ParaIslemleri paraEkrani = new com.oybak.otel.GUIResepsiyon.ParaIslemleri(p);
         
         paraEkrani.setLocationRelativeTo(null);
         paraEkrani.setVisible(true);
@@ -133,7 +134,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
         // Resepsiyon panelindeki butonun içi
-    MusteriArama musteriAramaSayfasi = new MusteriArama(com.oybak.otel.enums.UserRole.RESEPSIYON);
+        MusteriArama musteriAramaSayfasi = new MusteriArama(p);
         musteriAramaSayfasi.setLocationRelativeTo(null);
         musteriAramaSayfasi.setVisible(true);
         this.dispose();

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIYonetim;
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 /**
  *
@@ -15,11 +16,11 @@ public class ParaGirisi extends javax.swing.JFrame {
     /**
      * Creates new form ParaGirisi
      */
-    private UserRole aktifRol;
+    private Personel p;
     
-    public ParaGirisi(UserRole rol) {
+    public ParaGirisi(Personel p) {
         initComponents();
-        this.aktifRol=rol;
+        this.p = p;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
 
@@ -143,7 +144,7 @@ public class ParaGirisi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(aktifRol);
+       com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(p);
        
        Kasa.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -171,9 +172,9 @@ public class ParaGirisi extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-    
-    new ParaGirisi(UserRole.YONETIM).setVisible(true); 
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            new ParaGirisi(p).setVisible(true); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

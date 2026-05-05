@@ -4,8 +4,9 @@
  */
 package com.oybak.otel.GUITeknikEkip;
 
+import com.oybak.otel.Personel;
 import com.oybakotel.GUI.OdaSecim;
-import com.oybak.otel.enums.UserRole;
+import static com.oybak.otel.enums.UserRole.BAKIM;
 
 /**
  *
@@ -17,11 +18,11 @@ public class TeknikPersonelSayfasi extends javax.swing.JFrame implements OdaSeci
 
     /**
      * Creates new form NewJFrame
-     */    
-    private UserRole aktifRol;
+     */  
+    private Personel personel;
     
-    public TeknikPersonelSayfasi(UserRole rol) {
-        this.aktifRol = rol;
+    public TeknikPersonelSayfasi(Personel p) {
+        this.personel = p;
         initComponents();
     }
 
@@ -89,12 +90,12 @@ public class TeknikPersonelSayfasi extends javax.swing.JFrame implements OdaSeci
     }// </editor-fold>//GEN-END:initComponents
 
     private void odalarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odalarActionPerformed
-        odaSecim(aktifRol);
+        odaSecim(personel);
     }//GEN-LAST:event_odalarActionPerformed
 
     private void bakımIslemiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bakımIslemiActionPerformed
-        aktifRol = UserRole.BAKIM;
-        odaSecim(aktifRol);
+        personel.setIsTipi(BAKIM);
+        odaSecim(personel);
     }//GEN-LAST:event_bakımIslemiActionPerformed
 
     /**

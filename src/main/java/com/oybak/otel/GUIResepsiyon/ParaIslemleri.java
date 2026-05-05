@@ -4,24 +4,26 @@
  */
 package com.oybak.otel.GUIResepsiyon;
 
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
+import com.oybakotel.GUI.GeriButonu;
 
 /**
  *
  * @author onuro
  */
-public class ParaIslemleri extends javax.swing.JFrame {
+public class ParaIslemleri extends javax.swing.JFrame implements GeriButonu{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ParaIslemleri.class.getName());
 
     /**
      * Creates new form ParaIslemleri
      */
-    private UserRole aktifRol;
+    private Personel p;
     
-    public ParaIslemleri(UserRole aktifRol) {
+    public ParaIslemleri(Personel p) {
         initComponents();
-        this.aktifRol=aktifRol;
+        this.p = p;
     }
 
     /**
@@ -95,7 +97,7 @@ public class ParaIslemleri extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         // ParaAlma JFrame'inden bir nesne oluşturuyoruz
-    ParaAlma paraAlmaEkrani = new ParaAlma(aktifRol); 
+    ParaAlma paraAlmaEkrani = new ParaAlma(p); 
     
     // Ekranın bilgisayarın tam ortasında açılmasını sağlar
     paraAlmaEkrani.setLocationRelativeTo(null); 
@@ -108,16 +110,7 @@ public class ParaIslemleri extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa resepsiyonAnaSayfa = 
-        new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(com.oybak.otel.enums.UserRole.RESEPSIYON);
-    
-        // 2. Yeni açılacak pencereyi ekranın tam ortasına hizalıyoruz
-        resepsiyonAnaSayfa.setLocationRelativeTo(null);
-    
-        // 3. Resepsiyon ana sayfasını görünür (aktif) hale getiriyoruz
-        resepsiyonAnaSayfa.setVisible(true);
-    
-        // 4. İçinde bulunduğumuz "Müşteri Arama" penceresini tamamen kapatıyoruz
+        geriButonu(p);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -144,9 +137,9 @@ public class ParaIslemleri extends javax.swing.JFrame {
 
         /* Create and display the form */
        java.awt.EventQueue.invokeLater(() -> {
-    
-    new ParaIslemleri(UserRole.RESEPSIYON).setVisible(true); 
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            new ParaIslemleri(p).setVisible(true); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

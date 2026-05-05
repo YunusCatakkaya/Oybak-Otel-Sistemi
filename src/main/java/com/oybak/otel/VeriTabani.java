@@ -64,7 +64,7 @@ public interface VeriTabani {
  
     public default Personel calısanBilgileri(String tc, String parola){
         Personel calisan = null;
-        String sql = "SELECT is_tipi FROM calisanlar WHERE tc_no = ? AND Parola = ?";
+        String sql = "SELECT * FROM calisanlar WHERE tc_no = ? AND Parola = ?";
     
         try (Connection baglanti = DriverManager.getConnection(URL);
             PreparedStatement sorgu = baglanti.prepareStatement(sql)) {

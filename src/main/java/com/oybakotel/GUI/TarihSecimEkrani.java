@@ -4,6 +4,8 @@
  */
 package com.oybakotel.GUI;
 
+import com.oybak.otel.Personel;
+
 /**
  *
  * @author Yunus
@@ -19,8 +21,11 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     /**
      * Creates new form TarihSecimEkrani
      */
-    public TarihSecimEkrani(com.oybak.otel.enums.UserRole rol) {
-        this.aktifRol=rol;
+    
+    private Personel p;
+    
+    public TarihSecimEkrani(Personel p) {
+        this.p = p;
         initComponents();
         
         
@@ -216,7 +221,7 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     System.out.println("Başarılı! Giriş: " + giris + " | Çıkış: " + cikis);
     
     // Müşteriyi Oda Seçim Ekranına yolla ve rolünü de beraberinde götür
-    com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(aktifRol);
+    com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(p);
     odaEkrani.setVisible(true);
     
     // İşimiz biten bu tarih ekranını kapatalım
@@ -246,7 +251,11 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        new TarihSecimEkrani(com.oybak.otel.enums.UserRole.MUSTERI).setVisible(true); //test etmek için müşteri
+        java.awt.EventQueue.invokeLater(() -> {
+            // Test edebilmek için sahte (dummy) bir personel oluşturuyoruz
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123"); 
+            new TarihSecimEkrani(p).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

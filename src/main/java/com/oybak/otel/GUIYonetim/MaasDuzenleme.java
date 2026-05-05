@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIYonetim;
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.YONETIM;
 /**
@@ -16,10 +17,10 @@ public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.
     /**
      * Creates new form MaasDuzenleme
      */
-    private UserRole aktifRol;
-    public MaasDuzenleme(UserRole rol) {
+    private Personel p;
+    public MaasDuzenleme(Personel p) {
         initComponents();
-        this.aktifRol=rol;
+        this.p=p;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
 
@@ -142,7 +143,7 @@ public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimCalisan Calisan = new com.oybak.otel.GUIYonetim.YonetimCalisan(aktifRol);
+        com.oybak.otel.GUIYonetim.YonetimCalisan Calisan = new com.oybak.otel.GUIYonetim.YonetimCalisan(p);
        
        Calisan.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -170,7 +171,7 @@ public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.
         String tamAdSoyad = isim + " " + soyisim;
 
         // 5. Yonetim sınıfını çağır
-        com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", "", 0, 0, YONETIM, "");
+        com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", 0, 0, YONETIM, "");
         yonetici.maasGuncelle(tamAdSoyad, tcNoStr, yeniMaasStr);
 
         // 6. Başarılıysa kutuları temizle
@@ -208,9 +209,9 @@ public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-    
-    new MaasDuzenleme(UserRole.YONETIM).setVisible(true); 
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            new MaasDuzenleme(p).setVisible(true); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

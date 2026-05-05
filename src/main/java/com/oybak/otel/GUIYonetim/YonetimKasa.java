@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIYonetim;
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 /**
  *
@@ -15,10 +16,10 @@ public class YonetimKasa extends javax.swing.JFrame {
     /**
      * Creates new form YonetimKasa
      */
-    private UserRole aktifRol;
-    public YonetimKasa(UserRole rol) {
+    private Personel p;
+    public YonetimKasa(Personel p) {
         initComponents();
-        this.aktifRol=rol;
+        this.p=p;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
 
@@ -90,19 +91,19 @@ public class YonetimKasa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       com.oybak.otel.GUIYonetim.YonetimEkran Ekran = new com.oybak.otel.GUIYonetim.YonetimEkran(aktifRol);
+       com.oybak.otel.GUIYonetim.YonetimEkran Ekran = new com.oybak.otel.GUIYonetim.YonetimEkran(p);
        
        Ekran.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        com.oybak.otel.GUIYonetim.ParaIade Iade = new com.oybak.otel.GUIYonetim.ParaIade(aktifRol);
+        com.oybak.otel.GUIYonetim.ParaIade Iade = new com.oybak.otel.GUIYonetim.ParaIade(p);
        
        Iade.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        com.oybak.otel.GUIResepsiyon.ParaAlma Alma = new com.oybak.otel.GUIResepsiyon.ParaAlma(aktifRol);
+        com.oybak.otel.GUIResepsiyon.ParaAlma Alma = new com.oybak.otel.GUIResepsiyon.ParaAlma(p);
        
        Alma.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -130,9 +131,9 @@ public class YonetimKasa extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-    
-    new YonetimKasa(UserRole.YONETIM).setVisible(true); 
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            new YonetimKasa(p).setVisible(true); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

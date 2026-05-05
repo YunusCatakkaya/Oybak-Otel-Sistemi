@@ -5,6 +5,7 @@
 package com.oybak.otel.GUIYonetim;
 
 import com.oybak.otel.GUIYonetim.YonetimMusteriArama;
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import com.oybakotel.GUI.OdaSecim;
 
@@ -19,10 +20,10 @@ public class YonetimEkran extends javax.swing.JFrame implements OdaSecim{
     /**
      * Creates new form YonetimEkran
      */    
-    private UserRole aktifRol;
+    private Personel p;
     
-    public YonetimEkran(UserRole rol) {
-        this.aktifRol = rol;
+    public YonetimEkran(Personel p) {
+        this.p = p;
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
@@ -109,23 +110,23 @@ public class YonetimEkran extends javax.swing.JFrame implements OdaSecim{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        odaSecim(aktifRol);
+        odaSecim(p);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       com.oybak.otel.GUIYonetim.YonetimMusteriArama musteriArama = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(aktifRol);
+       com.oybak.otel.GUIYonetim.YonetimMusteriArama musteriArama = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(p);
        
        musteriArama.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(aktifRol);
+       com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(p);
        
        Genel.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(aktifRol);
+        com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(p);
        
        Kasa.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed

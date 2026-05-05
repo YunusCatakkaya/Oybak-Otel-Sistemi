@@ -3,8 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIResepsiyon;
+import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
-import com.oybak.otel.enums.UserRole;
 /**
  *
  * @author onuro
@@ -19,13 +19,13 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
     
     //private com.oybak.otel.enums.UserRole aktifRol; // Mevcut rolü saklamak için
     
-    private UserRole aktifRol;
+    private Personel p;
     
-    public MusteriArama(UserRole aktifRol) {
+    public MusteriArama(Personel p) {
         initComponents();
         // JTextArea'nın (txtSonucAlani) düzenlenmesini engellemek için:
         txtSonucAlani.setEditable(false);
-        this.aktifRol=aktifRol;
+        this.p = p;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
         
     }
@@ -149,7 +149,7 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
 
             // --- YETKİ KONTROLÜ BURADA YAPILIYOR ---
             // Eğer aktif rol YONETIM ise TC numarasını da ekle[cite: 1]
-            if (aktifRol == com.oybak.otel.enums.UserRole.YONETIM) {
+            if (p.getIsTipi() == com.oybak.otel.enums.UserRole.YONETIM) {
                 sb.append("TC Kimlik No: ").append(rs.getString("tc_no")).append("\n");
             }
             // --------------------------------------
@@ -194,13 +194,13 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      if (aktifRol == com.oybak.otel.enums.UserRole.YONETIM) {
+      if (p.getIsTipi() == com.oybak.otel.enums.UserRole.YONETIM) {
         // Yönetim sayfasına dön[cite: 1]
-        com.oybak.otel.GUIYonetim.YonetimMusteriArama yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(aktifRol);
+        com.oybak.otel.GUIYonetim.YonetimMusteriArama yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(p);
         yonetimGeri.setVisible(true);
     } else {
         // Resepsiyon sayfasına dön[cite: 1]
-        com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa resepsiyonGeri = new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(aktifRol);
+        com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa resepsiyonGeri = new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p);
         resepsiyonGeri.setVisible(true);
     }
       this.dispose();
@@ -229,9 +229,10 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-    // Test amaçlı varsayılan bir rol (örneğin YONETIM) gönderiyoruz
-    new MusteriArama(com.oybak.otel.enums.UserRole.YONETIM).setVisible(true);
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            // Test amaçlı varsayılan bir rol (örneğin YONETIM) gönderiyoruz
+            new MusteriArama(p).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

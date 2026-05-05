@@ -6,8 +6,8 @@ package com.oybakotel.GUI;
 
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
 import com.oybak.otel.Oda;
+import com.oybak.otel.Personel;
 import com.oybak.otel.TeknikEkip;
-import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
 import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
@@ -28,12 +28,12 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
      * Creates new form OdaGUI
      */
     private int secilenOda;
-    private UserRole aktifRol;
+    private Personel p;
 
     // Parametreli Constructor: Bu ekran açılırken bir Oda nesnesi bekler
-    public OdaGUI(int oda, UserRole rol) {
+    public OdaGUI(int oda, Personel p) {
         this.secilenOda = oda; // Gelen oda bilgisini kaydet
-        this.aktifRol = rol;
+        this.p = p;
         initComponents();    // Verileri arayüze bas
  // --- EKLENEN KISIM BAŞLANGICI ---
         // Ekranda yer alan OdaNo isimli JLabel'a seçilen odayı yazdırıyoruz
@@ -53,7 +53,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     musteriBilgileriPaneli.setVisible(false);
 
     // 2. Aktif role göre panelleri görünür yap
-    switch (this.aktifRol) {
+    switch (p.getIsTipi()) {
         case TEKNIKPERSONEL ->{
             bakimSebebiPaneli.setVisible(true); // Bakım sebebi yazısını da görmeleri gerekir
         }
@@ -274,7 +274,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
             case BAKIMDA -> JOptionPane.showMessageDialog(this, "Oda zaten bakımda!");
             case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");
             case MUSAIT -> {
-                BakımSebebiPopupGUI popup = new BakımSebebiPopupGUI(this, true, secilenOda); 
+                BakımSebebiPopupGUI popup = new BakımSebebiPopupGUI(this, true, secilenOda, p); 
                 popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
                 popup.setVisible(true);
                 this.dispose();
@@ -292,7 +292,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
             case BAKIMDA ->{ 
                 TeknikEkip.odaBakimdanCikar(this.secilenOda);
                 JOptionPane.showMessageDialog(this, "Oda bakımdan çıkarıldı.");
-                logKayit(bilgileriYazdir() ," TC'li personel " +secilenOda +" numaralı odayı bakımdan çıkardı.");
+                logKayit(p.bilgileriYazdir() ," TC'li personel " +secilenOda +" numaralı odayı bakımdan çıkardı.");
                 this.dispose();
             }
             case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIYonetim;
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.VeriTabani;
 /**
@@ -16,10 +17,10 @@ public class ParaIade extends javax.swing.JFrame implements VeriTabani {
     /**
      * Creates new form Paraİade
      */
-    private UserRole aktifRol;
-    public ParaIade(UserRole rol) {
+    private Personel p;
+    public ParaIade(Personel p) {
         initComponents();
-        this.aktifRol=rol;
+        this.p = p;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
 
@@ -120,7 +121,7 @@ public class ParaIade extends javax.swing.JFrame implements VeriTabani {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(aktifRol);
+        com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(p);
        
        Kasa.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -219,9 +220,9 @@ public class ParaIade extends javax.swing.JFrame implements VeriTabani {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-    
-    new ParaIade(UserRole.YONETIM).setVisible(true); 
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            new ParaIade(p).setVisible(true); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

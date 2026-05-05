@@ -4,7 +4,7 @@
  */
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.enums.UserRole;
-import com.oybak.otel.GUIYonetim.CalisanEkle;
+import com.oybak.otel.Personel;
 
 /**
  *
@@ -17,11 +17,11 @@ public class YonetimCalisan extends javax.swing.JFrame {
     /**
      * Creates new form YonetimCalisan
      */
-    private UserRole aktifRol;
+    private Personel p;
     
-    public YonetimCalisan(UserRole rol) {
+    public YonetimCalisan(Personel p) {
         initComponents();
-        this.aktifRol=rol;
+        this.p=p;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
         
     }
@@ -103,25 +103,25 @@ public class YonetimCalisan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(aktifRol);
+         com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(p);
        
        Genel.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         com.oybak.otel.GUIYonetim.CalisanEkle Ekle = new com.oybak.otel.GUIYonetim.CalisanEkle(aktifRol);
+         com.oybak.otel.GUIYonetim.CalisanEkle Ekle = new com.oybak.otel.GUIYonetim.CalisanEkle(p);
        
        Ekle.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        com.oybak.otel.GUIYonetim.CalisanCikar Cikar = new com.oybak.otel.GUIYonetim.CalisanCikar(aktifRol);
+        com.oybak.otel.GUIYonetim.CalisanCikar Cikar = new com.oybak.otel.GUIYonetim.CalisanCikar(p);
        
        Cikar.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        com.oybak.otel.GUIYonetim.MaasDuzenleme Duzenleme = new com.oybak.otel.GUIYonetim.MaasDuzenleme(aktifRol);
+        com.oybak.otel.GUIYonetim.MaasDuzenleme Duzenleme = new com.oybak.otel.GUIYonetim.MaasDuzenleme(p);
        
        Duzenleme.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -150,9 +150,10 @@ public class YonetimCalisan extends javax.swing.JFrame {
         /* Create and display the form */
         
         java.awt.EventQueue.invokeLater(() -> {
-    // UserRole.ADMIN örnektir, kendi enum değerine göre değiştir
-    new YonetimCalisan(UserRole.YONETIM).setVisible(true); 
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            // UserRole.ADMIN örnektir, kendi enum değerine göre değiştir
+            new YonetimCalisan(p).setVisible(true); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

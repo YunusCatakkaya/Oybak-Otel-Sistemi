@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIYonetim;
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 /**
  *
@@ -16,11 +17,11 @@ public class YonetimGenel extends javax.swing.JFrame {
      * Creates new form YonetimGenel
      */
     
-    private UserRole aktifRol;
+    private Personel p;
     
-    public YonetimGenel(UserRole rol) {
+    public YonetimGenel(Personel p) {
         initComponents();
-        this.aktifRol=rol;
+        this.p = p;
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
     }
     
@@ -99,13 +100,13 @@ public class YonetimGenel extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         com.oybak.otel.GUIYonetim.YonetimCalisan Calisan = new com.oybak.otel.GUIYonetim.YonetimCalisan(aktifRol);
+         com.oybak.otel.GUIYonetim.YonetimCalisan Calisan = new com.oybak.otel.GUIYonetim.YonetimCalisan(p);
        
        Calisan.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    com.oybak.otel.GUIYonetim.YonetimEkran Ekran = new com.oybak.otel.GUIYonetim.YonetimEkran(aktifRol);
+    com.oybak.otel.GUIYonetim.YonetimEkran Ekran = new com.oybak.otel.GUIYonetim.YonetimEkran(p);
        
        Ekran.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -134,9 +135,9 @@ public class YonetimGenel extends javax.swing.JFrame {
         /* Create and display the form */
        
         java.awt.EventQueue.invokeLater(() -> {
-    
-    new YonetimGenel(UserRole.YONETIM).setVisible(true); 
-});
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            new YonetimGenel(p).setVisible(true); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

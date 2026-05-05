@@ -5,7 +5,6 @@
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.Yonetim;
 import com.oybak.otel.enums.UserRole;
-import javax.swing.JOptionPane;
 import com.oybak.otel.Personel;
 import com.oybak.otel.Hatalar;
 import static com.oybak.otel.enums.UserRole.YONETIM;
@@ -20,13 +19,13 @@ public class CalisanEkle extends javax.swing.JFrame implements Hatalar {
     /**
      * Creates new form CalisanEkle
      */
-    private UserRole aktifRol;
+    private Personel p;
     private String teknikUzmanlik = "";
     
-    public CalisanEkle(UserRole rol) {
+    public CalisanEkle(Personel p) {
         initComponents();
         this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Uygulamayı tam ekran açar
-        this.aktifRol=rol;
+        this.p=p;
     }
     
     // CalisanEkle.java dosyasının içinde bir yere:
@@ -39,7 +38,7 @@ private void personelKaydet(String uzmanlikAlani) {
         String maasStr = jTextPane3.getText().trim();
         String tcStr = jTextPane4.getText().trim();
         String parola = jTextPane5.getText().trim(); // Parola alanını çektik
-
+        
         // 2. Boşluk Kontrolü (Parola dahil)
         if (ad.isEmpty() || soyad.isEmpty() || maasStr.isEmpty() || tcStr.isEmpty() || parola.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları (şifre dahil) eksiksiz doldurunuz!", "Eksik Bilgi", 2);
@@ -64,14 +63,14 @@ private void personelKaydet(String uzmanlikAlani) {
 
         // 6. Veritabanı Mükerrer Kayıt Kontrolü
         // Yonetim nesnesini 7 parametreli yeni constructor ile oluşturuyoruz
-        Yonetim yonetici = new Yonetim("Admin", "Sistem", 0L, 0.0, YONETIM, "123");
+        Yonetim yonetici = new Yonetim("Admin", 0L, 0.0, YONETIM, "123");
         if (yonetici.tcVarMi(tc)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Bu TC numarası zaten kayıtlı!", "Mükerrer Kayıt", 0);
             return;
         }
         UserRole rol = UserRole.valueOf(secilenIsTipi);
         // 7. Personel Nesnesi Oluşturma (7 Parametre: ad, soyad, tc, maas, isTipi, uzmanlik, parola)
-        Personel yeniKisi = new Personel(ad, tc, maas, rol, uzmanlikAlani, parola);
+        Personel yeniKisi = new Personel((ad + " " +soyad), tc, maas, rol, uzmanlikAlani, parola);
         
         // 8. Veritabanına Kayıt
         yonetici.personelEkle(yeniKisi);
@@ -237,7 +236,7 @@ private void personelKaydet(String uzmanlikAlani) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimCalisan Calisan = new com.oybak.otel.GUIYonetim.YonetimCalisan(aktifRol);
+        com.oybak.otel.GUIYonetim.YonetimCalisan Calisan = new com.oybak.otel.GUIYonetim.YonetimCalisan(p);
        
        Calisan.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -320,11 +319,11 @@ private void personelKaydet(String uzmanlikAlani) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-java.awt.EventQueue.invokeLater(() -> {
-    
-    new CalisanEkle(UserRole.YONETIM).setVisible(true); 
-});
-        
+        java.awt.EventQueue.invokeLater(() -> {
+            Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+            new CalisanEkle(p).setVisible(true); 
+        });
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,6 +5,7 @@
 package com.oybak.otel.GUITeknikEkip;
 
 import com.oybak.otel.Oda;
+import com.oybak.otel.Personel;
 import com.oybak.otel.TeknikEkip;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
@@ -17,12 +18,14 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BakımSebebiPopupGUI.class.getName());
     private int oda;
+    private Personel p;
     /**
      * Creates new form NewJDialog
      */
-    public BakımSebebiPopupGUI(java.awt.Frame parent, boolean modal, int gelenOda) {
+    public BakımSebebiPopupGUI(java.awt.Frame parent, boolean modal, int gelenOda, Personel p) {
         super(parent, modal);
         this.oda = gelenOda;
+        this.p = p;
         initComponents();
     }
     
@@ -139,7 +142,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
         System.out.println("İşlem gerçekleştiriliyor.");
         JOptionPane.showMessageDialog(this, oda + " numaralı oda bakıma alındı.");
         System.out.println("İşlem gerçekleşti.");
-        logKayit(bilgileriYazdir() ," TC'li personel " +oda +" numaralı odayı bakıma aldı.");
+        logKayit(p.bilgileriYazdir() ," TC'li personel " +oda +" numaralı odayı bakıma aldı.");
         this.dispose();
     }//GEN-LAST:event_tamamActionPerformed
 
@@ -168,7 +171,8 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                BakımSebebiPopupGUI dialog = new BakımSebebiPopupGUI(new javax.swing.JFrame(), true, 0);
+                Personel p = new Personel("Test", 12345678916L, 0, null, "123");
+                BakımSebebiPopupGUI dialog = new BakımSebebiPopupGUI(new javax.swing.JFrame(), true, 0, p);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

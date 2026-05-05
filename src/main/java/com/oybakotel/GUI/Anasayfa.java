@@ -4,6 +4,7 @@
  */
 package com.oybakotel.GUI;
 
+import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.MUSTERI;
 import javafx.embed.swing.JFXPanel;
@@ -23,7 +24,7 @@ import java.awt.BorderLayout;
 public class Anasayfa extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Anasayfa.class.getName());
-    private UserRole aktifRol;
+    private Personel p;
     
     /**
      * Creates new form Anasayfa
@@ -150,8 +151,8 @@ public class Anasayfa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void musteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musteriActionPerformed
-        aktifRol = MUSTERI;
-        TarihSecimEkrani tarihEkrani = new TarihSecimEkrani(aktifRol);
+        p.setIsTipi(MUSTERI);
+        TarihSecimEkrani tarihEkrani = new TarihSecimEkrani(p);
         // 3. Ekranı ortala ve görünür yap
         tarihEkrani.setLocationRelativeTo(null); 
         tarihEkrani.setVisible(true);
@@ -188,14 +189,6 @@ public class Anasayfa extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Anasayfa().setVisible(true));
-    }
-
-    public UserRole getAktifRol() {
-        return aktifRol;
-    }
-
-    public void setAktifRol(UserRole aktifRol) {
-        this.aktifRol = aktifRol;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -7,7 +7,7 @@ package com.oybakotel.GUI;
 import com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa;
 import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
 import com.oybak.otel.GUIYonetim.YonetimEkran;
-import com.oybak.otel.enums.UserRole;
+import com.oybak.otel.Personel;
 import static com.oybak.otel.enums.UserRole.BAKIM;
 import static com.oybak.otel.enums.UserRole.MUSTERI;
 import static com.oybak.otel.enums.UserRole.MUSTERİEKLEME;
@@ -22,8 +22,8 @@ import javax.swing.JOptionPane;
  * @author ahmet
  */
 public interface GeriButonu {
-    public default void odaSecim(UserRole aktifRol){
-        switch(aktifRol){
+    public default void geriButonu(Personel p){
+        switch(p.getIsTipi()){
             case  MUSTERI->{ 
                 JOptionPane.showMessageDialog((Component) this, "Anasayfaya aktarılıyorsunuz.");
                 Anasayfa t = new Anasayfa();
@@ -32,19 +32,19 @@ public interface GeriButonu {
             }
             case  RESEPSIYON, MUSTERİEKLEME->{ 
                 JOptionPane.showMessageDialog((Component) this, "Resepsiyon anasayfasına aktarılıyorsunuz.");
-                ResepsiyonSayfa r = new ResepsiyonSayfa(aktifRol);
+                ResepsiyonSayfa r = new ResepsiyonSayfa(p);
                 r.setLocationRelativeTo(null);
                 r.setVisible(true);
             }
             case  YONETIM->{ 
                 JOptionPane.showMessageDialog((Component) this, "Yonetim anasayfasına aktarılıyorsunuz.");
-                YonetimEkran y = new YonetimEkran(aktifRol);
+                YonetimEkran y = new YonetimEkran(p);
                 y.setLocationRelativeTo(null);
                 y.setVisible(true);
             }
             case  TEKNIKPERSONEL, BAKIM->{ 
                 JOptionPane.showMessageDialog((Component) this, "Teknik perosnel anasayfayasına aktarılıyorsunuz.");
-                TeknikPersonelSayfasi t = new TeknikPersonelSayfasi(aktifRol);
+                TeknikPersonelSayfasi t = new TeknikPersonelSayfasi(p);
                 t.setLocationRelativeTo(null);
                 t.setVisible(true);
             }
