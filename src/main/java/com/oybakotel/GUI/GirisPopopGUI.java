@@ -12,7 +12,6 @@ import com.oybak.otel.OturumKullanicisi;
 import com.oybak.otel.enums.UserRole;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
-import javax.swing.JTextField;
 
 /**
  *

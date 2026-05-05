@@ -18,13 +18,14 @@ public class Oda {
     private int tekKisilikYatak;
     private int ciftKisilikYatak;
     private boolean denizManzarası;
-    private boolean minibar;
+    private boolean balkon;
     private boolean jakuzi;
     private OdaDurumu odaDurumu;  // Bakımda  Müsait Dolu
     private String bakımSebebi;
     private List<Musteri> odadakiMusteriler;
     private int kapasite;//odanın kapasitresinii belirlemek için
     private double fiyat;
+    boolean odenmeDurumu;
         
 	
     public Oda(int odaNumarası, OdaDurumu odaDurumu, String odaTipi, String ekOzellikler,int kapasite) { //oda constructor 
@@ -87,12 +88,12 @@ public class Oda {
         this.denizManzarası = denizManzarası;
     }
 
-    public boolean isMinibar() {
-        return minibar;
+    public boolean isBalkon() {
+        return balkon;
     }
 
-    public void setMinibar(boolean minibar) {
-        this.minibar = minibar;
+    public void setBalkon(boolean balkon) {
+        this.balkon = balkon;
     }
 
     public boolean isJakuzi() {
@@ -139,6 +140,14 @@ public class Oda {
         if (fiyat >= 0) {
                 this.fiyat = fiyat;
         }
+    }
+
+    public void setOdenmeDurumu(boolean odenmeDurumu) {
+        this.odenmeDurumu = odenmeDurumu;
+    }
+    
+    public boolean isOdenmeDurumu() {
+        return odenmeDurumu;
     }
 }
 

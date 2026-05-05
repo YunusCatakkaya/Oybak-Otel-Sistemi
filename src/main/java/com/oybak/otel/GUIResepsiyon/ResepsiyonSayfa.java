@@ -5,12 +5,13 @@
 package com.oybak.otel.GUIResepsiyon;
 
 import com.oybak.otel.enums.UserRole;
+import com.oybakotel.GUI.OdaSecim;
 
 /**
  *
  * @author ahmet
  */
-public class ResepsiyonSayfa extends javax.swing.JFrame {
+public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ResepsiyonSayfa.class.getName());
 
@@ -118,10 +119,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(aktifRol);
-        
-        odaEkrani.setVisible(true);
-        this.dispose();
+        odaSecim(aktifRol);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

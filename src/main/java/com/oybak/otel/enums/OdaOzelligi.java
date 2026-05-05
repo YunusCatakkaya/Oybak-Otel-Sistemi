@@ -10,6 +10,6 @@ package com.oybak.otel.enums;
  */
 public enum OdaOzelligi {
     DENIZ_MANZARASI,
-    MINIBAR,
+    BALKON,
     JAKUZI
 }

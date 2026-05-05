@@ -11,14 +11,12 @@ import com.oybak.otel.Oda;
 import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
 import static com.oybak.otel.enums.OdaDurumu.DOLU;
 import static com.oybak.otel.enums.OdaDurumu.MUSAIT;
-import static com.oybak.otel.enums.UserRole.MUSTERİEKLEME;
-import javax.swing.JOptionPane;
     
 /**
  *
  * @author userxpc666
  */
-public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, VeriTabani{
+public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, VeriTabani, GeriButonu{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(OdaSecimEkrani.class.getName());
     
@@ -343,24 +341,8 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
     }//GEN-LAST:event_j405ActionPerformed
 
     private void GeriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeriActionPerformed
-        switch(aktifRol){
-            case  MUSTERI->{ 
-                JOptionPane.showMessageDialog(this, "Anasayfaya aktarılıyorsunuz.");
-                this.dispose();
-            }
-            case  RESEPSIYON, MUSTERİEKLEME->{ 
-                JOptionPane.showMessageDialog(this, "Resepsiyon anasayfasına aktarılıyorsunuz.");
-                this.dispose();
-            }
-            case  YONETIM->{ 
-                JOptionPane.showMessageDialog(this, "Yonetim anasayfasına aktarılıyorsunuz.");
-                this.dispose();
-            }
-            case  TEKNIKPERSONEL, BAKIM->{ 
-                JOptionPane.showMessageDialog(this, "Teknik perosnel anasayfayasına aktarılıyorsunuz.");
-                this.dispose();
-            }
-        }     // TODO add your handling code here:
+        odaSecim(aktifRol);
+        this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_GeriActionPerformed
 
     /**
