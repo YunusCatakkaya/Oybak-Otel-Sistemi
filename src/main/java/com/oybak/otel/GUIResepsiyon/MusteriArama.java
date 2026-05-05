@@ -199,7 +199,7 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       if (aktifRol == com.oybak.otel.enums.UserRole.YONETIM) {
         // Yönetim sayfasına dön[cite: 1]
-        com.oybak.otel.GUIYonetim.YonetimEkran yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimEkran(aktifRol);
+        com.oybak.otel.GUIYonetim.YonetimMusteriArama yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(aktifRol);
         yonetimGeri.setVisible(true);
     } else {
         // Resepsiyon sayfasına dön[cite: 1]
