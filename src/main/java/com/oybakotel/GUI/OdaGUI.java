@@ -292,7 +292,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
             case BAKIMDA ->{ 
                 TeknikEkip.odaBakimdanCikar(this.secilenOda);
                 JOptionPane.showMessageDialog(this, "Oda bakımdan çıkarıldı.");
-                logKayit(p.bilgileriYazdir() ," TC'li personel " +secilenOda +" numaralı odayı bakımdan çıkardı.");
+                logKayit(p.bilgileriYazdir() ," " +secilenOda +" numaralı odayı bakımdan çıkardı.");
                 this.dispose();
             }
             case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");

@@ -142,7 +142,7 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
         System.out.println("İşlem gerçekleştiriliyor.");
         JOptionPane.showMessageDialog(this, oda + " numaralı oda bakıma alındı.");
         System.out.println("İşlem gerçekleşti.");
-        logKayit(p.bilgileriYazdir() ," TC'li personel " +oda +" numaralı odayı bakıma aldı.");
+        logKayit(p.bilgileriYazdir() ," " +oda +" numaralı odayı bakıma aldı.");
         this.dispose();
     }//GEN-LAST:event_tamamActionPerformed
 

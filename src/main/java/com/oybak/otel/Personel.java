@@ -34,10 +34,10 @@ public class Personel extends Person{
     
     @Override
     public String bilgileriYazdir() {
-        return("Personel İsim ve Soy İsim"+getName()+"Tc No"+getTcNo()+"TC");
+        return("Personel "+getName()+" Tc No "+ getTcNo());
     }
     public String bilgileriYazdir(String isTipi, String maas) {
-        return("Personel İsim ve Soy İsim"+getName()+"Tc No"+getTcNo()+"TC"+ "Görevi"+isTipi+"Maaşı"+maas+"TL");
+        return("Personel "+getName()+" Tc No "+ getTcNo()+ "Görevi"+isTipi+"Maaşı"+maas+"TL");
     }
     public double getMaas() {
             return maas;
