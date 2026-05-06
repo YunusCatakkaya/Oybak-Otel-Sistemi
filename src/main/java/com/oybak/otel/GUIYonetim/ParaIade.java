@@ -6,11 +6,12 @@ package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.VeriTabani;
+import com.oybakotel.GUI.GeriButonu;
 /**
  *
  * @author userxpc666
  */
-public class ParaIade extends javax.swing.JFrame implements VeriTabani {
+public class ParaIade extends javax.swing.JFrame implements VeriTabani,GeriButonu {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ParaIade.class.getName());
 
@@ -121,9 +122,8 @@ public class ParaIade extends javax.swing.JFrame implements VeriTabani {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(p);
-       
-       Kasa.setVisible(true);
+        geriButonu(p);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

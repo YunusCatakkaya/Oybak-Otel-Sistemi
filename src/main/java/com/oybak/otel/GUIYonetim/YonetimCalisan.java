@@ -5,12 +5,13 @@
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.Personel;
+import com.oybakotel.GUI.GeriButonu;
 
 /**
  *
  * @author userxpc666
  */
-public class YonetimCalisan extends javax.swing.JFrame {
+public class YonetimCalisan extends javax.swing.JFrame implements GeriButonu {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimCalisan.class.getName());
 
@@ -111,9 +112,8 @@ public class YonetimCalisan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(p);
-       
-       Genel.setVisible(true);
+        geriButonu(p);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

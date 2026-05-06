@@ -12,13 +12,14 @@ import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import com.oybakotel.GUI.GeriButonu;
 
 /**
  *
  * @author userxpc666
  * y
  */
-public class YonetimOdaOzellik extends javax.swing.JFrame implements VeriTabani {
+public class YonetimOdaOzellik extends javax.swing.JFrame implements VeriTabani,GeriButonu {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(YonetimOdaOzellik.class.getName());
 
@@ -223,9 +224,8 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-          com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(p);
-       
-       Genel.setVisible(true);
+        geriButonu(p);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased

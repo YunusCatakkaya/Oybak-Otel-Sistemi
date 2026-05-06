@@ -6,12 +6,13 @@ package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.VeriTabani;
+import com.oybakotel.GUI.GeriButonu;
 
 /**
  *
  * @author userxpc666
  */
-public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani {
+public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani, GeriButonu {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GecmisMusteriler.class.getName());
 
@@ -183,9 +184,8 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani {
     }//GEN-LAST:event_txtSonucAlaniFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        com.oybak.otel.GUIYonetim.YonetimMusteriArama Ara = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(p);
-       
-       Ara.setVisible(true);
+       geriButonu(p);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
