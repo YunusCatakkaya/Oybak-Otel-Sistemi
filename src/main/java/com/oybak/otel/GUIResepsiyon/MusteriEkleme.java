@@ -174,14 +174,14 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim {
 
     private void jTextField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusGained
          // Eğer kutunun içinde varsayılan yazı varsa, kullanıcı tıklayınca içini temizle
-        if (jTextField1.getText().equals("TC Kimlik No:")) {
-        jTextField1.setText("");
+        if (jTextField2.getText().equals("TC Kimlik No:")) {
+        jTextField2.setText("");
         }
     }//GEN-LAST:event_jTextField2FocusGained
 
     private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
-        if (jTextField1.getText().isEmpty()) {
-        jTextField1.setText("TC Kimlik No:");
+        if (jTextField2.getText().isEmpty()) {
+        jTextField2.setText("TC Kimlik No:");
         }
     }//GEN-LAST:event_jTextField2FocusLost
 
