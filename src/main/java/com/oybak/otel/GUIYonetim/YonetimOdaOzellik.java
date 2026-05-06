@@ -248,9 +248,15 @@ public class YonetimOdaOzellik extends javax.swing.JFrame implements VeriTabani 
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     String odaNo = jTextField1.getText();
-    String yeniFiyatStr = jTextField2.getText(); // Fiyat TextField'ın
+    // Kullanıcı "Fiyat:" yazısını silmeden sayı yazarsa onu temizleyelim
+    String yeniFiyatStr = jTextField2.getText().replace("Fiyat:", "").trim(); 
     
-    // HATA KONTROLÜ: Fiyat sadece sayı mı?
+    if (odaNo.isEmpty() || odaNo.equals("Oda Numarası:")) {
+        JOptionPane.showMessageDialog(this, "Lütfen geçerli bir oda numarası giriniz!");
+        return;
+    }
+
+    // HATA KONTROLÜ: Fiyat sadece sayı olmalı
     if (!yeniFiyatStr.isEmpty() && !yeniFiyatStr.matches("\\d+(\\.\\d+)?")) {
         JOptionPane.showMessageDialog(this, "Hata: Fiyat sadece sayı olmalıdır!", "Giriş Hatası", JOptionPane.ERROR_MESSAGE);
         return;
@@ -258,30 +264,57 @@ public class YonetimOdaOzellik extends javax.swing.JFrame implements VeriTabani 
 
     try {
         Connection con = DriverManager.getConnection(URL);
-        
-        // Dinamik sorgu oluşturma (Sadece değişenleri güncellemek için en güvenli yol)
         StringBuilder query = new StringBuilder("UPDATE odalar SET ");
         boolean first = true;
 
-        // ComboBox Kontrolleri (Seçiniz değilse ekle)
+        // 1. Tek Kişilik Yatak Kontrolü
         if (!jComboBox1.getSelectedItem().toString().equals("Seçiniz")) {
             query.append("tek_kisilik_yatak = ").append(jComboBox1.getSelectedItem());
             first = false;
         }
-        // ... (Diğer yatak combobox'ı için de benzerini yap)
 
-        // Boolean (Var/Yok) Kontrolleri
-        if (!jComboBox3.getSelectedItem().toString().equals("Seçiniz")) { // Deniz Manzarası
+        // 2. Çift Kişilik Yatak Kontrolü (Senin kodunda eksikti)
+        if (!jComboBox2.getSelectedItem().toString().equals("Seçiniz")) {
+            if (!first) query.append(", ");
+            query.append("cift_kisilik_yatak = ").append(jComboBox2.getSelectedItem());
+            first = false;
+        }
+
+        // 3. Deniz Manzarası Kontrolü (Boolean)
+        if (!jComboBox3.getSelectedItem().toString().equals("Seçiniz")) {
             if (!first) query.append(", ");
             boolean val = jComboBox3.getSelectedItem().toString().equals("Var");
-            query.append("deniz_manzarasi = ").append(val);
+            query.append("deniz_manzarasi = '").append(val).append("'"); // SQLite boolean için tırnak gerekebilir
+            first = false;
+        }
+
+        // 4. Balkon Kontrolü (Boolean - Senin kodunda eksikti)
+        if (!jComboBox4.getSelectedItem().toString().equals("Seçiniz")) {
+            if (!first) query.append(", ");
+            boolean val = jComboBox4.getSelectedItem().toString().equals("Var");
+            query.append("balkon = '").append(val).append("'");
+            first = false;
+        }
+
+        // 5. Jakuzi Kontrolü (Boolean - Senin kodunda eksikti)
+        if (!jComboBox5.getSelectedItem().toString().equals("Seçiniz")) {
+            if (!first) query.append(", ");
+            boolean val = jComboBox5.getSelectedItem().toString().equals("Var");
+            query.append("jakuzi = '").append(val).append("'");
             first = false;
         }
         
-        // Fiyat kontrolü
+        // 6. Fiyat Kontrolü
         if (!yeniFiyatStr.isEmpty()) {
             if (!first) query.append(", ");
             query.append("fiyat = ").append(yeniFiyatStr);
+            first = false;
+        }
+
+        // Eğer hiçbir şey seçilmediyse sorguyu çalıştırma
+        if (first) {
+            JOptionPane.showMessageDialog(this, "Değiştirilecek bir alan seçmediniz.");
+            return;
         }
 
         query.append(" WHERE oda_no = ?");
@@ -291,13 +324,17 @@ public class YonetimOdaOzellik extends javax.swing.JFrame implements VeriTabani 
         
         int sonuc = pst.executeUpdate();
         if (sonuc > 0) {
-            JOptionPane.showMessageDialog(this, "Değişiklikler başarıyla kaydedildi!");
+            JOptionPane.showMessageDialog(this, "Oda " + odaNo + " başarıyla güncellendi!");
+            // Bilgileri TextArea'da güncellemek için metodu tekrar tetikle
+            jTextField1KeyReleased(null); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Oda bulunamadığı için güncelleme yapılamadı.");
         }
         
         con.close();
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Veritabanı hatası: " + e.getMessage());
-    }        
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
