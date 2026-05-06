@@ -127,6 +127,8 @@ private void personelKaydet(String uzmanlikAlani) {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Yeni Çalışan Bilgilerini Giriniz");
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Geri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 

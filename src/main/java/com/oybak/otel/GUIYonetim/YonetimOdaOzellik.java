@@ -80,6 +80,8 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Geri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 

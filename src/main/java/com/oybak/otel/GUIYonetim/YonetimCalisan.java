@@ -45,17 +45,25 @@ public class YonetimCalisan extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Çalışan Çıkar");
         jButton2.setMaximumSize(new java.awt.Dimension(116, 23));
         jButton2.setMinimumSize(new java.awt.Dimension(116, 23));
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
+        jButton3.setBackground(new java.awt.Color(51, 51, 255));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setLabel("Geri");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
+        jButton5.setBackground(new java.awt.Color(51, 51, 255));
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Maaş Düzenle");
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Çalışan Ekle");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
