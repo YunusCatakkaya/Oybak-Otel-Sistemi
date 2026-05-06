@@ -30,15 +30,49 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     private int secilenOda;
     private Personel p;
 
-    // Parametreli Constructor: Bu ekran açılırken bir Oda nesnesi bekler
+   // Parametreli Constructor: Bu ekran açılırken bir Oda nesnesi bekler
     public OdaGUI(int oda, Personel p) {
         this.secilenOda = oda; // Gelen oda bilgisini kaydet
         this.p = p;
         initComponents();    // Verileri arayüze bas
- // --- EKLENEN KISIM BAŞLANGICI ---
-        // Ekranda yer alan OdaNo isimli JLabel'a seçilen odayı yazdırıyoruz
+
+        // 1. Oda Numarasını Yazdır
         OdaNo.setText("Oda No: " + this.secilenOda);
-        // --- EKLENEN KISIM BİTİŞİ ---
+
+        // --- 2. VERİTABANINDAN ÖZELLİKLERİ ÇEKİP YAZDIRMA BAŞLANGICI ---
+        // Implemente ettiğimiz VeriTabani arayüzündeki metodu kullanarak odayı çekiyoruz
+        Oda aktifOda = odaBilgileri(this.secilenOda);
+        
+ if (aktifOda != null) {
+            // JLabel içinde alt alta ve kalın yazdırabilmek için HTML kullanıyoruz
+            String ozellikMetni = "<html>"
+                    + "<b>Fiyat:</b> " + aktifOda.getFiyat() + " TL / Gece<br><br>"
+                    + "<b>Yatak Kapasitesi:</b><br>"
+                    + "- " + aktifOda.getTekKisilikYatak() + " Adet Tek Kişilik<br>"
+                    + "- " + aktifOda.getCiftKisilikYatak() + " Adet Çift Kişilik<br><br>"
+                    + "<b>Ekstra Özellikler:</b><br>"
+                    + "✔️ Ücretsiz Wi-Fi<br>"      // <--- STANDART ÖZELLİK EKLENDİ
+                    + "✔️ Kahvaltı Dahil<br>";     // <--- STANDART ÖZELLİK EKLENDİ
+            
+            // Boolean (true/false) olan özel özellikleri kontrol edip listeye ekliyoruz
+            if (aktifOda.isDenizManzarasi()) { 
+                ozellikMetni += "✔️ Deniz Manzarası<br>";
+            }
+            if (aktifOda.isBalkon()) {
+                ozellikMetni += "✔️ Balkon<br>";
+            }
+            if (aktifOda.isJakuzi()) {
+                ozellikMetni += "✔️ Jakuzi<br>";
+            }
+            
+            ozellikMetni += "</html>";
+            
+            // Hazırladığımız metni ekrandaki Label'a basıyoruz
+            Ozellikler.setText(ozellikMetni);
+        } else {
+            Ozellikler.setText("Oda bilgileri veritabanından çekilemedi.");
+        }
+        // --- VERİTABANINDAN ÖZELLİKLERİ ÇEKİP YAZDIRMA BİTİŞİ ---
 
         setLocationRelativeTo(null);
         
