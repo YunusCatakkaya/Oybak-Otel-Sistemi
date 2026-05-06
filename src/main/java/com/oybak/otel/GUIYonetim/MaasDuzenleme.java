@@ -167,9 +167,7 @@ public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.
         }
 
         // 3. TC Geçerlilik Kontrolü
-        if (!tcKontrol(tcNoStr)) {
-            return; 
-        }
+        tcKontrol(tcNoStr);
 
         // 4. Veritabanı formatı için birleştirme
         String tamAdSoyad = isim + " " + soyisim;

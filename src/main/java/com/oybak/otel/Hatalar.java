@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author ahmet
  */
 public interface Hatalar {
-    public default boolean tcKontrol(String tc){
+    public default void tcKontrol(String tc){
         try {
             long sayi = Long.parseLong(tc);
             int sonHane = (int) (sayi%10);
@@ -25,8 +25,8 @@ public interface Hatalar {
             int toplam = 0;
             
             if(!(sayi > 999999999L) && (sayi < 10000000000L)){
-                JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz!");
-                return false;
+                JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz! Hata:001");
+                return ;
             }
             
             while(sayi >= 1){
@@ -36,14 +36,12 @@ public interface Hatalar {
             }
             
             if(((toplam%10) != sonHane) || ((sonHane%2) !=0)){
-                JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz!");
-                return false;
+                JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz! Hata:002");
             }
             
         } catch (NumberFormatException e) {
             System.out.println("Hata: Metin geçerli bir sayı formatında değil!");
         }
-        return true;
     }
     public default boolean tcVarMi(long tcNo) {
     String sql = "SELECT COUNT(*) FROM calisanlar WHERE tc_no = ?";

@@ -156,8 +156,10 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
         
         Personel geciciPersonel = calısanBilgileri(tc, parola);
         
-        if (tcKontrol(tc) && geciciPersonel.getIsTipi() == null) {
-            JOptionPane.showMessageDialog(this, "TC No veya Parola hatalı!");
+        tcKontrol(tc);
+        
+        if (geciciPersonel.getIsTipi() == null) {
+            JOptionPane.showMessageDialog(this, "Personel bulunamadı! Hata:003");
             return;
         }
         

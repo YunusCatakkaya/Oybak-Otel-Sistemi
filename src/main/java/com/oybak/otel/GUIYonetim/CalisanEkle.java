@@ -47,9 +47,7 @@ private void personelKaydet(String uzmanlikAlani) {
         }
 
         // 3. TC Kontrolü (Hatalar Interface'indeki gelişmiş algoritma)
-        if (!tcKontrol(tcStr)) { 
-            return; // Geçersiz TC ise işlem durur
-        }
+        tcKontrol(tcStr);
 
         // 4. Sayısal Dönüşümler
         long tc = Long.parseLong(tcStr);

@@ -154,9 +154,7 @@ public class CalisanCikar extends javax.swing.JFrame implements com.oybak.otel.H
         }
 
         // 3. TC Kontrolü (Hatalar interface'inden geliyor)
-        if (!tcKontrol(tcNoStr)) {
-            return;
-        }
+       tcKontrol(tcNoStr);
 
         // 4. İsim ve Soyismi birleştir
         String tamAdSoyad = isim + " " + soyisim;
