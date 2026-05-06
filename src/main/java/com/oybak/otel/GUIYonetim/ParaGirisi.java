@@ -49,6 +49,7 @@ public class ParaGirisi extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
         jButton1.setText("Geri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();

@@ -43,12 +43,18 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Güncel Müşteri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Geçmiş Müşteri");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
+        jButton3.setBackground(new java.awt.Color(51, 51, 255));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Geri");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
@@ -59,14 +65,12 @@ public class YonetimMusteriArama extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(54, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(78, 78, 78)
-                        .addComponent(jButton2)
-                        .addContainerGap(54, Short.MAX_VALUE))))
+                        .addComponent(jButton2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

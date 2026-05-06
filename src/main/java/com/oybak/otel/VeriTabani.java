@@ -41,11 +41,15 @@ public interface VeriTabani {
                     bulunanOda.setOdaNumarasi(rs.getInt("oda_no"));
                     bulunanOda.setTekKisilikYatak(rs.getInt("tek_kisilik_yatak"));
                     bulunanOda.setCiftKisilikYatak(rs.getInt("cift_kisilik_yatak"));
-                    bulunanOda.setDenizManzarasi(rs.getBoolean("deniz_manzarasi"));
-                    bulunanOda.setBalkon(rs.getBoolean("balkon"));
-                    bulunanOda.setJakuzi(rs.getBoolean("jakuzi"));
+                    // rs.getString(...) alıp onu Boolean'a çeviriyoruz:
+                    bulunanOda.setDenizManzarasi(Boolean.parseBoolean(rs.getString("deniz_manzarasi")));
+                    bulunanOda.setBalkon(Boolean.parseBoolean(rs.getString("balkon")));
+                    bulunanOda.setJakuzi(Boolean.parseBoolean(rs.getString("jakuzi")));
                     bulunanOda.setFiyat(rs.getInt("fiyat"));
-                    bulunanOda.setOdenmeDurumu(rs.getBoolean("odenme_durumu"));
+                    bulunanOda.setOdenmeDurumu(Boolean.parseBoolean(rs.getString("odenme_durumu")));
+                    
+                    
+                   
                 
                     // 3. Durum bilgisini Enum'a çevirirken hata payını azaltmak için büyük harf yapıyoruz
                     String durumString = rs.getString("durum");

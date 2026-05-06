@@ -43,6 +43,8 @@ public class OdaDuzenleme extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Geri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
@@ -50,6 +52,8 @@ public class OdaDuzenleme extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jTextPane1);
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Düzenle");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 

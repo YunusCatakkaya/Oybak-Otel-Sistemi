@@ -44,12 +44,18 @@ public class YonetimGenel extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Oda Düzenleme");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Çalışan İşlemleri");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
+        jButton3.setBackground(new java.awt.Color(51, 51, 255));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Geri");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 

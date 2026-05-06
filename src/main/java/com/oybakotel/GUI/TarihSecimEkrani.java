@@ -301,13 +301,41 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     
     private void devamEtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devamEtActionPerformed
     java.util.Date giris = girisTakvim.getDate();
-        java.util.Date cikis = cikisTakvim.getDate();
+    java.util.Date cikis = cikisTakvim.getDate();
+    java.util.Date bugun = new java.util.Date();
         
+        // KONTROL 1: Boşluk Kontrolü (Kullanıcı tarih seçmeyi unutmuş mu?)
         if (giris == null || cikis == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen giriş ve çıkış tarihlerini seçiniz!");
+            javax.swing.JOptionPane.showMessageDialog(this, 
+            "Lütfen konaklama yapacağınız giriş ve çıkış tarihlerini seçiniz!", 
+            "Eksik Bilgi", 
+            javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+        
+        // KONTROL 2: Geçmiş Tarih Kontrolü (Giriş bugünden önce olamaz)
+        // (Saat farklarını yoksaymak için bugünün tam tarihinden bir gün öncesiyle kıyaslarız ama basitçe şöyle yapabiliriz)
+        // Not: Date nesnesi saati de tuttuğu için tam gün kıyası biraz daha uzundur, şimdilik en temel halini yazıyoruz.
+        if (giris.before(new java.util.Date(bugun.getTime() - (1000 * 60 * 60 * 24)))) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+            "Giriş tarihi geçmiş bir tarih olamaz!", 
+            "Geçersiz Tarih", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // KONTROL 3: Çıkış Tarihi Kontrolü (Çıkış, girişten önce veya aynı gün olamaz)
+        if (cikis.before(giris) || cikis.equals(giris)) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+            "Çıkış tarihi, giriş tarihinden en az 1 gün sonra olmalıdır!", 
+            "Mantık Hatası", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        System.out.println("Başarılı! Giriş: " + giris + " | Çıkış: " + cikis);
+        
+        
         if (odaNo != -1) {
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy");
             String girisStr = sdf.format(giris);
@@ -318,6 +346,10 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
         } else {
             // Misafir (Anasayfa) girişi ise yapılacak normal işlemler...
         }
+        
+        com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(p);
+        odaEkrani.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_devamEtActionPerformed
 
     /**

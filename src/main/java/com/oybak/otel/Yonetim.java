@@ -11,6 +11,8 @@ import static com.oybak.otel.enums.UserRole.YONETIM;
  *
  * @author Yunus                       //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
  */
+
+//y
 public class Yonetim extends Personel implements VeriTabani, Hatalar{
     public Yonetim(String name, long tcNo, double maas, UserRole isTipi,String parola) {
         super(name,tcNo,maas,YONETIM,parola);

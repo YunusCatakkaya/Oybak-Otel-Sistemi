@@ -52,6 +52,8 @@ public class CalisanCikar extends javax.swing.JFrame implements com.oybak.otel.H
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Geri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
@@ -67,6 +69,8 @@ public class CalisanCikar extends javax.swing.JFrame implements com.oybak.otel.H
 
         jScrollPane2.setViewportView(jTextPane2);
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Kaydet");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
