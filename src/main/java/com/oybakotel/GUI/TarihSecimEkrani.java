@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import com.oybakotel.GUI.OdaSecimEkrani;
+import java.sql.ResultSet;
 
 /**
  *
@@ -215,53 +216,107 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void devamEtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devamEtActionPerformed
-        java.util.Date giris = girisTakvim.getDate();
-        java.util.Date cikis = cikisTakvim.getDate();
-        
-        if (giris == null || cikis == null) {
-            JOptionPane.showMessageDialog(this, "Lütfen giriş ve çıkış tarihlerini seçiniz!");
-            return;
-        }
+    
+    // Veritabanı kayıt ve yönlendirme işlemlerini arka planda da yapabilmek için ayırdık
+    public void veritabaninaIsleVeKontrolEt(String girisStr, String cikisStr) {
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection("jdbc:sqlite:veritabani_dosyan.db")) {
+            
+            // 1. KAPASİTE KONTROLÜ
+            int kapasite = 0;
+            String sqlKapasite = "SELECT tek_kisilik_yatak, cift_kisilik_yatak FROM odalar WHERE oda_no = ?";
+            java.sql.PreparedStatement pstmtCap = conn.prepareStatement(sqlKapasite);
+            pstmtCap.setInt(1, odaNo);
+            java.sql.ResultSet rsCap = pstmtCap.executeQuery();
+            if(rsCap.next()){
+                kapasite = rsCap.getInt("tek_kisilik_yatak") + (rsCap.getInt("cift_kisilik_yatak") * 2);
+            }
+            
+            int mevcutMusteri = 0;
+            String sqlCount = "SELECT COUNT(*) AS kisi_sayisi FROM guncel_musteriler WHERE oda_no = ?";
+            java.sql.PreparedStatement pstmtCount = conn.prepareStatement(sqlCount);
+            pstmtCount.setString(1, String.valueOf(odaNo));
+            java.sql.ResultSet rsCount = pstmtCount.executeQuery();
+            if(rsCount.next()){
+                mevcutMusteri = rsCount.getInt("kisi_sayisi");
+            }
+            
+            if (mevcutMusteri >= kapasite) {
+                javax.swing.JOptionPane.showMessageDialog(this, "HATA: Bu oda (" + kapasite + " kişi) tam kapasite dolu!");
+                return; 
+            }
 
-        // Eğer odaNo -1 değilse, resepsiyon bir müşteriyi odaya kaydediyor demektir
-        if (odaNo != -1) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            String girisStr = sdf.format(giris);
-            String cikisStr = sdf.format(cikis);
-
-            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:veritabani_dosyan.db")) {
-                
-                // 1. Müşteriyi 'guncel_musteriler' tablosuna ekle
-                String sqlMusteri = "INSERT INTO guncel_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) VALUES (?, ?, ?, ?, ?, 0)";
-                PreparedStatement pstmt = conn.prepareStatement(sqlMusteri);
-                pstmt.setString(1, musteriAd);
-                pstmt.setString(2, musteriTc);
-                pstmt.setString(3, String.valueOf(odaNo));
-                pstmt.setString(4, girisStr);
-                pstmt.setString(5, cikisStr);
-                pstmt.executeUpdate();
-
-                // 2. Odanın durumunu 'DOLU' olarak güncelle
+            // 2. MÜŞTERİYİ VERİTABANINA EKLE
+            String sqlMusteri = "INSERT INTO guncel_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) VALUES (?, ?, ?, ?, ?, 0)";
+            java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlMusteri);
+            pstmt.setString(1, musteriAd);
+            pstmt.setString(2, musteriTc);
+            pstmt.setString(3, String.valueOf(odaNo));
+            pstmt.setString(4, girisStr);
+            pstmt.setString(5, cikisStr);
+            pstmt.executeUpdate();
+            
+            mevcutMusteri++; // Kayıt atıldığı için sayıyı 1 artırıyoruz
+            
+            // 3. DOLULUK VE YÖNLENDİRME
+            if (mevcutMusteri >= kapasite) {
                 String sqlOda = "UPDATE odalar SET durum = 'DOLU' WHERE oda_no = ?";
-                PreparedStatement pstmtOda = conn.prepareStatement(sqlOda);
+                java.sql.PreparedStatement pstmtOda = conn.prepareStatement(sqlOda);
                 pstmtOda.setInt(1, odaNo);
                 pstmtOda.executeUpdate();
-
-                JOptionPane.showMessageDialog(this, "Müşteri kaydı başarıyla oluşturuldu ve oda DOLU olarak işaretlendi!");
                 
-                // İşlem bitince Oda Seçim ekranına geri dön
-                OdaSecimEkrani odaSecim = new OdaSecimEkrani(p);
+                javax.swing.JOptionPane.showMessageDialog(this, "Müşteri eklendi! Oda kapasitesi tam dolduğu için oda 'DOLU' durumuna getirildi.");
+                
+                com.oybakotel.GUI.OdaSecimEkrani odaSecim = new com.oybakotel.GUI.OdaSecimEkrani(p);
                 odaSecim.setLocationRelativeTo(null);
                 odaSecim.setVisible(true);
                 this.dispose();
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Veritabanı Hatası: " + e.getMessage());
+            } else {
+                int cevap = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "Müşteri eklendi.\nOda Kapasitesi: " + kapasite + "\nŞu anki Kişi: " + mevcutMusteri + "\n\nBu odaya başka bir müşteri daha ekleyecek misiniz?", 
+                    "Kayıt Başarılı", 
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+                    
+                if (cevap == javax.swing.JOptionPane.YES_OPTION) {
+                    // *** EN ÖNEMLİ DEĞİŞİKLİK: Tarihleri yeni ekrana yolluyoruz ***
+                    com.oybak.otel.GUIResepsiyon.MusteriEkleme yeniEkleme = new com.oybak.otel.GUIResepsiyon.MusteriEkleme(p, odaNo, girisStr, cikisStr);
+                    yeniEkleme.setLocationRelativeTo(null);
+                    yeniEkleme.setVisible(true);
+                    this.dispose();
+                } else {
+                    String sqlOda = "UPDATE odalar SET durum = 'DOLU' WHERE oda_no = ?";
+                    java.sql.PreparedStatement pstmtOda = conn.prepareStatement(sqlOda);
+                    pstmtOda.setInt(1, odaNo);
+                    pstmtOda.executeUpdate();
+                    
+                    com.oybakotel.GUI.OdaSecimEkrani odaSecim = new com.oybakotel.GUI.OdaSecimEkrani(p);
+                    odaSecim.setLocationRelativeTo(null);
+                    odaSecim.setVisible(true);
+                    this.dispose();
+                }
             }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Veritabanı Hatası: " + e.getMessage());
+        }
+    }
+    
+    private void devamEtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devamEtActionPerformed
+    java.util.Date giris = girisTakvim.getDate();
+        java.util.Date cikis = cikisTakvim.getDate();
+        
+        if (giris == null || cikis == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen giriş ve çıkış tarihlerini seçiniz!");
+            return;
+        }
+
+        if (odaNo != -1) {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy");
+            String girisStr = sdf.format(giris);
+            String cikisStr = sdf.format(cikis);
+            
+            // İşlemleri arka planda yapan metodumuzu çağırıyoruz
+            veritabaninaIsleVeKontrolEt(girisStr, cikisStr);
         } else {
-            // Misafir (Anasayfa) girişi ise yapılacak normal işlemler (Mevcut kodlarınız)
-            // ...
+            // Misafir (Anasayfa) girişi ise yapılacak normal işlemler...
         }
     }//GEN-LAST:event_devamEtActionPerformed
 

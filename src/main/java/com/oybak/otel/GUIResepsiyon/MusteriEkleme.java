@@ -4,23 +4,33 @@
  */
 package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Personel;
-import javax.swing.JOptionPane;
-import com.oybakotel.GUI.TarihSecimEkrani;
+import com.oybakotel.GUI.OdaSecim;
 
 /**
  *
  * @author onuro
  */
-public class MusteriEkleme extends javax.swing.JFrame {
+public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MusteriEkleme.class.getName());
 
     private Personel p;
     private int odaNo;
+    private String otoGiris = null;
+    private String otoCikis = null;
     
     public MusteriEkleme(Personel p, int odaNo) {
         this.p = p;
         this.odaNo = odaNo;
+        initComponents();
+    }
+    
+    // YENİ EKLENEN KURUCU METOT (2. ve 3. kişiler için çalışır, tarihleri alır)
+    public MusteriEkleme(Personel p, int odaNo, String giris, String cikis) {
+        this.p = p;
+        this.odaNo = odaNo;
+        this.otoGiris = giris;
+        this.otoCikis = cikis;
         initComponents();
     }
 
@@ -70,6 +80,7 @@ public class MusteriEkleme extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Kapat");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,20 +134,29 @@ public class MusteriEkleme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TextField isimleriniz jTextField1 ve jTextField2 olarak varsayılmıştır
         String adSoyad = jTextField1.getText().trim();
         String tcNo = jTextField2.getText().trim();
 
         if(adSoyad.isEmpty() || tcNo.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Lütfen müşteri adı ve TC kimlik numarasını giriniz!");
+            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen müşteri adı ve TC kimlik numarasını giriniz!");
             return;
         }
 
-        // Tüm bilgileri toplayıp Tarih Seçim Ekranı'na yolluyoruz
-        TarihSecimEkrani tarihEkrani = new TarihSecimEkrani(p, odaNo, adSoyad, tcNo);
-        tarihEkrani.setLocationRelativeTo(null);
-        tarihEkrani.setVisible(true);
-        this.dispose(); // Müşteri ekleme ekranını kapat
+        // EĞER TARİHLER HAFIZADA VARSA (Yani 2. veya 3. kişiyse)
+        if (otoGiris != null && otoCikis != null) {
+            // Tarih Seçim Ekranı'nı GÖRSEL OLARAK HİÇ AÇMADAN arka planda çalıştırıyoruz
+            com.oybakotel.GUI.TarihSecimEkrani gizliEkran = new com.oybakotel.GUI.TarihSecimEkrani(p, odaNo, adSoyad, tcNo);
+            gizliEkran.veritabaninaIsleVeKontrolEt(otoGiris, otoCikis); 
+            this.dispose(); // Müşteri ekleme ekranını kapat
+        } 
+        // EĞER TARİHLER YOKSA (Yani odanın ilk müşterisiyse)
+        else {
+            // Tarihleri seçmesi için Tarih Seçim Ekranı'nı normal şekilde görünür olarak açıyoruz
+            com.oybakotel.GUI.TarihSecimEkrani tarihEkrani = new com.oybakotel.GUI.TarihSecimEkrani(p, odaNo, adSoyad, tcNo);
+            tarihEkrani.setLocationRelativeTo(null);
+            tarihEkrani.setVisible(true);
+            this.dispose(); // Müşteri ekleme ekranını kapat
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
@@ -164,6 +184,12 @@ public class MusteriEkleme extends javax.swing.JFrame {
         jTextField1.setText("TC Kimlik No:");
         }
     }//GEN-LAST:event_jTextField2FocusLost
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       // OdaSecim interface'inden gelen metodu kullanıyoruz
+        odaSecim(p); 
+        this.dispose(); // Müşteri Ekleme ekranını kapat
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
