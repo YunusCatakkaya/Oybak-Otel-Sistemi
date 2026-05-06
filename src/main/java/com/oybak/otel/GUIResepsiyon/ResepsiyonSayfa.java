@@ -111,7 +111,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        p.setIsTipi(UserRole.MUSTERİEKLEME);
+        p.setIsTipi(UserRole.MUSTERIEKLEME);
         com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri rezervasyonEkrani = new com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri();
  
         rezervasyonEkrani.setLocationRelativeTo(null);

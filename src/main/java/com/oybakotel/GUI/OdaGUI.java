@@ -64,7 +64,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
         case RESEPSIYON -> {
             musteriBilgileriPaneli.setVisible(true);
         }
-        case MUSTERİEKLEME -> {
+        case MUSTERIEKLEME -> {
             musteriEklemePaneli.setVisible(true);
             musteriBilgileriPaneli.setVisible(true);
         }

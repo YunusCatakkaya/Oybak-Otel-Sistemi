@@ -11,7 +11,7 @@ package com.oybak.otel.enums;
 public enum UserRole {
     MUSTERI,
     RESEPSIYON,
-    MUSTERİEKLEME,
+    MUSTERIEKLEME,
     YONETIM,
     TEKNIKPERSONEL,
     BAKIM
