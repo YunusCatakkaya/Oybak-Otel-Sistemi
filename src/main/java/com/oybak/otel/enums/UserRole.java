@@ -14,5 +14,6 @@ public enum UserRole {
     MUSTERIEKLEME,
     YONETIM,
     TEKNIKPERSONEL,
-    BAKIM
+    BAKIM,
+    MUSTERICIKARMA
 }
