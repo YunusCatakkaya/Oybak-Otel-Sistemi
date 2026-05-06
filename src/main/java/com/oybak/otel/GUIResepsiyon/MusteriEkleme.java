@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIResepsiyon;
+import com.oybak.otel.Personel;
+import javax.swing.JOptionPane;
+import com.oybakotel.GUI.TarihSecimEkrani;
 
 /**
  *
@@ -12,10 +15,12 @@ public class MusteriEkleme extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MusteriEkleme.class.getName());
 
-    /**
-     * Creates new form MusteriEkleme
-     */
-    public MusteriEkleme() {
+    private Personel p;
+    private int odaNo;
+    
+    public MusteriEkleme(Personel p, int odaNo) {
+        this.p = p;
+        this.odaNo = odaNo;
         initComponents();
     }
 
@@ -40,12 +45,29 @@ public class MusteriEkleme extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jTextField1.setText("Ad Soyad:");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
 
         jTextField2.setText("TC Kimlik No:");
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField2FocusLost(evt);
+            }
+        });
 
-        jLabel1.setText("Eklenecek Müşteri Bilgileriniz Giriniz.");
+        jLabel1.setText("Eklenecek Müşteri Bilgilerini Giriniz.");
 
         jButton1.setText("Müşteriyi Ekle");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Kapat");
 
@@ -61,16 +83,19 @@ public class MusteriEkleme extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(103, 103, 103)
-                .addComponent(jButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton2)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -80,7 +105,7 @@ public class MusteriEkleme extends javax.swing.JFrame {
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(jButton1)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -96,6 +121,49 @@ public class MusteriEkleme extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TextField isimleriniz jTextField1 ve jTextField2 olarak varsayılmıştır
+        String adSoyad = jTextField1.getText().trim();
+        String tcNo = jTextField2.getText().trim();
+
+        if(adSoyad.isEmpty() || tcNo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Lütfen müşteri adı ve TC kimlik numarasını giriniz!");
+            return;
+        }
+
+        // Tüm bilgileri toplayıp Tarih Seçim Ekranı'na yolluyoruz
+        TarihSecimEkrani tarihEkrani = new TarihSecimEkrani(p, odaNo, adSoyad, tcNo);
+        tarihEkrani.setLocationRelativeTo(null);
+        tarihEkrani.setVisible(true);
+        this.dispose(); // Müşteri ekleme ekranını kapat
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+        // Eğer kutunun içinde varsayılan yazı varsa, kullanıcı tıklayınca içini temizle
+        if (jTextField1.getText().equals("İsim Soyisim:")) {
+        jTextField1.setText("");
+        }
+    }//GEN-LAST:event_jTextField1FocusGained
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        if (jTextField1.getText().isEmpty()) {
+        jTextField1.setText("İsim Soyisim:");
+        }
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void jTextField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusGained
+         // Eğer kutunun içinde varsayılan yazı varsa, kullanıcı tıklayınca içini temizle
+        if (jTextField1.getText().equals("TC Kimlik No:")) {
+        jTextField1.setText("");
+        }
+    }//GEN-LAST:event_jTextField2FocusGained
+
+    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
+        if (jTextField1.getText().isEmpty()) {
+        jTextField1.setText("TC Kimlik No:");
+        }
+    }//GEN-LAST:event_jTextField2FocusLost
 
     /**
      * @param args the command line arguments
@@ -119,7 +187,10 @@ public class MusteriEkleme extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MusteriEkleme().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+        Personel testPersoneli = new Personel("Test", 12345678910L, 0, null, "123");
+        new MusteriEkleme(testPersoneli, -1).setVisible(true); // -1 test oda numarasıdır
+     });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

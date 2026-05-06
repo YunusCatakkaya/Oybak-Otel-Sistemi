@@ -5,6 +5,12 @@
 package com.oybakotel.GUI;
 
 import com.oybak.otel.Personel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import com.oybakotel.GUI.OdaSecimEkrani;
 
 /**
  *
@@ -17,11 +23,10 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TarihSecimEkrani.class.getName());
 
-    /**
-     * Creates new form TarihSecimEkrani
-     */
-    
     private Personel p;
+    private int odaNo = -1; // -1 ise normal giriş, değilse müşteri ekleme işlemidir
+    private String musteriAd;
+    private String musteriTc;
     
     public TarihSecimEkrani(Personel p) {
         this.p = p;
@@ -56,6 +61,37 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     pnlCikis.repaint();
     
     // --- TAKVİM KODLARI BİTİŞİ ---
+    }
+    
+    
+    // 2. YENİ EKLENEN KURUCU METOT (Müşteri Ekleme işlemi için kullanılacak)
+    public TarihSecimEkrani(Personel p, int odaNo, String musteriAd, String musteriTc) {
+        this.p = p;
+        this.odaNo = odaNo;
+        this.musteriAd = musteriAd;
+        this.musteriTc = musteriTc;
+        
+        initComponents();
+        
+        // --- 1. görseldeki orijinal görünümü sağlayan kodlar ---
+        this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); // Tam ekran
+        this.getContentPane().setLayout(new java.awt.GridBagLayout());
+        this.add(AnaPanel, new java.awt.GridBagConstraints()); // Ekranı ortaya hizala
+
+        // Takvim nesnelerini oluştur ve panellere yerleştir
+        girisTakvim = new com.toedter.calendar.JDateChooser();
+        cikisTakvim = new com.toedter.calendar.JDateChooser();
+        
+        pnlGiris.setLayout(new java.awt.BorderLayout());
+        pnlGiris.add(girisTakvim, java.awt.BorderLayout.CENTER);
+        
+        pnlCikis.setLayout(new java.awt.BorderLayout());
+        pnlCikis.add(cikisTakvim, java.awt.BorderLayout.CENTER);
+        
+        pnlGiris.revalidate();
+        pnlGiris.repaint();
+        pnlCikis.revalidate();
+        pnlCikis.repaint();
     }
 
     /**
@@ -180,52 +216,53 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void devamEtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devamEtActionPerformed
-        // 1. Takvimlerden seçilen tarihleri alıyoruz
-    java.util.Date giris = girisTakvim.getDate();
-    java.util.Date cikis = cikisTakvim.getDate();
-    java.util.Date bugun = new java.util.Date(); // Bugünün tarihi
+        java.util.Date giris = girisTakvim.getDate();
+        java.util.Date cikis = cikisTakvim.getDate();
+        
+        if (giris == null || cikis == null) {
+            JOptionPane.showMessageDialog(this, "Lütfen giriş ve çıkış tarihlerini seçiniz!");
+            return;
+        }
 
-    // KONTROL 1: Boşluk Kontrolü (Kullanıcı tarih seçmeyi unutmuş mu?)
-    if (giris == null || cikis == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Lütfen konaklama yapacağınız giriş ve çıkış tarihlerini seçiniz!", 
-            "Eksik Bilgi", 
-            javax.swing.JOptionPane.WARNING_MESSAGE);
-        return; // Hata varsa kodu burada kes, aşağıya inme
-    }
+        // Eğer odaNo -1 değilse, resepsiyon bir müşteriyi odaya kaydediyor demektir
+        if (odaNo != -1) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            String girisStr = sdf.format(giris);
+            String cikisStr = sdf.format(cikis);
 
-    // KONTROL 2: Geçmiş Tarih Kontrolü (Giriş bugünden önce olamaz)
-    // (Saat farklarını yoksaymak için bugünün tam tarihinden bir gün öncesiyle kıyaslarız ama basitçe şöyle yapabiliriz)
-    // Not: Date nesnesi saati de tuttuğu için tam gün kıyası biraz daha uzundur, şimdilik en temel halini yazıyoruz.
-    if (giris.before(new java.util.Date(bugun.getTime() - (1000 * 60 * 60 * 24)))) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Giriş tarihi geçmiş bir tarih olamaz!", 
-            "Geçersiz Tarih", 
-            javax.swing.JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+            try (Connection conn = DriverManager.getConnection("jdbc:sqlite:veritabani_dosyan.db")) {
+                
+                // 1. Müşteriyi 'guncel_musteriler' tablosuna ekle
+                String sqlMusteri = "INSERT INTO guncel_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) VALUES (?, ?, ?, ?, ?, 0)";
+                PreparedStatement pstmt = conn.prepareStatement(sqlMusteri);
+                pstmt.setString(1, musteriAd);
+                pstmt.setString(2, musteriTc);
+                pstmt.setString(3, String.valueOf(odaNo));
+                pstmt.setString(4, girisStr);
+                pstmt.setString(5, cikisStr);
+                pstmt.executeUpdate();
 
-    // KONTROL 3: Çıkış Tarihi Kontrolü (Çıkış, girişten önce veya aynı gün olamaz)
-    if (cikis.before(giris) || cikis.equals(giris)) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Çıkış tarihi, giriş tarihinden en az 1 gün sonra olmalıdır!", 
-            "Mantık Hatası", 
-            javax.swing.JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+                // 2. Odanın durumunu 'DOLU' olarak güncelle
+                String sqlOda = "UPDATE odalar SET durum = 'DOLU' WHERE oda_no = ?";
+                PreparedStatement pstmtOda = conn.prepareStatement(sqlOda);
+                pstmtOda.setInt(1, odaNo);
+                pstmtOda.executeUpdate();
 
-    // --- BÜTÜN KONTROLLERDEN GEÇTİYSE BURAYA ULAŞIR ---
-    
-    // Test amaçlı, doğru tarihler seçildiyse ekrana yazdıralım:
-    System.out.println("Başarılı! Giriş: " + giris + " | Çıkış: " + cikis);
-    
-    // Müşteriyi Oda Seçim Ekranına yolla ve rolünü de beraberinde götür
-    com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(p);
-    odaEkrani.setVisible(true);
-    
-    // İşimiz biten bu tarih ekranını kapatalım
-    this.dispose();
+                JOptionPane.showMessageDialog(this, "Müşteri kaydı başarıyla oluşturuldu ve oda DOLU olarak işaretlendi!");
+                
+                // İşlem bitince Oda Seçim ekranına geri dön
+                OdaSecimEkrani odaSecim = new OdaSecimEkrani(p);
+                odaSecim.setLocationRelativeTo(null);
+                odaSecim.setVisible(true);
+                this.dispose();
 
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Veritabanı Hatası: " + e.getMessage());
+            }
+        } else {
+            // Misafir (Anasayfa) girişi ise yapılacak normal işlemler (Mevcut kodlarınız)
+            // ...
+        }
     }//GEN-LAST:event_devamEtActionPerformed
 
     /**
