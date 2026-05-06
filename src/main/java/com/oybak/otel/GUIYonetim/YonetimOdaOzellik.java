@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 /**
  *
  * @author userxpc666
+ * y
  */
 public class YonetimOdaOzellik extends javax.swing.JFrame implements VeriTabani {
     
@@ -226,9 +227,8 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-       String odaNo = jTextField1.getText().trim();
+      String odaNo = jTextField1.getText().trim();
 
-    // Eğer kutu boşsa veya varsayılan placeholder yazısı varsa sadece başlığı göster
     if (odaNo.isEmpty() || odaNo.equals("Oda Numarası:")) {
         jTextArea1.setText("Oda Bilgileri:");
         return;
@@ -241,10 +241,16 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
         ResultSet rs = pst.executeQuery();
 
         if (rs.next()) {
-            // Veritabanındaki boolean (0/1) değerleri Var/Yok metnine çeviriyoruz
-            String dManzara = rs.getBoolean("deniz_manzarasi") ? "Var" : "Yok";
-            String balkon = rs.getBoolean("balkon") ? "Var" : "Yok";
-            String jakuzi = rs.getBoolean("jakuzi") ? "Var" : "Yok";
+            // --- GÜVENLİ OKUMA YÖNTEMİ ---
+            // getString kullanarak hem "true" metnini hem de "1" değerini yakalıyoruz
+            String dbManzara = String.valueOf(rs.getObject("deniz_manzarasi"));
+            String dbBalkon = String.valueOf(rs.getObject("balkon"));
+            String dbJakuzi = String.valueOf(rs.getObject("jakuzi"));
+
+            // Değer "true" veya "1" ise "Var", değilse "Yok" yaz
+            String dManzara = (dbManzara.equalsIgnoreCase("true") || dbManzara.equals("1")) ? "Var" : "Yok";
+            String balkon = (dbBalkon.equalsIgnoreCase("true") || dbBalkon.equals("1")) ? "Var" : "Yok";
+            String jakuzi = (dbJakuzi.equalsIgnoreCase("true") || dbJakuzi.equals("1")) ? "Var" : "Yok";
 
             String bilgiler = "Oda No: " + rs.getInt("oda_no") + "\n"
                             + "Tek Kişilik Yatak: " + rs.getInt("tek_kisilik_yatak") + "\n"
@@ -256,7 +262,6 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
             
             jTextArea1.setText(bilgiler);
         } else {
-            // Oda veritabanında yoksa "Oda Bilgileri:" başlığını koru
             jTextArea1.setText("Oda Bilgileri:\n(Oda bulunamadı)");
         }
     } catch (Exception e) {
@@ -291,19 +296,22 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
 
         if (!jComboBox3.getSelectedItem().equals("Seçiniz")) {
             if (!first) query.append(", ");
-            query.append("deniz_manzarasi = ").append(jComboBox3.getSelectedItem().equals("Var") ? 1 : 0);
+            String val = jComboBox3.getSelectedItem().equals("Var") ? "'true'" : "'false'";
+            query.append("deniz_manzarasi = ").append(val);
             first = false;
         }
 
         if (!jComboBox4.getSelectedItem().equals("Seçiniz")) {
             if (!first) query.append(", ");
-            query.append("balkon = ").append(jComboBox4.getSelectedItem().equals("Var") ? 1 : 0);
+            String val = jComboBox4.getSelectedItem().equals("Var") ? "'true'" : "'false'";
+            query.append("balkon = ").append(val);
             first = false;
         }
 
         if (!jComboBox5.getSelectedItem().equals("Seçiniz")) {
             if (!first) query.append(", ");
-            query.append("jakuzi = ").append(jComboBox5.getSelectedItem().equals("Var") ? 1 : 0);
+            String val = jComboBox5.getSelectedItem().equals("Var") ? "'true'" : "'false'";
+            query.append("jakuzi = ").append(val);
             first = false;
         }
 
