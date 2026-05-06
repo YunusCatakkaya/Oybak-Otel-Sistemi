@@ -3,19 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIResepsiyon;
+import com.oybak.otel.Personel;
+import com.oybakotel.GUI.OdaSecimEkrani;
+import com.oybakotel.GUI.OdaSecim;
 
 /**
  *
  * @author onuro
  */
-public class RezervasyonIslemleri extends javax.swing.JFrame {
+public class RezervasyonIslemleri extends javax.swing.JFrame implements OdaSecim{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RezervasyonIslemleri.class.getName());
 
     /**
      * Creates new form RezervasyonIslemleri
      */
-    public RezervasyonIslemleri() {
+    private Personel p;
+    
+    public RezervasyonIslemleri(Personel p) {
+        this.p = p;
         initComponents();
     }
 
@@ -77,7 +83,8 @@ public class RezervasyonIslemleri extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    odaSecim(p); // OdaSecim interface'inden gelen metot
+    this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -106,7 +113,11 @@ public class RezervasyonIslemleri extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new RezervasyonIslemleri().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+    // Sayfayı tek başına test edebilmek için sahte bir personel oluşturuyoruz
+    Personel testPersoneli = new Personel("Test", 12345678910L, 0, null, "123");
+    new RezervasyonIslemleri(testPersoneli).setVisible(true);
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

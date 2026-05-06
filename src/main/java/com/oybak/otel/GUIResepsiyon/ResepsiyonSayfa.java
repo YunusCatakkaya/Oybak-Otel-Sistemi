@@ -111,12 +111,15 @@ public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        p.setIsTipi(UserRole.MUSTERIEKLEME);
-        com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri rezervasyonEkrani = new com.oybak.otel.GUIResepsiyon.RezervasyonIslemleri();
- 
-        rezervasyonEkrani.setLocationRelativeTo(null);
-        rezervasyonEkrani.setVisible(true);
-        this.dispose();
+       // 1. Personelin rolünü geçici olarak "Müşteri Ekleme" yapıyoruz
+    p.setIsTipi(UserRole.MUSTERIEKLEME); 
+    
+    // 2. Güncel Personel (p) bilgisini yeni ekrana yolluyoruz
+    RezervasyonIslemleri rezervasyonEkrani = new RezervasyonIslemleri(p); 
+    
+    rezervasyonEkrani.setLocationRelativeTo(null);
+    rezervasyonEkrani.setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

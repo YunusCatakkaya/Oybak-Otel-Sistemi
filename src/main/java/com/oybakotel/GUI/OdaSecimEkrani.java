@@ -421,50 +421,65 @@ public void filtreyiUygula(int kapasite) {
     }
 }
 private void odalariRenklendir() {
-        javax.swing.JButton[] odaButonlari = {
-            j101, j102, j103, j104, j105, 
-            j201, j202, j203, j204, j205,
-            j301, j302, j303, j304, j305,
-            j401, j402, j403, j404, j405
-        };
+javax.swing.JButton[] odaButonlari = {
+        j101, j102, j103, j104, j105, 
+        j201, j202, j203, j204, j205,
+        j301, j302, j303, j304, j305,
+        j401, j402, j403, j404, j405
+    };
 
-        for (javax.swing.JButton buton : odaButonlari) {
-            if (buton == null || buton.getText() == null || buton.getText().trim().isEmpty()) continue;
+    for (javax.swing.JButton buton : odaButonlari) {
+        if (buton == null || buton.getText() == null || buton.getText().trim().isEmpty()) continue;
+        try {
+            int odaNo = Integer.parseInt(buton.getText().trim());
+            Oda oda = odaBilgileri(odaNo);
 
-            try {
-                int odaNo = Integer.parseInt(buton.getText().trim()); 
-                Oda oda = odaBilgileri(odaNo); 
+            if (oda != null && oda.getOdaDurumu() != null) {
+                // Renklerin görünmesi için gereken standart ayarlar
+                buton.setContentAreaFilled(true);
+                buton.setOpaque(true);
+                buton.setBorderPainted(true);
 
-                if (oda != null && oda.getOdaDurumu() != null) {
-                    // Renklerin görünmesi için gereken standart ayarlar
-                    buton.setContentAreaFilled(true);
-                    buton.setOpaque(true);
-                    buton.setBorderPainted(true);
-
-                    switch (oda.getOdaDurumu()) {
-                        case MUSAIT -> {
-                            buton.setBackground(new Color(46, 204, 113)); // Yeşil
-                            buton.setForeground(Color.WHITE);
-                            buton.setEnabled(true);
-                        }
-                        case DOLU -> {
-                            buton.setBackground(new Color(231, 76, 60)); // Kırmızı
-                            buton.setForeground(Color.WHITE);
-                            buton.setEnabled(true); // Gri olmaması için true bıraktık
-                        }
-                        case BAKIMDA -> {
-                            buton.setBackground(new Color(241, 196, 15)); // Sarı
-                            buton.setForeground(Color.BLACK);
-                            buton.setEnabled(true); // Gri olmaması için true bıraktık
-                        }
-                        default -> buton.setBackground(Color.LIGHT_GRAY);
+                switch (oda.getOdaDurumu()) {
+                    case MUSAIT -> {
+                        buton.setBackground(new Color(46, 204, 113)); // Yeşil
+                        buton.setForeground(Color.WHITE);
+                        buton.setEnabled(true);
                     }
-                } else {
-                    buton.setBackground(Color.LIGHT_GRAY);
+                    case DOLU -> {
+                        buton.setBackground(new Color(231, 76, 60)); // Kırmızı
+                        buton.setForeground(Color.WHITE);
+                        
+                        // Sadece Müşteri Ekleme rolü varsa tıklamayı devre dışı bırak
+                        if (p != null && p.getIsTipi() == UserRole.MUSTERIEKLEME) {
+                            buton.setEnabled(false);
+                        } else {
+                            buton.setEnabled(true); 
+                        }
+                    }
+                    case BAKIMDA -> {
+                        buton.setBackground(new Color(241, 196, 15)); // Sarı
+                        buton.setForeground(Color.BLACK);
+                        
+                        // Sadece Müşteri Ekleme rolü varsa tıklamayı devre dışı bırak
+                        if (p != null && p.getIsTipi() == UserRole.MUSTERIEKLEME) {
+                            buton.setEnabled(false);
+                        } else {
+                            buton.setEnabled(true); 
+                        }
+                    }
+                    default -> {
+                        buton.setBackground(Color.LIGHT_GRAY);
+                        buton.setEnabled(true);
+                    }
                 }
-            } catch (Exception e) {
-                // Hata durumunda buton varsayılan renginde kalsın
+            } else {
+                buton.setBackground(Color.LIGHT_GRAY);
             }
+        } catch (Exception e) {
+            // Hata durumunda buton varsayılan renginde kalsın
         }
     }
-}
+  } 
+}  
+

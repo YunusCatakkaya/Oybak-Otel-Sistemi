@@ -283,7 +283,9 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     }//GEN-LAST:event_BakimAlActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        com.oybak.otel.GUIResepsiyon.MusteriEkleme musteriEkleme = new com.oybak.otel.GUIResepsiyon.MusteriEkleme();
+        musteriEkleme.setLocationRelativeTo(null); // Ekranı tam ortaya hizala
+        musteriEkleme.setVisible(true); // Ekranı görünür yap
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BakımdanCikarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BakımdanCikarActionPerformed
