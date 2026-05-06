@@ -35,7 +35,7 @@ public interface Hatalar {
                 toplam = toplam + hane;
             }
             
-            if((toplam%10) != sonHane){
+            if(((toplam%10) != sonHane) || ((sonHane%2) !=0)){
                 JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz!");
                 return false;
             }
