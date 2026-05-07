@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIResepsiyon;
+import com.oybak.otel.Hatalar;
 import com.oybak.otel.Personel;
 import com.oybakotel.GUI.OdaSecim;
 
@@ -10,7 +11,7 @@ import com.oybakotel.GUI.OdaSecim;
  *
  * @author onuro
  */
-public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim {
+public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim, Hatalar {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MusteriEkleme.class.getName());
 
@@ -63,6 +64,7 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim {
                 jTextField1FocusLost(evt);
             }
         });
+        jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
         jTextField2.setText("TC Kimlik No:");
         jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -137,9 +139,20 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim {
         String adSoyad = jTextField1.getText().trim();
         String tcNo = jTextField2.getText().trim();
 
-        if(adSoyad.isEmpty() || tcNo.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen müşteri adı ve TC kimlik numarasını giriniz!");
+        // 1. Boşluk ve varsayılan metin kontrolü
+        if(adSoyad.isEmpty() || adSoyad.equals("Ad Soyad:") || tcNo.isEmpty() || tcNo.equals("TC Kimlik No:")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen müşteri adı ve TC kimlik numarasını tam giriniz!");
             return;
+        }
+
+        // 2. TC KİMLİK KONTROLÜ (VOID YÖNTEMİ)
+        try {
+            // tcKontrol void olduğu için sadece çalıştırıyoruz.
+            tcKontrol(tcNo); 
+        } catch (IllegalArgumentException ex) {
+            // Eğer tcKontrol içinde bir hata bulunup fırlatılırsa kod buraya düşer
+            // ve return diyerek veritabanı kayıt işlemlerini yapmadan anında dururuz.
+            return; 
         }
 
         // EĞER TARİHLER HAFIZADA VARSA (Yani 2. veya 3. kişiyse)
@@ -161,14 +174,14 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim {
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
         // Eğer kutunun içinde varsayılan yazı varsa, kullanıcı tıklayınca içini temizle
-        if (jTextField1.getText().equals("İsim Soyisim:")) {
-        jTextField1.setText("");
+        if (jTextField1.getText().equals("Ad Soyad:")) {
+            jTextField1.setText("");
         }
     }//GEN-LAST:event_jTextField1FocusGained
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
         if (jTextField1.getText().isEmpty()) {
-        jTextField1.setText("İsim Soyisim:");
+            jTextField1.setText("Ad Soyad:");
         }
     }//GEN-LAST:event_jTextField1FocusLost
 
@@ -190,6 +203,10 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim {
         odaSecim(p); 
         this.dispose(); // Müşteri Ekleme ekranını kapat
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

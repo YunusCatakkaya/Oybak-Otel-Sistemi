@@ -19,6 +19,11 @@ import javax.swing.JOptionPane;
 public interface Hatalar {
     public default void tcKontrol(String tc){
         try {
+            if (tc.length() != 11) {
+                JOptionPane.showMessageDialog((Component) this, "TC Kimlik numarası 11 haneli olmalıdır!");
+                throw new IllegalArgumentException("Hatalı TC"); // KODU BURADA KESER!
+            }
+            
             long sayi = Long.parseLong(tc);
             int sonHane = (int) (sayi%10);
             sayi = sayi/10;
@@ -26,7 +31,7 @@ public interface Hatalar {
             
             if(!(sayi > 999999999L) && (sayi < 10000000000L)){
                 JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz! Hata:001");
-                return ;
+                throw new IllegalArgumentException("Hatalı TC"); // KODU BURADA KESER!
             }
             
             while(sayi >= 1){
@@ -37,10 +42,12 @@ public interface Hatalar {
             
             if(((toplam%10) != sonHane) || ((sonHane%2) !=0)){
                 JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz! Hata:002");
+                throw new IllegalArgumentException("Hatalı TC"); // KODU BURADA KESER!
             }
             
         } catch (NumberFormatException e) {
-            System.out.println("Hata: Metin geçerli bir sayı formatında değil!");
+            JOptionPane.showMessageDialog((Component) this, "Hata: TC Kimlik numarası sadece sayılardan oluşmalıdır!");
+            throw new IllegalArgumentException("Hatalı TC"); // KODU BURADA KESER!
         }
     }
     public default boolean tcVarMi(long tcNo) {

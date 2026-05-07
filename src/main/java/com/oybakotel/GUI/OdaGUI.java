@@ -78,7 +78,10 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
         setLocationRelativeTo(null);
         
         rolleriAyarla();
+        musteriBilgileriniYukle();
     }
+    
+    
     
     private void rolleriAyarla() {
     // 1. Önce tüm özel panelleri gizle (Varsayılan durum)
@@ -108,6 +111,51 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
             // İsteğe bağlı: Varsayılan bir işlem buraya eklenebilir
         }
     }
+    }
+    
+    private void musteriBilgileriniYukle() {
+        Oda geciciOda = odaBilgileri(this.secilenOda);
+
+        // Eğer oda DOLU ise müşteri bilgilerini veritabanından çekip yazdır
+        if (geciciOda != null && geciciOda.getOdaDurumu() == com.oybak.otel.enums.OdaDurumu.DOLU) {
+            
+            // Kullanıcının rolü bu paneli görmeye yetiyorsa (rolleriAyarla metodundan geçebildiyse)
+            if (musteriBilgileriPaneli.isVisible()) {
+                // TC no'yu SQL sorgusundan ve ekrandan çıkardık
+                String sql = "SELECT ad_soyad, giris_tarihi, cikis_tarihi FROM guncel_musteriler WHERE oda_no = ?";
+                StringBuilder sb = new StringBuilder();
+                sb.append("<html>");
+                
+                try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL);
+                     java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                     
+                    pstmt.setString(1, String.valueOf(this.secilenOda));
+                    
+                    try (java.sql.ResultSet rs = pstmt.executeQuery()) {
+                        int kisiSayisi = 1;
+                        while (rs.next()) {
+                            // Sadece Müşteri adı ve tarihleri ekrana basıyoruz
+                            sb.append("<b>").append(kisiSayisi).append(". Müşteri:</b> ").append(rs.getString("ad_soyad")).append("<br>");
+                            sb.append("<b>Giriş:</b> ").append(rs.getString("giris_tarihi"))
+                              .append(" &nbsp;|&nbsp; <b>Çıkış:</b> ").append(rs.getString("cikis_tarihi")).append("<br><br>");
+                            kisiSayisi++;
+                        }
+                        
+                        if (kisiSayisi == 1) { 
+                            sb.append("Oda dolu görünüyor ancak müşteri kaydı bulunamadı.");
+                        }
+                    }
+                } catch (Exception e) {
+                    sb.append("Veri tabanından bilgiler çekilirken hata oluştu: ").append(e.getMessage());
+                }
+                
+                sb.append("</html>");
+                Bilgiler.setText(sb.toString()); // Çekilen veriyi Label'a bas
+            }
+        } else {
+            // Oda DOLU değilse (Müsait, Bakımda vb.) müşteri paneli tamamen SAKLANIR
+            musteriBilgileriPaneli.setVisible(false);
+        }
     }
 
     private OdaGUI() {
@@ -160,6 +208,8 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
 
         Ozellikler.setText("sırayla özellikler");
 
+        teknikPersonelPaneli.setBackground(new java.awt.Color(255, 255, 255));
+
         BakimAl.setText("Bakıma Al");
         BakimAl.addActionListener(this::BakimAlActionPerformed);
 
@@ -187,6 +237,8 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
+        bakimSebebiPaneli.setBackground(new java.awt.Color(255, 255, 255));
+
         BakımSebebi.setText("Bakım sebebi");
 
         javax.swing.GroupLayout bakimSebebiPaneliLayout = new javax.swing.GroupLayout(bakimSebebiPaneli);
@@ -207,6 +259,8 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
         );
 
         BakımSebebi.getAccessibleContext().setAccessibleName("Bakım Sebebi");
+
+        musteriBilgileriPaneli.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("Müşteri Bilgileri:");
 
@@ -234,6 +288,8 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
                 .addComponent(Bilgiler, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        musteriEklemePaneli.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton2.setText("Müşteri ekle");
         jButton2.addActionListener(this::jButton2ActionPerformed);

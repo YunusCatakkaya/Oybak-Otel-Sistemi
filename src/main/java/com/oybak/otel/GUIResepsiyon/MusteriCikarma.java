@@ -47,7 +47,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         String sqlMusteriSil = "DELETE FROM guncel_musteriler WHERE oda_no = ?";
         
         // 3. Odayı boşa çıkar
-        String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT' WHERE oda_no = ?";
+        String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT', odenme_durumu = 'false' WHERE oda_no = ?";
 
         try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
             conn.setAutoCommit(false); // Atomik işlem (Hepsi ya da hiçbiri)

@@ -8,6 +8,9 @@ import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
 import com.oybak.otel.Yonetim;
 import static com.oybak.otel.enums.UserRole.YONETIM;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 /**
  *
  * @author onuro
@@ -34,17 +37,70 @@ public class ParaAlma extends javax.swing.JFrame implements VeriTabani { //sd
 private void doluOdalariYukle() {
     odaComboBox.removeAllItems(); // Önce eski verileri temizle
     
-    // VeriTabani interface'ini implemente eden bir sınıf nesnesi (örneğin Resepsiyon)
-    VeriTabani vt = new Yonetim("Geçici", 0L, 0.0, YONETIM,""); 
-    
-    // Sadece durumu DOLU olan odaları getirir
-    java.util.List<Oda> doluOdalar = vt.doluOdaListesi(); 
-
-    for (Oda oda : doluOdalar) {
-        // ComboBox'a oda numarasını ekliyoruz
-        odaComboBox.addItem(String.valueOf(oda.getOdaNumarasi()));
-    }
+    // Sadece durumu DOLU olan ve ödemesi henüz alınmamış odaları getir
+        String sql = "SELECT oda_no FROM odalar WHERE durum = 'DOLU' AND (odenme_durumu = 'false' OR odenme_durumu IS NULL)";
+        
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL);
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql);
+             java.sql.ResultSet rs = pstmt.executeQuery()) {
+            
+            while (rs.next()) {
+                odaComboBox.addItem(String.valueOf(rs.getInt("oda_no")));
+            }
+        } catch (Exception e) {
+            System.out.println("Oda yükleme hatası: " + e.getMessage());
+        }
 }
+
+
+// 2. Yeni bir metot ekliyoruz: Gün sayısını hesaplayıp toplam fiyatı bulur
+    private double hesaplaToplamFiyat(int odaNo) {
+        double tabanFiyat = 0;
+        long gunSayisi = 1; // Varsayılan en az 1 gün
+        
+        // Odalar tablosundan taban fiyatı al
+        String sqlOda = "SELECT fiyat FROM odalar WHERE oda_no = ?";
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL);
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlOda)) {
+            pstmt.setInt(1, odaNo);
+            try (java.sql.ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    tabanFiyat = rs.getDouble("fiyat");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Fiyat çekme hatası: " + e.getMessage());
+            return -1;
+        }
+
+        // Guncel musteriler tablosundan kalma süresini al (1 müşteri üzerinden)
+        String sqlMusteri = "SELECT giris_tarihi, cikis_tarihi FROM guncel_musteriler WHERE oda_no = ? LIMIT 1";
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL);
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlMusteri)) {
+            pstmt.setInt(1, odaNo);
+            try (java.sql.ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String girisStr = rs.getString("giris_tarihi");
+                    String cikisStr = rs.getString("cikis_tarihi");
+                    
+                    if (girisStr != null && cikisStr != null && !girisStr.isEmpty() && !cikisStr.isEmpty()) {
+                        // TARİH FORMATINI SENİN SİSTEMİNE (dd.MM.yyyy) UYGUN HALE GETİRDİK
+                        DateTimeFormatter formatlayici = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                        
+                        LocalDate giris = LocalDate.parse(girisStr, formatlayici);
+                        LocalDate cikis = LocalDate.parse(cikisStr, formatlayici);
+                        
+                        gunSayisi = ChronoUnit.DAYS.between(giris, cikis);
+                        if (gunSayisi <= 0) gunSayisi = 1; // Aynı gün çıkış yaparsa 1 günlük ücret al
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Tarih çekme hatası: " + e.getMessage());
+        }
+
+        return tabanFiyat * gunSayisi;
+    }       
 
 private double odenenMiktariGetir(int odaNo) {
     double odenen = 0.0;
@@ -147,86 +203,108 @@ private double odenenMiktariGetir(int odaNo) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void odaComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odaComboBoxActionPerformed
-    // 1. Seçilen nesneyi al ve boş değilse işleme başla
     Object secilen = odaComboBox.getSelectedItem();
-    if (secilen == null) return;
-
-    // 2. Doğrudan veritabanı bağlantısı açarak sorgu yap
-    String sql = "SELECT fiyat FROM odalar WHERE oda_no = ?";
-    
-    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL);
-         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        
-        pstmt.setInt(1, Integer.parseInt(secilen.toString()));
-        
-        try (java.sql.ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) {
-                double fiyat = rs.getInt("fiyat");
-                
-                // rs.getDouble(), veritabanındaki değer NULL ise 0.0 döner.
-                // Eğer veritabanında gerçekten NULL ise bunu kontrol edelim:
-                if (rs.wasNull()) {
-                    fiyatText.setText("Fiyat: Tanımlanmamış (NULL)");
-                } else {
-                    fiyatText.setText("Fiyat: " + fiyat + " TL");
-                }
-            } else {
-                fiyatText.setText("Fiyat: Oda Bulunamadı");
-            }
+        if (secilen == null) {
+            fiyatText.setText("Fiyat: Seçili Oda Yok");
+            return;
         }
-    } catch (Exception e) {
-        System.err.println("Hata: " + e.getMessage());
-        fiyatText.setText("Fiyat: Bağlantı Hatası");
-    }
+
+        try {
+            int odaNo = Integer.parseInt(secilen.toString());
+            double toplamFiyat = hesaplaToplamFiyat(odaNo);
+            
+            if (toplamFiyat >= 0) {
+                fiyatText.setText("Fiyat: " + toplamFiyat + " TL");
+            } else {
+                fiyatText.setText("Fiyat: Hata/Bulunamadı");
+            }
+        } catch (Exception e) {
+            fiyatText.setText("Fiyat: Hata");
+        }
     }//GEN-LAST:event_odaComboBoxActionPerformed
 
     private void odemeAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odemeAlActionPerformed
-    // 1. Seçili odayı kontrol et
     Object secilen = odaComboBox.getSelectedItem();
-    if (secilen == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen bir oda seçiniz!");
-        return;
-    }
-
-    String odaNoStr = secilen.toString();
-    double odaFiyati = 0.0;
-
-    // 2. Interface metoduna güvenmek yerine doğrudan SQL ile fiyatı çek (Garantici Yöntem)
-    String sql = "SELECT fiyat FROM odalar WHERE oda_no = ?";
-    
-    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL);
-         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        
-        pstmt.setInt(1, Integer.parseInt(odaNoStr));
-        
-        try (java.sql.ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) {
-                odaFiyati = rs.getDouble("fiyat");
-            }
+        if (secilen == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen bir oda seçiniz!");
+            return;
         }
 
-        // 3. Fiyat kontrolü ve ödeme onayı
-        if (odaFiyati > 0) {
-            // Ödeme başarılı mesajı
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                odaNoStr + " nolu odanın " + odaFiyati + " TL tutarındaki ödemesi alınmıştır.", 
-                "Ödeme Başarılı", 
-                javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            
-            // İsterseniz burada kasa güncelleme metodunuzu çağırabilirsiniz
-            // ornek: resepsiyon.odemeAl(mevcutMusteri, secilenOda);
+        int odaNo = Integer.parseInt(secilen.toString());
+        double odaFiyati = hesaplaToplamFiyat(odaNo);
 
+        if (odaFiyati > 0) {
+            // 1. Odanın ödenme durumunu true yapacak sorgu
+            String sqlOdaGuncelle = "UPDATE odalar SET odenme_durumu = 'true' WHERE oda_no = ?";
+            
+            // 2. Odaya giren İLK müşteriyi (kime ödeme yazılacağını) bulma sorgusu
+            // rowid sıralaması bize o odaya ilk eklenen kişiyi verir
+            String sqlIlkMusteriBul = "SELECT tc_no FROM guncel_musteriler WHERE oda_no = ? ORDER BY rowid ASC LIMIT 1";
+            
+            // 3. Sadece bulduğumuz o kişinin kasasına parayı ekleyecek sorgu
+            String sqlMusteriGuncelle = "UPDATE guncel_musteriler SET kasa_katki = COALESCE(kasa_katki, 0) + ? WHERE tc_no = ?";
+            
+            try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL)) {
+                
+                // İki işlemi aynı anda ve hatasız yapmak için otomatik kaydetmeyi kapatıyoruz (Transaction)
+                conn.setAutoCommit(false); 
+                
+                try (java.sql.PreparedStatement pstmtOda = conn.prepareStatement(sqlOdaGuncelle);
+                     java.sql.PreparedStatement pstmtMusteriBul = conn.prepareStatement(sqlIlkMusteriBul);
+                     java.sql.PreparedStatement pstmtMusteri = conn.prepareStatement(sqlMusteriGuncelle)) {
+                    
+                    // 1. Adım: Oda ödenme durumunu güncelle
+                    pstmtOda.setInt(1, odaNo);
+                    pstmtOda.executeUpdate();
+                    
+                    // 2. Adım: İlk müşteriyi bul
+                    pstmtMusteriBul.setInt(1, odaNo);
+                    String ilkMusteriTc = null;
+                    try (java.sql.ResultSet rs = pstmtMusteriBul.executeQuery()) {
+                        if (rs.next()) {
+                            ilkMusteriTc = rs.getString("tc_no"); // İlk eklenen kişinin tc_no'sunu aldık
+                        }
+                    }
+                    
+                    // 3. Adım: Eğer ilk müşteri bulunduysa sadece onun hesabını güncelle
+                    if (ilkMusteriTc != null) {
+                        pstmtMusteri.setDouble(1, odaFiyati);
+                        pstmtMusteri.setString(2, ilkMusteriTc);
+                        pstmtMusteri.executeUpdate();
+                    }
+                    
+                    // Tüm işlemler başarılıysa veritabanına onayla/kaydet (Commit)
+                    conn.commit();
+                    
+                    javax.swing.JOptionPane.showMessageDialog(this, 
+                        odaNo + " nolu odanın " + odaFiyati + " TL tutarındaki ödemesi alınmış ve ana müşteri (TC: " + ilkMusteriTc + ") hesabına işlenmiştir.", 
+                        "Ödeme Başarılı", 
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    
+                    // Listeden seçili odayı sil
+                    odaComboBox.removeItem(secilen);
+                    
+                    // Varsa sıradaki odayı seç, yoksa uyarı ver
+                    if (odaComboBox.getItemCount() > 0) {
+                        odaComboBox.setSelectedIndex(0);
+                    } else {
+                        fiyatText.setText("Fiyat: Ödenecek Oda Kalmadı");
+                    }
+                    
+                } catch (Exception ex) {
+                    // Herhangi bir hata olursa işlemleri geri al (Rollback)
+                    conn.rollback();
+                    javax.swing.JOptionPane.showMessageDialog(this, "Güncelleme sırasında hata oluştu: " + ex.getMessage(), "Hata", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Veritabanı bağlantı hatası: " + e.getMessage(), "Hata", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            // Fiyat hala 0 geliyorsa veritabanı hücresinde sorun vardır
             javax.swing.JOptionPane.showMessageDialog(this, 
-                "Hata: Veritabanında " + odaNoStr + " nolu odanın fiyatı 0.0 veya boş görünüyor!\nLütfen DB Browser'dan kontrol edin.", 
+                "Hata: Veritabanında " + odaNo + " nolu odanın fiyatı 0.0 veya boş görünüyor!", 
                 "Fiyat Hatası", 
                 javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Hata oluştu: " + e.getMessage());
-    }
     }//GEN-LAST:event_odemeAlActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
