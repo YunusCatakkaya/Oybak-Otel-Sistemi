@@ -123,9 +123,24 @@ public class Resepsiyon extends Personel{
             System.err.println("Oda güncelleme hatası: " + e.getMessage());
         }
     }
-		
+    
+    public static boolean isOdaOdenmis(int odaNo) {
+        String sql = "SELECT odenme_durumu FROM odalar WHERE oda_no = ?";
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, odaNo);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String durum = rs.getString("odenme_durumu");
+                    // Eğer durum "true" ise ödenmiştir (true döner), false veya null ise ödenmemiştir (false döner).
+                    return "true".equalsIgnoreCase(durum);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ödeme kontrol hatası: " + e.getMessage());
+        }
+        // Eğer veritabanına ulaşılamazsa güvenli tarafta kalıp çıkışa izin verme
+        return false; 
+    }
 }       
-        
-	
-
-

@@ -39,7 +39,17 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         });    }
     
     private void musterileriBosalt(int odaNo) {
-        // SQL işlemlerini Resepsiyon sınıfındaki metoda devrettik
+        if (!com.oybak.otel.Resepsiyon.isOdaOdenmis(odaNo)) {
+            // Eğer ödenmemişse ekrana hata ver ve return ile metodu (çıkış işlemini) anında durdur
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "İşlem Reddedildi: Bu odanın ödemesi henüz alınmamıştır!\nLütfen çıkış yapmadan önce 'Para Alma' menüsünden ödemeyi tahsil ediniz.", 
+                "Ödeme Bekleniyor", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
+        // ------------------------------------
+
+        // Eğer yukarıdaki takılmadan geçerse (yani para ödenmişse) SQL işlemlerine devam et
         boolean basarili = com.oybak.otel.Resepsiyon.odayiBosalt(odaNo);
         
         if (basarili) {
