@@ -219,83 +219,48 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     
     // Veritabanı kayıt ve yönlendirme işlemlerini arka planda da yapabilmek için ayırdık
     public void veritabaninaIsleVeKontrolEt(String girisStr, String cikisStr) {
-        try (java.sql.Connection conn = java.sql.DriverManager.getConnection("jdbc:sqlite:veritabani_dosyan.db")) {
-            
-            // 1. KAPASİTE KONTROLÜ
-            int kapasite = 0;
-            String sqlKapasite = "SELECT tek_kisilik_yatak, cift_kisilik_yatak FROM odalar WHERE oda_no = ?";
-            java.sql.PreparedStatement pstmtCap = conn.prepareStatement(sqlKapasite);
-            pstmtCap.setInt(1, odaNo);
-            java.sql.ResultSet rsCap = pstmtCap.executeQuery();
-            if(rsCap.next()){
-                kapasite = rsCap.getInt("tek_kisilik_yatak") + (rsCap.getInt("cift_kisilik_yatak") * 2);
-            }
-            
-            int mevcutMusteri = 0;
-            String sqlCount = "SELECT COUNT(*) AS kisi_sayisi FROM guncel_musteriler WHERE oda_no = ?";
-            java.sql.PreparedStatement pstmtCount = conn.prepareStatement(sqlCount);
-            pstmtCount.setString(1, String.valueOf(odaNo));
-            java.sql.ResultSet rsCount = pstmtCount.executeQuery();
-            if(rsCount.next()){
-                mevcutMusteri = rsCount.getInt("kisi_sayisi");
-            }
-            
-            if (mevcutMusteri >= kapasite) {
-                javax.swing.JOptionPane.showMessageDialog(this, "HATA: Bu oda (" + kapasite + " kişi) tam kapasite dolu!");
-                return; 
-            }
+        // Müşteri Ekleme işlemini Resepsiyon.java'ya yaptırıyoruz
+        int sonuc = com.oybak.otel.Resepsiyon.musteriEkle(odaNo, musteriAd, musteriTc, girisStr, cikisStr);
 
-            // 2. MÜŞTERİYİ VERİTABANINA EKLE
-            String sqlMusteri = "INSERT INTO guncel_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) VALUES (?, ?, ?, ?, ?, 0)";
-            java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlMusteri);
-            pstmt.setString(1, musteriAd);
-            pstmt.setString(2, musteriTc);
-            pstmt.setString(3, String.valueOf(odaNo));
-            pstmt.setString(4, girisStr);
-            pstmt.setString(5, cikisStr);
-            pstmt.executeUpdate();
+        if (sonuc == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "HATA: Bu oda tam kapasite dolu!");
+            return;
+        } 
+        else if (sonuc == -2) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Veritabanı Hatası oluştu!");
+            return;
+        } 
+        else if (sonuc == 1) {
+            // Müşteri eklendi ve oda tam kapasiteye ulaştı (Otomatik DOLU yapıldı)
+            javax.swing.JOptionPane.showMessageDialog(this, "Müşteri eklendi! Oda kapasitesi tam dolduğu için oda 'DOLU' durumuna getirildi.");
             
-            mevcutMusteri++; // Kayıt atıldığı için sayıyı 1 artırıyoruz
-            
-            // 3. DOLULUK VE YÖNLENDİRME
-            if (mevcutMusteri >= kapasite) {
-                String sqlOda = "UPDATE odalar SET durum = 'DOLU' WHERE oda_no = ?";
-                java.sql.PreparedStatement pstmtOda = conn.prepareStatement(sqlOda);
-                pstmtOda.setInt(1, odaNo);
-                pstmtOda.executeUpdate();
+            com.oybakotel.GUI.OdaSecimEkrani odaSecim = new com.oybakotel.GUI.OdaSecimEkrani(p);
+            odaSecim.setLocationRelativeTo(null);
+            odaSecim.setVisible(true);
+            this.dispose();
+        } 
+        else if (sonuc == 0) {
+            // Müşteri eklendi ama odada hala boş yatak var
+            int cevap = javax.swing.JOptionPane.showConfirmDialog(this, 
+                "Müşteri eklendi.\nBu odaya başka bir müşteri daha ekleyecek misiniz?", 
+                "Kayıt Başarılı", 
+                javax.swing.JOptionPane.YES_NO_OPTION);
                 
-                javax.swing.JOptionPane.showMessageDialog(this, "Müşteri eklendi! Oda kapasitesi tam dolduğu için oda 'DOLU' durumuna getirildi.");
+            if (cevap == javax.swing.JOptionPane.YES_OPTION) {
+                // Tarihleri yeni ekrana yolluyoruz
+                com.oybak.otel.GUIResepsiyon.MusteriEkleme yeniEkleme = new com.oybak.otel.GUIResepsiyon.MusteriEkleme(p, odaNo, girisStr, cikisStr);
+                yeniEkleme.setLocationRelativeTo(null);
+                yeniEkleme.setVisible(true);
+                this.dispose();
+            } else {
+                // Kullanıcı başka müşteri eklemek istemediği için odayı "DOLU"ya çekiyoruz
+                com.oybak.otel.Resepsiyon.odayiDoluYap(odaNo);
                 
                 com.oybakotel.GUI.OdaSecimEkrani odaSecim = new com.oybakotel.GUI.OdaSecimEkrani(p);
                 odaSecim.setLocationRelativeTo(null);
                 odaSecim.setVisible(true);
                 this.dispose();
-            } else {
-                int cevap = javax.swing.JOptionPane.showConfirmDialog(this, 
-                    "Müşteri eklendi.\nOda Kapasitesi: " + kapasite + "\nŞu anki Kişi: " + mevcutMusteri + "\n\nBu odaya başka bir müşteri daha ekleyecek misiniz?", 
-                    "Kayıt Başarılı", 
-                    javax.swing.JOptionPane.YES_NO_OPTION);
-                    
-                if (cevap == javax.swing.JOptionPane.YES_OPTION) {
-                    // *** EN ÖNEMLİ DEĞİŞİKLİK: Tarihleri yeni ekrana yolluyoruz ***
-                    com.oybak.otel.GUIResepsiyon.MusteriEkleme yeniEkleme = new com.oybak.otel.GUIResepsiyon.MusteriEkleme(p, odaNo, girisStr, cikisStr);
-                    yeniEkleme.setLocationRelativeTo(null);
-                    yeniEkleme.setVisible(true);
-                    this.dispose();
-                } else {
-                    String sqlOda = "UPDATE odalar SET durum = 'DOLU' WHERE oda_no = ?";
-                    java.sql.PreparedStatement pstmtOda = conn.prepareStatement(sqlOda);
-                    pstmtOda.setInt(1, odaNo);
-                    pstmtOda.executeUpdate();
-                    
-                    com.oybakotel.GUI.OdaSecimEkrani odaSecim = new com.oybakotel.GUI.OdaSecimEkrani(p);
-                    odaSecim.setLocationRelativeTo(null);
-                    odaSecim.setVisible(true);
-                    this.dispose();
-                }
             }
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Veritabanı Hatası: " + e.getMessage());
         }
     }
     

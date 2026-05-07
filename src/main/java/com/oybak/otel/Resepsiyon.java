@@ -24,157 +24,106 @@ public class Resepsiyon extends Personel{
             super(name, tcNo, maas, RESEPSIYON ,parola);
     }
 
-    public void musteriGirisYap(Oda secilenOda, Musteri yeniMusteri) {
-        if (secilenOda.getOdaDurumu().equals(OdaDurumu.MUSAIT)) {
+    // 1. Müşteri Çıkarma (Odayı Boşaltma) İşlemi
+    public static boolean odayiBosalt(int odaNo) {
+        String sqlGecmiseTasi = "INSERT INTO gecmis_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) " +
+                                "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, DATE('now'), kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
+        
+        String sqlMusteriSil = "DELETE FROM guncel_musteriler WHERE oda_no = ?";
+        
+        String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT', odenme_durumu = 'false' WHERE oda_no = ?";
 
-            // 1. RAM üzerindeki nesne güncellemeleri
-            secilenOda.musteriEkle(yeniMusteri);
-            secilenOda.setOdaDurumu(OdaDurumu.DOLU);
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
+            conn.setAutoCommit(false); // Atomik işlem (Transaction)
 
+            try (PreparedStatement ps1 = conn.prepareStatement(sqlGecmiseTasi);
+                 PreparedStatement ps2 = conn.prepareStatement(sqlMusteriSil);
+                 PreparedStatement ps3 = conn.prepareStatement(sqlOdaGuncelle)) {
+                
+                ps1.setInt(1, odaNo); ps1.executeUpdate();
+                ps2.setInt(1, odaNo); ps2.executeUpdate();
+                ps3.setInt(1, odaNo); ps3.executeUpdate();
 
-            String url = VeriTabani.URL;
-            String sql = "UPDATE odalar SET durum = 'DOLU' WHERE oda_no = ?";
-
-            try (Connection conn = DriverManager.getConnection(url);
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-                pstmt.setInt(1, secilenOda.getOdaNumarasi());
-                pstmt.executeUpdate();
-
-                System.out.println("İşlem Başarılı: " + yeniMusteri.getName() + " isimli müşteri " + secilenOda.getOdaNumarasi() + " numaralı odaya giriş yaptı.");
-                System.out.println("Odada şu an " + secilenOda.getKisiSayisi() + " kişi kalıyor.");
-
-            } catch (Exception e) {
-                System.out.println("Veritabanı Hatası (Giriş): " + e.getMessage());
+                conn.commit(); 
+                return true;   // İşlem başarılı
+            } catch (SQLException e) {
+                conn.rollback(); 
+                System.err.println("SQL Hatası (Oda Boşaltma): " + e.getMessage());
+                return false;
             }
-        } else {
-            System.out.println("İşlem Başarısız: " + secilenOda.getOdaNumarasi() + " numaralı oda müsait değil!");
-        }
-    }        
-		
-    public void musteriCıkısYap(Oda secilenOda, Musteri yenMusteri) {
-        if (secilenOda.getOdaDurumu().equals(OdaDurumu.DOLU)) {
-
-            // Odanın durumunu sistem hafızasında tekrar 'MUSAIT' yapar
-            secilenOda.setOdaDurumu(OdaDurumu.MUSAIT);
-            // Odadaki müşteri listesini tamamen temizler
-            secilenOda.musterileriTemizle();
-            String url = VeriTabani.URL;
-            // Odalar tablosundaki ilgili odanın durumunu 'MUSAIT' yapacak SQL sorgusu
-            String sql = "UPDATE odalar SET durum = 'MUSAİT' WHERE oda_no = ?";
-
-            try (Connection conn = DriverManager.getConnection(url);
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-                // SQL sorgusundaki '?' yerine çıkış yapılan odanın numarasını yerleştirir
-                pstmt.setInt(1, secilenOda.getOdaNumarasi());
-                // Sorguyu çalıştırarak veritabanındaki oda durumunu günceller
-                pstmt.executeUpdate();
-
-                System.out.println(secilenOda.getOdaNumarasi() + " numaralı odanın çıkış işlemi yapıldı. Oda artık Müsait.");
-            } catch (Exception e) {
-                System.out.println("Veritabanı Hatası (Çıkış): " + e.getMessage());
-            }
-        } else {
-            // Eğer oda zaten DOLU değilse çıkış yapılamayacağını belirtir
-            System.out.println("Hata: Bu oda zaten dolu değil!");
+        } catch (Exception e) {
+            System.err.println("Veritabanı Bağlantı Hatası: " + e.getMessage());
+            return false;
         }
     }
-        
-        // Resepsiyon.java içinde revize edilmiş hali
-    public void odemeAl(Musteri musteri, Oda secilenOda) {
-        double odaFiyatı = secilenOda.getFiyat(); // Fiyatı odadan çekiyoruz
     
-        if (odaFiyatı > 0) {
-            musteri.kasayaKatkiEkle(odaFiyatı);
-        
-            String url = VeriTabani.URL;
-            String sql = "UPDATE musteriler SET kasaya_katkisi = ? WHERE tc_no = ?";
-        
-            try (Connection conn = DriverManager.getConnection(url);
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    // Dönüş değerleri -> 0: Eklendi (Yer var), 1: Eklendi (Oda tam doldu), -1: Hata (Zaten dolu), -2: Veritabanı Hatası
+    public static int musteriEkle(int odaNo, String musteriAd, String musteriTc, String girisStr, String cikisStr) {
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
             
-                 pstmt.setDouble(1, musteri.getKasayaKatkisi());
-                 pstmt.setLong(2, musteri.getTcNo());
-                 pstmt.executeUpdate();
-            
-                 System.out.println(secilenOda.getOdaNumarasi() + " nolu oda ücreti olan " + odaFiyatı + " TL tahsil edildi.");
-            } catch (Exception e) {
-            System.out.println("Hata: " + e.getMessage());
+            // A) Kapasiteyi kontrol et
+            int kapasite = 0;
+            String sqlKapasite = "SELECT tek_kisilik_yatak, cift_kisilik_yatak FROM odalar WHERE oda_no = ?";
+            try (PreparedStatement pstmtCap = conn.prepareStatement(sqlKapasite)) {
+                pstmtCap.setInt(1, odaNo);
+                ResultSet rsCap = pstmtCap.executeQuery();
+                if(rsCap.next()){
+                    kapasite = rsCap.getInt("tek_kisilik_yatak") + (rsCap.getInt("cift_kisilik_yatak") * 2);
+                }
             }
-        }
-    }
-        
-    public void paraIadeEt(Musteri musteri, double iadeMiktari) {
-        if (iadeMiktari > 0 && musteri.getKasayaKatkisi() >= iadeMiktari) {
             
-            musteri.kasayaKatkiCikar(iadeMiktari);
+            int mevcutMusteri = 0;
+            String sqlCount = "SELECT COUNT(*) AS kisi_sayisi FROM guncel_musteriler WHERE oda_no = ?";
+            try (PreparedStatement pstmtCount = conn.prepareStatement(sqlCount)) {
+                pstmtCount.setString(1, String.valueOf(odaNo));
+                ResultSet rsCount = pstmtCount.executeQuery();
+                if(rsCount.next()){
+                    mevcutMusteri = rsCount.getInt("kisi_sayisi");
+                }
+            }
             
-            String url = VeriTabani.URL;
-            String sql = "UPDATE musteriler SET kasaya_katkisi = ? WHERE tc_no = ?";
-            
-            try (Connection conn = DriverManager.getConnection(url);
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                
-                // 1. soru işareti: İade edildikten sonra müşteride kalan net katkı payı
-                pstmt.setDouble(1, musteri.getKasayaKatkisi());
-                // 2. soru işareti: Hangi müşteri olduğunu bulmak için TC No
-                pstmt.setLong(2, musteri.getTcNo());
+            if (mevcutMusteri >= kapasite) {
+                return -1; // Oda zaten dolu
+            }
+
+            // B) Müşteriyi veritabanına ekle
+            String sqlMusteri = "INSERT INTO guncel_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) VALUES (?, ?, ?, ?, ?, 0)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlMusteri)) {
+                pstmt.setString(1, musteriAd);
+                pstmt.setString(2, musteriTc);
+                pstmt.setString(3, String.valueOf(odaNo));
+                pstmt.setString(4, girisStr);
+                pstmt.setString(5, cikisStr);
                 pstmt.executeUpdate();
-                
-                System.out.println("İşlem Başarılı: " + musteri.getName() + " isimli müşteriye " + iadeMiktari + " TL iade edildi.");
-            } catch (Exception e) {
-                System.out.println("Veritabanı Hatası (İade): " + e.getMessage());
             }
-        } else {
-            // Eğer iade edilmek istenen para müşterinin verdiği paradan fazlaysa hata verir
-            System.out.println("Hata: Geçersiz iade miktarı veya yetersiz bakiye!");
+            
+            mevcutMusteri++; // Kayıt atıldığı için sayıyı 1 artırıyoruz
+            
+            // C) Kapasite dolduysa odayı DOLU yap
+            if (mevcutMusteri >= kapasite) {
+                odayiDoluYap(odaNo);
+                return 1; // Eklendi, kapasite sınırına ulaştı
+            }
+            
+            return 0; // Eklendi, hala kapasite var
+            
+        } catch (Exception e) {
+            System.err.println("SQL Hatası (Müşteri Ekleme): " + e.getMessage());
+            return -2;
         }
     }
-    public void musteriArama(String musteriIsmi) {
-        String url = VeriTabani.URL;
-        
-        // İsmin bir kısmı girilse bile bulabilmesi için LIKE ve % kullanıyoruz
-        String sql = "SELECT * FROM guncel_musteriler WHERE ad_soyad LIKE ?";
-        
-        try (Connection conn = DriverManager.getConnection(url);
+    
+    public static void odayiDoluYap(int odaNo) {
+        String sql = "UPDATE odalar SET durum = 'DOLU' WHERE oda_no = ?";
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            // Girilen ismin sağına ve soluna % ekleyerek içerenleri bulmasını sağlıyoruz
-            pstmt.setString(1, "%" + musteriIsmi + "%");
-            ResultSet rs = pstmt.executeQuery();
-            
-            boolean bulundu = false;
-            System.out.println("--- Müşteri Arama Sonuçları ---");
-            
-            while (rs.next()) {
-                bulundu = true;
-                // Veritabanı tablonuzdaki sütun isimleriyle eşleşen verileri çekiyoruz
-                String adSoyad = rs.getString("ad_soyad");
-                String tcNo = rs.getString("tc_no");
-                String odaNo = rs.getString("oda_no");
-                String girisTarihi = rs.getString("giris_tarihi");
-                String cikisTarihi = rs.getString("cikis_tarihi");
-                int kasaKatki = rs.getInt("kasa_katki");
-                
-                // Konsola (veya isterseniz GUI'ye) basılacak çıktı
-                System.out.println("Ad Soyad: " + adSoyad + 
-                                   " | TC: " + tcNo + 
-                                   " | Oda No: " + odaNo + 
-                                   " | Giriş: " + girisTarihi + 
-                                   " | Çıkış: " + cikisTarihi + 
-                                   " | Kasaya Katkı: " + kasaKatki + " TL");
-            }
-            
-            if (!bulundu) {
-                System.out.println("Sistemde '" + musteriIsmi + "' isminde güncel bir müşteri bulunamadı.");
-            }
-            System.out.println("-------------------------------");
-            
+            pstmt.setInt(1, odaNo);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Veritabanı Hatası (Müşteri Arama): " + e.getMessage());
+            System.err.println("Oda güncelleme hatası: " + e.getMessage());
         }
     }
+		
 }       
         
 	

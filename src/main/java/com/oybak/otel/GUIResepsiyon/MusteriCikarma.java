@@ -39,47 +39,17 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         });    }
     
     private void musterileriBosalt(int odaNo) {
-        // 1. Müşterileri geçmişe kopyala (Tablo adı guncel_musteriler olarak düzeltildi)
-        String sqlGecmiseTasi = "INSERT INTO gecmis_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) " +
-                                "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, DATE('now'), kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
+        // SQL işlemlerini Resepsiyon sınıfındaki metoda devrettik
+        boolean basarili = com.oybak.otel.Resepsiyon.odayiBosalt(odaNo);
         
-        // 2. Mevcut tablodan sil (Tablo adı guncel_musteriler olarak düzeltildi)
-        String sqlMusteriSil = "DELETE FROM guncel_musteriler WHERE oda_no = ?";
-        
-        // 3. Odayı boşa çıkar
-        String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT', odenme_durumu = 'false' WHERE oda_no = ?";
-
-        try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
-            conn.setAutoCommit(false); // Atomik işlem (Hepsi ya da hiçbiri)
-
-            try (PreparedStatement ps1 = conn.prepareStatement(sqlGecmiseTasi);
-                 PreparedStatement ps2 = conn.prepareStatement(sqlMusteriSil);
-                 PreparedStatement ps3 = conn.prepareStatement(sqlOdaGuncelle)) {
-                
-                // Önce geçmiş tablosuna aktar
-                ps1.setInt(1, odaNo);
-                ps1.executeUpdate();
-
-                // Sonra aktif müşterilerden sil
-                ps2.setInt(1, odaNo);
-                ps2.executeUpdate();
-
-                // Odayı müsait yap
-                ps3.setInt(1, odaNo);
-                ps3.executeUpdate();
-
-                conn.commit();
-                logKayit(p.getName(), " " + odaNo + " nolu odayı boşalttı.");
-                
-                javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda başarıyla boşaltıldı.");
-                new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p).setVisible(true);
-                this.dispose();
-            } catch (SQLException e) {
-                conn.rollback();
-                throw e;
-            }
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Veritabanı Hatası: " + e.getMessage());
+        if (basarili) {
+            logKayit(p.getName(), " " + odaNo + " nolu odayı boşalttı.");
+            javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda başarıyla boşaltıldı.");
+            
+            new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p).setVisible(true);
+            this.dispose();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Oda boşaltılırken veritabanı hatası oluştu!");
         }
     }
 
