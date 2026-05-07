@@ -5,6 +5,10 @@
 package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -21,38 +25,61 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
     public MusteriCikarma(int odaNo, Personel p) {
         this.odaNo = odaNo;
         this.p = p;
+        
+        // DİKKAT: initComponents her zaman ilk sırada çağrılmalıdır!
         initComponents();
-    }
+        
+        // "Evet" butonuna basılırsa müşteriyi boşalt
+        jButton1.addActionListener(evt -> musterileriBosalt(odaNo));
+        
+        // "Hayır" butonuna basılırsa resepsiyon sayfasına dön ve bu pencereyi kapat
+        jButton2.addActionListener(evt -> {
+            new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p).setVisible(true);
+            this.dispose();
+        });    }
     
     private void musterileriBosalt(int odaNo) {
-        // VeriTabani interface'ine veya DbHelper'a eklenecek SQL işlemi
-        String sqlMusteriSil = "DELETE FROM musteriler WHERE oda_no = ?";
+        // 1. Müşterileri geçmişe kopyala (Tablo adı guncel_musteriler olarak düzeltildi)
+        String sqlGecmiseTasi = "INSERT INTO gecmis_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) " +
+                                "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, DATE('now'), kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
+        
+        // 2. Mevcut tablodan sil (Tablo adı guncel_musteriler olarak düzeltildi)
+        String sqlMusteriSil = "DELETE FROM guncel_musteriler WHERE oda_no = ?";
+        
+        // 3. Odayı boşa çıkar
         String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT' WHERE oda_no = ?";
 
-        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL)) {
-            conn.setAutoCommit(false); // İşlemleri toplu yapalım
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
+            conn.setAutoCommit(false); // Atomik işlem (Hepsi ya da hiçbiri)
 
-            try (java.sql.PreparedStatement st1 = conn.prepareStatement(sqlMusteriSil);
-                 java.sql.PreparedStatement st2 = conn.prepareStatement(sqlOdaGuncelle)) {
+            try (PreparedStatement ps1 = conn.prepareStatement(sqlGecmiseTasi);
+                 PreparedStatement ps2 = conn.prepareStatement(sqlMusteriSil);
+                 PreparedStatement ps3 = conn.prepareStatement(sqlOdaGuncelle)) {
                 
-                st1.setInt(1, odaNo);
-                st1.executeUpdate();
+                // Önce geçmiş tablosuna aktar
+                ps1.setInt(1, odaNo);
+                ps1.executeUpdate();
 
-                st2.setInt(1, odaNo);
-                st2.executeUpdate();
+                // Sonra aktif müşterilerden sil
+                ps2.setInt(1, odaNo);
+                ps2.executeUpdate();
+
+                // Odayı müsait yap
+                ps3.setInt(1, odaNo);
+                ps3.executeUpdate();
 
                 conn.commit();
-                javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda boşaltıldı.");
+                logKayit(p.getName(), " " + odaNo + " nolu odayı boşalttı.");
                 
-                // Başarılıysa ana sayfaya dön
+                javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda başarıyla boşaltıldı.");
                 new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p).setVisible(true);
                 this.dispose();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 conn.rollback();
                 throw e;
             }
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Veritabanı Hatası: " + e.getMessage());
         }
     }
 
@@ -147,7 +174,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MusteriCikarma(int odaNo, Personel p).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new MusteriCikarma(0, null).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

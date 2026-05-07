@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -444,7 +444,13 @@ javax.swing.JButton[] odaButonlari = {
                     case MUSAIT -> {
                         buton.setBackground(new Color(46, 204, 113)); // Yeşil
                         buton.setForeground(Color.WHITE);
-                        buton.setEnabled(true);
+                        
+                        // Müşteri Çıkarma işlemi için müsait odalar seçilemez olmalı
+                        if (p != null && p.getIsTipi() == UserRole.MUSTERICIKARMA) {
+                            buton.setEnabled(false);
+                        } else {
+                            buton.setEnabled(true);
+                        }
                     }
                     case DOLU -> {
                         buton.setBackground(new Color(231, 76, 60)); // Kırmızı
@@ -461,8 +467,8 @@ javax.swing.JButton[] odaButonlari = {
                         buton.setBackground(new Color(241, 196, 15)); // Sarı
                         buton.setForeground(Color.BLACK);
                         
-                        // Sadece Müşteri Ekleme rolü varsa tıklamayı devre dışı bırak
-                        if (p != null && p.getIsTipi() == UserRole.MUSTERIEKLEME) {
+                        // Müşteri Ekleme ve Müşteri Çıkarma rolleri için bakımda odalar tıklanamaz
+                        if (p != null && (p.getIsTipi() == UserRole.MUSTERIEKLEME || p.getIsTipi() == UserRole.MUSTERICIKARMA)) {
                             buton.setEnabled(false);
                         } else {
                             buton.setEnabled(true); 
@@ -480,6 +486,6 @@ javax.swing.JButton[] odaButonlari = {
             // Hata durumunda buton varsayılan renginde kalsın
         }
     }
-  } 
+  }
 }  
 

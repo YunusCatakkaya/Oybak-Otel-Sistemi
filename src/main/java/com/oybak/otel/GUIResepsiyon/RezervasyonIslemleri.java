@@ -4,6 +4,8 @@
  */
 package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Personel;
+import com.oybak.otel.enums.UserRole;
+import static com.oybak.otel.enums.UserRole.MUSTERICIKARMA;
 import com.oybakotel.GUI.OdaSecimEkrani;
 import com.oybakotel.GUI.OdaSecim;
 
@@ -88,9 +90,7 @@ public class RezervasyonIslemleri extends javax.swing.JFrame implements OdaSecim
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    // Personelin rolünü müşteri çıkarma/yönetme yetkisine set ediyoruz (veya bu yetkiye sahip olduğunu varsayıyoruz)
-    // Eğer UserRole enumunda özel bir MÜŞTERİ_ÇIKARMA yoksa RESEPSIYON veya MUSTERIEKLEME üzerinden gidebilirsin.
-    // OdaSecimEkrani'ndaki kısıtlamalar p.getIsTipi() kontrolüne bağlıdır.
+    p.setIsTipi(UserRole.MUSTERICIKARMA);
     odaSecim(p);
     this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
