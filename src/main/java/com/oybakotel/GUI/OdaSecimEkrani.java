@@ -170,6 +170,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         jPanel1.add(j405);
 
         Filtreleme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hepsi", "1 Kişilik", "2 Kişilik", "3 Kişilik", "4 Kişilik" }));
+        Filtreleme.addActionListener(this::FiltrelemeActionPerformed);
 
         Geri.setText("GERİ");
         Geri.addActionListener(this::GeriActionPerformed);
@@ -345,6 +346,50 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         geriButonu(p);
         this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_GeriActionPerformed
+
+    private void FiltrelemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FiltrelemeActionPerformed
+        // 1. Seçilen filtreyi al (Örn: "2 Kişilik")
+        javax.swing.JComboBox filtreKutusu = (javax.swing.JComboBox) evt.getSource();
+        String secim = filtreKutusu.getSelectedItem().toString();
+        
+        // 2. Hedef kapasiteyi belirle ("Hepsi" seçilirse 0 kalır)
+        int hedefKapasite = 0; 
+        if (secim.equals("1 Kişilik")) hedefKapasite = 1;
+        else if (secim.equals("2 Kişilik")) hedefKapasite = 2;
+        else if (secim.equals("3 Kişilik")) hedefKapasite = 3;
+        else if (secim.equals("4 Kişilik")) hedefKapasite = 4;
+
+        // 3. İŞTE DÜZELTİLEN KISIM: Odalarımız jPanel1'in içinde!
+        for (java.awt.Component comp : jPanel1.getComponents()) {
+            
+            // Eğer taradığımız şey bir butonsa işlemi yap
+            if (comp instanceof javax.swing.JButton) {
+                javax.swing.JButton btn = (javax.swing.JButton) comp;
+                
+                try {
+                    // Butonun üzerindeki yazıyı ("101", "102") sayıya çevir
+                    int odaNo = Integer.parseInt(btn.getText().trim());
+                    
+                    // Veritabanından odayı çek
+                    com.oybak.otel.Oda oda = odaBilgileri(odaNo); 
+                    
+                    if(oda != null) {
+                        // Toplam kapasiteyi hesapla (Tekler + Çiftlerin 2 katı)
+                        int kapasite = oda.getTekKisilikYatak() + (oda.getCiftKisilikYatak() * 2);
+
+                        // Filtre "Hepsi" (0) ise veya kapasite eşleşiyorsa göster
+                            if (hedefKapasite == 0 || kapasite == hedefKapasite) {
+                                btn.setEnabled(true); // Filtreye uyanlara tıklanabilsin
+                            } else {
+                                btn.setEnabled(false); // Uymayanlar tıklanamaz ve soluk (gri) olsun
+                            }
+                    }
+                } catch (NumberFormatException e) {
+                    // Geri butonu gibi üzerinde sayı yazmayan butonları pas geç
+                }
+            }
+        }
+    }//GEN-LAST:event_FiltrelemeActionPerformed
 
     /**
      * @param args the command line arguments
