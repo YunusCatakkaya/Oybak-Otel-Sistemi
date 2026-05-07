@@ -88,7 +88,11 @@ public class RezervasyonIslemleri extends javax.swing.JFrame implements OdaSecim
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    // Personelin rolünü müşteri çıkarma/yönetme yetkisine set ediyoruz (veya bu yetkiye sahip olduğunu varsayıyoruz)
+    // Eğer UserRole enumunda özel bir MÜŞTERİ_ÇIKARMA yoksa RESEPSIYON veya MUSTERIEKLEME üzerinden gidebilirsin.
+    // OdaSecimEkrani'ndaki kısıtlamalar p.getIsTipi() kontrolüne bağlıdır.
+    odaSecim(p);
+    this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

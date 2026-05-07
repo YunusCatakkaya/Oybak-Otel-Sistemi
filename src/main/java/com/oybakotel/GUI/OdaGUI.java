@@ -4,6 +4,7 @@
  */
 package com.oybakotel.GUI;
 
+import com.oybak.otel.GUIResepsiyon.MusteriCikarma;
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
 import com.oybak.otel.Oda;
 import com.oybak.otel.Personel;
@@ -257,6 +258,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
         );
 
         jButton1.setText("Müşterileri çıkar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -373,6 +375,13 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
             case MUSAIT -> JOptionPane.showMessageDialog(this, "Odada bakımda değil.!");
         }// TODO add your handling code here:
     }//GEN-LAST:event_BakımdanCikarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MusteriCikarma onayEkrani = new MusteriCikarma(this.secilenOda, this.p);
+        onayEkrani.setLocationRelativeTo(this);
+        onayEkrani.setVisible(true);
+        this.dispose(); // Mevcut oda ekranını kapatabiliriz
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

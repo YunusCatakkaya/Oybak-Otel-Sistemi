@@ -3,20 +3,57 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIResepsiyon;
+import com.oybak.otel.Personel;
+import com.oybak.otel.VeriTabani;
 
 /**
  *
  * @author onuro
  */
-public class MusteriCikarma extends javax.swing.JFrame {
+
+public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MusteriCikarma.class.getName());
 
-    /**
-     * Creates new form MusteriCikarma
-     */
-    public MusteriCikarma() {
+    private int odaNo;
+    private Personel p;
+    
+    public MusteriCikarma(int odaNo, Personel p) {
+        this.odaNo = odaNo;
+        this.p = p;
         initComponents();
+    }
+    
+    private void musterileriBosalt(int odaNo) {
+        // VeriTabani interface'ine veya DbHelper'a eklenecek SQL işlemi
+        String sqlMusteriSil = "DELETE FROM musteriler WHERE oda_no = ?";
+        String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT' WHERE oda_no = ?";
+
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL)) {
+            conn.setAutoCommit(false); // İşlemleri toplu yapalım
+
+            try (java.sql.PreparedStatement st1 = conn.prepareStatement(sqlMusteriSil);
+                 java.sql.PreparedStatement st2 = conn.prepareStatement(sqlOdaGuncelle)) {
+                
+                st1.setInt(1, odaNo);
+                st1.executeUpdate();
+
+                st2.setInt(1, odaNo);
+                st2.executeUpdate();
+
+                conn.commit();
+                javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda boşaltıldı.");
+                
+                // Başarılıysa ana sayfaya dön
+                new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p).setVisible(true);
+                this.dispose();
+            } catch (Exception e) {
+                conn.rollback();
+                throw e;
+            }
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
+        }
     }
 
     /**
@@ -110,7 +147,7 @@ public class MusteriCikarma extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MusteriCikarma().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new MusteriCikarma(int odaNo, Personel p).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
