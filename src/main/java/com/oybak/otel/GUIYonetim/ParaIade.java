@@ -128,32 +128,32 @@ public class ParaIade extends javax.swing.JFrame implements VeriTabani,GeriButon
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    // 1. Arayüzdeki kutulardan verileri alıyoruz
+    // Arayüzdeki kutulardan verileri alıyoruz
     String tcNoStr = jTextPane1.getText().trim(); 
     String iadeMiktariStr = jTextPane3.getText().trim(); 
 
-    // 2. Boş alan kontrolü (Kullanıcı hiçbir şey yazmadıysa uyar)
+    // Boş alan kontrolü (Kullanıcı hiçbir şey yazmadıysa uyar)
     if (tcNoStr.isEmpty() || iadeMiktariStr.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Lütfen TC No ve Miktar alanlarını doldurunuz!");
         return;
     }
 
     try {
-        // 3. Mevcut personeli Yonetim sınıfına çevirip metodunu çağırıyoruz
+
         Yonetim yonetici = new Yonetim(p.getName(), p.getTcNo(), p.getMaas(), p.getIsTipi(), p.getParola()); 
         
         // Metot çalışıyor ve bize bir sonuç mesajı döndürüyor
         String sonucMesaji = yonetici.paraIadeYap(tcNoStr, iadeMiktariStr);
 
-        // 4. BİLGİ PENCERESİ: Metottan gelen cevabı (Başarılı/Hata) ekranda gösteriyoruz
+        // Metottan gelen cevabı (Başarılı/Hata) ekranda gösteriyoruz
         javax.swing.JOptionPane.showMessageDialog(this, sonucMesaji);
 
-        // 5. Eğer işlem başarılıysa kutuları temizle ki iade yapıldığını anla
+        // Eğer işlem başarılıysa kutuları temizle ki iade yapıldığını anla
         if (sonucMesaji != null && sonucMesaji.startsWith("BAŞARILI")) {
             jTextPane1.setText("");
             jTextPane3.setText("");
             
-            // İsteğe bağlı: Konsola da yazdırabilirsin
+
             System.out.println("İşlem Onaylandı: " + sonucMesaji);
         }
 
