@@ -4,14 +4,11 @@
  */
 package com.oybak.otel;
 
-import com.oybak.otel.enums.OdaDurumu;
-import com.oybak.otel.enums.OdaOzelligi;
 import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.TEKNIKPERSONEL;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;//selam
-import java.util.List;
+import java.sql.PreparedStatement;
 
 public class TeknikEkip extends Personel {
     
@@ -19,18 +16,6 @@ public class TeknikEkip extends Personel {
     public TeknikEkip(String name, String lastName, long tcNo, double maas, UserRole isTipi,String uzmanlikAlani,String parola) {
         super(name, tcNo, maas, TEKNIKPERSONEL ,uzmanlikAlani,parola);
         
-    }
-    
-    /**
-     * @param odaNumarası
-     * @param odaTipi
-     * @param ekOzellikler
-     * @param odaDurumu
-     */
-    
-    //overload
-    public void odaGoruntule(int odaNumarası,  String odaTipi, List<OdaOzelligi>ekOzellikler, OdaDurumu odaDurumu, String bakım){
-        System.out.println("Bakım sebebi"+ bakım);
     }
     
     public static void odaBakimAl(int oda, String sebep) {
