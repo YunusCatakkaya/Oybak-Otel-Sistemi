@@ -177,7 +177,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         Geri.setText("GERİ");
         Geri.addActionListener(this::GeriActionPerformed);
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("FİLTRELEME");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
