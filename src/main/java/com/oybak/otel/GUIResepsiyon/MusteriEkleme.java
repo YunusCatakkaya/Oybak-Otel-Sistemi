@@ -78,9 +78,13 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim, Hatal
 
         jLabel1.setText("Eklenecek Müşteri Bilgilerini Giriniz.");
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Müşteriyi Ekle");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Kapat");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 

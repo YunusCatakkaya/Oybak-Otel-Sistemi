@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybakotel.GUI;
-
+import com.oybak.otel.Resepsiyon;
 import com.oybak.otel.Personel;
 
 
@@ -213,8 +213,8 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     
     // Veritabanı kayıt ve yönlendirme işlemlerini arka planda da yapabilmek için ayırdık
     public void veritabaninaIsleVeKontrolEt(String girisStr, String cikisStr) {
-        // Müşteri Ekleme işlemini Resepsiyon.java'ya yaptırıyoruz
-        int sonuc = com.oybak.otel.Resepsiyon.musteriEkle(odaNo, musteriAd, musteriTc, girisStr, cikisStr);
+        
+        int sonuc = Resepsiyon.musteriEkle(odaNo, musteriAd, musteriTc, girisStr, cikisStr);
 
         if (sonuc == -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "HATA: Bu oda tam kapasite dolu!");
@@ -225,7 +225,6 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
             return;
         } 
         else if (sonuc == 1) {
-            // Müşteri eklendi ve oda tam kapasiteye ulaştı (Otomatik DOLU yapıldı)
             javax.swing.JOptionPane.showMessageDialog(this, "Müşteri eklendi! Oda kapasitesi tam dolduğu için oda 'DOLU' durumuna getirildi.");
             
             com.oybakotel.GUI.OdaSecimEkrani odaSecim = new com.oybakotel.GUI.OdaSecimEkrani(p);
@@ -234,21 +233,19 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
             this.dispose();
         } 
         else if (sonuc == 0) {
-            // Müşteri eklendi ama odada hala boş yatak var
             int cevap = javax.swing.JOptionPane.showConfirmDialog(this, 
                 "Müşteri eklendi.\nBu odaya başka bir müşteri daha ekleyecek misiniz?", 
                 "Kayıt Başarılı", 
                 javax.swing.JOptionPane.YES_NO_OPTION);
                 
             if (cevap == javax.swing.JOptionPane.YES_OPTION) {
-                // Tarihleri yeni ekrana yolluyoruz
                 com.oybak.otel.GUIResepsiyon.MusteriEkleme yeniEkleme = new com.oybak.otel.GUIResepsiyon.MusteriEkleme(p, odaNo, girisStr, cikisStr);
                 yeniEkleme.setLocationRelativeTo(null);
                 yeniEkleme.setVisible(true);
                 this.dispose();
             } else {
-                // Kullanıcı başka müşteri eklemek istemediği için odayı "DOLU"ya çekiyoruz
-                com.oybak.otel.Resepsiyon.odayiDoluYap(odaNo);
+                // Odayı dolu yapma işlemini de kısa şekilde çağırıyoruz
+                Resepsiyon.odayiDoluYap(odaNo);
                 
                 com.oybakotel.GUI.OdaSecimEkrani odaSecim = new com.oybakotel.GUI.OdaSecimEkrani(p);
                 odaSecim.setLocationRelativeTo(null);

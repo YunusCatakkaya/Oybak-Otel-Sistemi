@@ -5,6 +5,7 @@
 package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
+import com.oybak.otel.Resepsiyon;
 
 /**
  *
@@ -35,8 +36,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         });    }
     
     private void musterileriBosalt(int odaNo) {
-        if (!com.oybak.otel.Resepsiyon.isOdaOdenmis(odaNo)) {
-            // Eğer ödenmemişse ekrana hata ver ve return ile metodu (çıkış işlemini) anında durdur
+        if (!Resepsiyon.isOdaOdenmis(odaNo)) {
             javax.swing.JOptionPane.showMessageDialog(this, 
                 "İşlem Reddedildi: Bu odanın ödemesi henüz alınmamıştır!\nLütfen çıkış yapmadan önce 'Para Alma' menüsünden ödemeyi tahsil ediniz.", 
                 "Ödeme Bekleniyor", 
@@ -85,6 +85,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         jButton2.setBackground(new java.awt.Color(51, 51, 255));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Hayır");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jLabel1.setText("İlgili Odadan Çıkış Yapılıyor Emin Misiniz?");
 
@@ -132,6 +133,10 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

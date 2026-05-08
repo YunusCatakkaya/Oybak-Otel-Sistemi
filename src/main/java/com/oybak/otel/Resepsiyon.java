@@ -143,4 +143,132 @@ public class Resepsiyon extends Personel{
         // Eğer veritabanına ulaşılamazsa güvenli tarafta kalıp çıkışa izin verme
         return false; 
     }
+    
+    // Ödenmemiş ve Dolu olan odaların listesini getirir
+    public static java.util.ArrayList<String> getOdenmemisDoluOdalar() {
+        java.util.ArrayList<String> odalar = new java.util.ArrayList<>();
+        String sql = "SELECT oda_no FROM odalar WHERE durum = 'DOLU' AND (odenme_durumu = 'false' OR odenme_durumu IS NULL)";
+        
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            
+            while (rs.next()) {
+                odalar.add(String.valueOf(rs.getInt("oda_no")));
+            }
+        } catch (Exception e) {
+            System.err.println("Oda yükleme hatası: " + e.getMessage());
+        }
+        return odalar;
+    }
+    
+    // Odanın kalma süresine göre toplam fiyatını hesaplar
+    public static double hesaplaToplamFiyat(int odaNo) {
+        double tabanFiyat = 0;
+        long gunSayisi = 1; 
+        
+        String sqlOda = "SELECT fiyat FROM odalar WHERE oda_no = ?";
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL);
+             PreparedStatement pstmt = conn.prepareStatement(sqlOda)) {
+            pstmt.setInt(1, odaNo);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    tabanFiyat = rs.getDouble("fiyat");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Fiyat çekme hatası: " + e.getMessage());
+            return -1;
+        }
+
+        String sqlMusteri = "SELECT giris_tarihi, cikis_tarihi FROM guncel_musteriler WHERE oda_no = ? LIMIT 1";
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL);
+             PreparedStatement pstmt = conn.prepareStatement(sqlMusteri)) {
+            pstmt.setInt(1, odaNo);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String girisStr = rs.getString("giris_tarihi");
+                    String cikisStr = rs.getString("cikis_tarihi");
+                    
+                    if (girisStr != null && cikisStr != null && !girisStr.isEmpty() && !cikisStr.isEmpty()) {
+                        java.time.format.DateTimeFormatter formatlayici = java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                        java.time.LocalDate giris = java.time.LocalDate.parse(girisStr, formatlayici);
+                        java.time.LocalDate cikis = java.time.LocalDate.parse(cikisStr, formatlayici);
+                        
+                        gunSayisi = java.time.temporal.ChronoUnit.DAYS.between(giris, cikis);
+                        if (gunSayisi <= 0) gunSayisi = 1; 
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Tarih çekme hatası: " + e.getMessage());
+        }
+
+        return tabanFiyat * gunSayisi;
+    }
+    
+    // Odaya ait daha önceden ödenmiş miktarı (kasa katkı) getirir
+    public static double odenenMiktariGetir(int odaNo) {
+        double odenen = 0.0;
+        String sql = "SELECT kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setString(1, String.valueOf(odaNo));
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                odenen = rs.getDouble("kasa_katki");
+            }
+        } catch (Exception e) {
+            System.err.println("Ödeme Sorgu Hatası: " + e.getMessage());
+        }
+        return odenen;
+    }
+    
+    // Ödeme Alma işlemini yapar (Transaction kullanır). Başarılıysa parayı ödeyen TC'yi, başarısızsa null döner.
+    public static String odemeAl(int odaNo, double odaFiyati) {
+        String sqlOdaGuncelle = "UPDATE odalar SET odenme_durumu = 'true' WHERE oda_no = ?";
+        String sqlIlkMusteriBul = "SELECT tc_no FROM guncel_musteriler WHERE oda_no = ? ORDER BY rowid ASC LIMIT 1";
+        String sqlMusteriGuncelle = "UPDATE guncel_musteriler SET kasa_katki = COALESCE(kasa_katki, 0) + ? WHERE tc_no = ?";
+        
+        try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
+            conn.setAutoCommit(false); 
+            
+            try (PreparedStatement pstmtOda = conn.prepareStatement(sqlOdaGuncelle);
+                 PreparedStatement pstmtMusteriBul = conn.prepareStatement(sqlIlkMusteriBul);
+                 PreparedStatement pstmtMusteri = conn.prepareStatement(sqlMusteriGuncelle)) {
+                
+                pstmtOda.setInt(1, odaNo);
+                pstmtOda.executeUpdate();
+                
+                pstmtMusteriBul.setInt(1, odaNo);
+                String ilkMusteriTc = null;
+                try (ResultSet rs = pstmtMusteriBul.executeQuery()) {
+                    if (rs.next()) {
+                        ilkMusteriTc = rs.getString("tc_no"); 
+                    }
+                }
+                
+                if (ilkMusteriTc != null) {
+                    pstmtMusteri.setDouble(1, odaFiyati);
+                    pstmtMusteri.setString(2, ilkMusteriTc);
+                    pstmtMusteri.executeUpdate();
+                }
+                
+                conn.commit();
+                return ilkMusteriTc; // İşlem başarılı, parayı ödeyen TC'yi geri yolla
+                
+            } catch (Exception ex) {
+                conn.rollback();
+                System.err.println("Ödeme işlemi veritabanı hatası: " + ex.getMessage());
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Ödeme bağlantı hatası: " + e.getMessage());
+            return null;
+        }
+    }
+    
 }       
+
+    
