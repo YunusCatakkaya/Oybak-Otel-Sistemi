@@ -136,40 +136,52 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim, Hatal
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String adSoyad = jTextField1.getText().trim();
-        String tcNo = jTextField2.getText().trim();
+ String adSoyad = jTextField1.getText().trim();
+    String tcNoStr = jTextField2.getText().trim();
 
-        // 1. Boşluk ve varsayılan metin kontrolü
-        if(adSoyad.isEmpty() || adSoyad.equals("Ad Soyad:") || tcNo.isEmpty() || tcNo.equals("TC Kimlik No:")) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen müşteri adı ve TC kimlik numarasını tam giriniz!");
-            return;
-        }
+    // 1. Boşluk ve varsayılan metin kontrolü
+    if(adSoyad.isEmpty() || adSoyad.equals("Ad Soyad:") || tcNoStr.isEmpty() || tcNoStr.equals("TC Kimlik No:")) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen müşteri adı ve TC kimlik numarasını tam giriniz!");
+        return;
+    }
 
-        // 2. TC KİMLİK KONTROLÜ (VOID YÖNTEMİ)
-        try {
-            // tcKontrol void olduğu için sadece çalıştırıyoruz.
-            tcKontrol(tcNo); 
-        } catch (IllegalArgumentException ex) {
-            // Eğer tcKontrol içinde bir hata bulunup fırlatılırsa kod buraya düşer
-            // ve return diyerek veritabanı kayıt işlemlerini yapmadan anında dururuz.
-            return; 
-        }
+    // 2. TC KİMLİK KONTROLÜ
+    try {
+        tcKontrol(tcNoStr); 
+    } catch (IllegalArgumentException ex) {
+        return; // Hata durumunda işlemi durdurur
+    }
 
-        // EĞER TARİHLER HAFIZADA VARSA (Yani 2. veya 3. kişiyse)
+    try {
+        // --- YENİ OOP YAPISI BAŞLANGICI ---
+        
+        // TC No'yu sayısal formata çeviriyoruz
+        long tcLong = Long.parseLong(tcNoStr);
+        
+        // Müşteri nesnesini oluşturuyoruz (Verileri paketledik)
+        com.oybak.otel.Musteri yeniMusteri = new com.oybak.otel.Musteri(adSoyad, tcLong);
+        
+        // --- YENİ OOP YAPISI BİTİŞİ ---
+
+        // EĞER TARİHLER HAFIZADA VARSA
         if (otoGiris != null && otoCikis != null) {
-            // Tarih Seçim Ekranı'nı GÖRSEL OLARAK HİÇ AÇMADAN arka planda çalıştırıyoruz
-            com.oybakotel.GUI.TarihSecimEkrani gizliEkran = new com.oybakotel.GUI.TarihSecimEkrani(p, odaNo, adSoyad, tcNo);
+            // Tarih Seçim Ekranı'na artık adSoyad ve tcNo yerine doğrudan nesneyi gönderiyoruz
+            com.oybakotel.GUI.TarihSecimEkrani gizliEkran = new com.oybakotel.GUI.TarihSecimEkrani(p, odaNo, yeniMusteri);
             gizliEkran.veritabaninaIsleVeKontrolEt(otoGiris, otoCikis); 
-            this.dispose(); // Müşteri ekleme ekranını kapat
+            this.dispose(); 
         } 
-        // EĞER TARİHLER YOKSA (Yani odanın ilk müşterisiyse)
+        // EĞER TARİHLER YOKSA
         else {
-            // Tarihleri seçmesi için Tarih Seçim Ekranı'nı normal şekilde görünür olarak açıyoruz
-            com.oybakotel.GUI.TarihSecimEkrani tarihEkrani = new com.oybakotel.GUI.TarihSecimEkrani(p, odaNo, adSoyad, tcNo);
+            // Aynı şekilde burada da nesneyi gönderiyoruz
+            com.oybakotel.GUI.TarihSecimEkrani tarihEkrani = new com.oybakotel.GUI.TarihSecimEkrani(p, odaNo, yeniMusteri);
             tarihEkrani.setLocationRelativeTo(null);
             tarihEkrani.setVisible(true);
-            this.dispose(); // Müşteri ekleme ekranını kapat
+            this.dispose(); 
         }
+        
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "TC No sadece rakamlardan oluşmalıdır!");
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained

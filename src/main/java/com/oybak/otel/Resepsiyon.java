@@ -58,54 +58,57 @@ public class Resepsiyon extends Personel{
     }
     
     // Dönüş değerleri -> 0: Eklendi (Yer var), 1: Eklendi (Oda tam doldu), -1: Hata (Zaten dolu), -2: Veritabanı Hatası
-    public static int musteriEkle(int odaNo, String musteriAd, String musteriTc, String girisStr, String cikisStr) {
-        try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
+ 
+    public static int musteriEkle(int odaNo, Musteri musteri, String girisStr, String cikisStr) {
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL)) {
             
-            // A) Kapasiteyi kontrol et
+            // A) Kapasiteyi Kontrol Et
             int kapasite = 0;
             String sqlKapasite = "SELECT tek_kisilik_yatak, cift_kisilik_yatak FROM odalar WHERE oda_no = ?";
-            try (PreparedStatement pstmtCap = conn.prepareStatement(sqlKapasite)) {
+            try (java.sql.PreparedStatement pstmtCap = conn.prepareStatement(sqlKapasite)) {
                 pstmtCap.setInt(1, odaNo);
-                ResultSet rsCap = pstmtCap.executeQuery();
+                java.sql.ResultSet rsCap = pstmtCap.executeQuery();
                 if(rsCap.next()){
+                    // Akıllı kapasite hesabı: Tek kişilik yataklar + (Çift kişilikler * 2)
                     kapasite = rsCap.getInt("tek_kisilik_yatak") + (rsCap.getInt("cift_kisilik_yatak") * 2);
                 }
             }
             
             int mevcutMusteri = 0;
             String sqlCount = "SELECT COUNT(*) AS kisi_sayisi FROM guncel_musteriler WHERE oda_no = ?";
-            try (PreparedStatement pstmtCount = conn.prepareStatement(sqlCount)) {
+            try (java.sql.PreparedStatement pstmtCount = conn.prepareStatement(sqlCount)) {
                 pstmtCount.setString(1, String.valueOf(odaNo));
-                ResultSet rsCount = pstmtCount.executeQuery();
+                java.sql.ResultSet rsCount = pstmtCount.executeQuery();
                 if(rsCount.next()){
                     mevcutMusteri = rsCount.getInt("kisi_sayisi");
                 }
             }
             
             if (mevcutMusteri >= kapasite) {
-                return -1; // Oda zaten dolu
+                return -1; // Oda zaten dolu, ekleme yapma
             }
 
-            // B) Müşteriyi veritabanına ekle
+            // B) Müşteriyi Nesne Üzerinden Veritabanına Ekle
             String sqlMusteri = "INSERT INTO guncel_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) VALUES (?, ?, ?, ?, ?, 0)";
-            try (PreparedStatement pstmt = conn.prepareStatement(sqlMusteri)) {
-                pstmt.setString(1, musteriAd);
-                pstmt.setString(2, musteriTc);
+            try (java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlMusteri)) {
+                // Bilgileri Musteri nesnesinden çekiyoruz (OOP'nin gücü!)
+                pstmt.setString(1, musteri.getName());
+                pstmt.setString(2, String.valueOf(musteri.getTcNo()));
                 pstmt.setString(3, String.valueOf(odaNo));
                 pstmt.setString(4, girisStr);
                 pstmt.setString(5, cikisStr);
                 pstmt.executeUpdate();
             }
             
-            mevcutMusteri++; // Kayıt atıldığı için sayıyı 1 artırıyoruz
+            mevcutMusteri++; // Yeni kayıt başarılı, sayacı artır
             
-            // C) Kapasite dolduysa odayı DOLU yap
+            // C) Kapasite dolduysa odayı otomatik olarak DOLU durumuna getir
             if (mevcutMusteri >= kapasite) {
                 odayiDoluYap(odaNo);
-                return 1; // Eklendi, kapasite sınırına ulaştı
+                return 1; // Eklendi ve oda tamamen doldu
             }
             
-            return 0; // Eklendi, hala kapasite var
+            return 0; // Eklendi, hala boş yatak var
             
         } catch (Exception e) {
             System.err.println("SQL Hatası (Müşteri Ekleme): " + e.getMessage());

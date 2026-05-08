@@ -20,8 +20,7 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
 
     private Personel p;
     private int odaNo = -1; // -1 ise normal giriş, değilse müşteri ekleme işlemidir
-    private String musteriAd;
-    private String musteriTc;
+    private com.oybak.otel.Musteri gelenMusteri; // OOP yapısına uygun Müşteri nesnesi
     
     public TarihSecimEkrani(Personel p) {
         this.p = p;
@@ -60,11 +59,10 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
     
     
     // 2. YENİ EKLENEN KURUCU METOT (Müşteri Ekleme işlemi için kullanılacak)
-    public TarihSecimEkrani(Personel p, int odaNo, String musteriAd, String musteriTc) {
+    public TarihSecimEkrani(Personel p, int odaNo, com.oybak.otel.Musteri m) {
         this.p = p;
         this.odaNo = odaNo;
-        this.musteriAd = musteriAd;
-        this.musteriTc = musteriTc;
+        this.gelenMusteri = m; // Verileri paket olarak aldık!
         
         initComponents();
         
@@ -212,9 +210,10 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
 
     
     // Veritabanı kayıt ve yönlendirme işlemlerini arka planda da yapabilmek için ayırdık
-    public void veritabaninaIsleVeKontrolEt(String girisStr, String cikisStr) {
+  public void veritabaninaIsleVeKontrolEt(String girisStr, String cikisStr) {
         
-        int sonuc = Resepsiyon.musteriEkle(odaNo, musteriAd, musteriTc, girisStr, cikisStr);
+        // Artık ayrı ayrı String yerine direkt gelenMusteri nesnesini yolluyoruz
+        int sonuc = com.oybak.otel.Resepsiyon.musteriEkle(odaNo, gelenMusteri, girisStr, cikisStr);
 
         if (sonuc == -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "HATA: Bu oda tam kapasite dolu!");
