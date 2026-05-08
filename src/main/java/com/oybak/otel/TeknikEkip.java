@@ -13,7 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;//selam
 import java.util.List;
 
-public class TeknikEkip extends Personel implements OdaGoruntuleme{
+public class TeknikEkip extends Personel {
     
 
     public TeknikEkip(String name, String lastName, long tcNo, double maas, UserRole isTipi,String uzmanlikAlani,String parola) {
@@ -27,9 +27,7 @@ public class TeknikEkip extends Personel implements OdaGoruntuleme{
      * @param ekOzellikler
      * @param odaDurumu
      */
-    @Override
-    public void OdaGoruntule(int odaNumarası,  String odaTipi, List<OdaOzelligi>ekOzellikler, OdaDurumu odaDurumu){
-    }
+    
     //overload
     public void odaGoruntule(int odaNumarası,  String odaTipi, List<OdaOzelligi>ekOzellikler, OdaDurumu odaDurumu, String bakım){
         System.out.println("Bakım sebebi"+ bakım);
