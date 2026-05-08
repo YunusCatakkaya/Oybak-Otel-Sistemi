@@ -141,7 +141,7 @@ public String gecmisMusteriAra(String arananIsim) {
     }
 }
   
-// Yonetim.java içine eklenecek metod
+
 public String paraIadeYap(String tcNoStr, String iadeMiktariStr) {
     if (tcNoStr == null || tcNoStr.trim().isEmpty() || iadeMiktariStr == null || iadeMiktariStr.trim().isEmpty()) {
         return "Lütfen TC No ve miktar alanlarını doldurunuz!";
@@ -150,12 +150,11 @@ public String paraIadeYap(String tcNoStr, String iadeMiktariStr) {
     try {
         long tcNo = Long.parseLong(tcNoStr.trim());
         double iadeMiktari = Double.parseDouble(iadeMiktariStr.replace(",", "."));
-        
+        // İade miktarını kontrol ediyoruz
         if (iadeMiktari <= 0) {
             return "İade miktarı 0'dan büyük olmalıdır!";
         }
-
-        // Sorguyu ad_soyad yerine tc_no'ya göre yapıyoruz
+        // Sorguyu TC'ye göre yapıyoruz
         String kontrolSql = "SELECT kasa_katki, ad_soyad FROM guncel_musteriler WHERE tc_no = ?";
         
         try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
@@ -167,7 +166,7 @@ public String paraIadeYap(String tcNoStr, String iadeMiktariStr) {
             if (rs.next()) {
                 double mevcutBakiye = rs.getDouble("kasa_katki");
                 String adSoyad = rs.getString("ad_soyad");
-
+                //İade işlemlerini yapıyoruz
                 if (iadeMiktari > mevcutBakiye) {
                     return "HATA: " + adSoyad + " isimli müşterinin toplam ödemesi " + mevcutBakiye + " TL. Daha yüksek iade yapılamaz!";
                 } else {
@@ -186,6 +185,7 @@ public String paraIadeYap(String tcNoStr, String iadeMiktariStr) {
             } else {
                 return "UYARI: '" + tcNo + "' TC numarasına sahip bir müşteri kaydı bulunamadı!";
             }
+        //Hata kısımları    
         }
     } catch (NumberFormatException e) {
         return "HATA: Lütfen TC ve miktar alanlarına geçerli sayılar giriniz!";
