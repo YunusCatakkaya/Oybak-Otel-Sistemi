@@ -4,7 +4,7 @@
  */
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.Personel;
-import com.oybak.otel.enums.UserRole;
+import com.oybak.otel.VeriTabani;
 import static com.oybak.otel.enums.UserRole.YONETIM;
 import com.oybakotel.GUI.GeriButonu;
 
@@ -12,7 +12,7 @@ import com.oybakotel.GUI.GeriButonu;
  *
  * @author userxpc666
  */
-public class CalisanCikar extends javax.swing.JFrame implements com.oybak.otel.Hatalar, GeriButonu {
+public class CalisanCikar extends javax.swing.JFrame implements com.oybak.otel.Hatalar, GeriButonu, VeriTabani{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CalisanCikar.class.getName());
 
@@ -162,6 +162,7 @@ public class CalisanCikar extends javax.swing.JFrame implements com.oybak.otel.H
         // 5. Silme işlemini başlat
         com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", 0, 0, YONETIM, "");
         yonetici.personelSil(tamAdSoyad, tcNoStr);
+        logKayit(p.bilgileriYazdir() ," " +tamAdSoyad +"isimli çalışanı işten çıkardı.");
         
         // 6. Başarılıysa alanları temizle
         jTextPane1.setText("");

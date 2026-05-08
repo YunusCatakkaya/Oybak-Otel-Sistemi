@@ -161,6 +161,7 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
               .append("---------------------------------\n");
 
             txtSonucAlani.append(sb.toString());
+            logKayit(p.bilgileriYazdir() ," " +arananIsim +" isimli müşteriyi aradı.");
         }
 
         if (!bulundu) {

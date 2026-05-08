@@ -277,6 +277,7 @@ private double odenenMiktariGetir(int odaNo) {
                         odaNo + " nolu odanın " + odaFiyati + " TL tutarındaki ödemesi alınmış ve ana müşteri (TC: " + ilkMusteriTc + ") hesabına işlenmiştir.", 
                         "Ödeme Başarılı", 
                         javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    logKayit(p.bilgileriYazdir() ," " +odaNo +" numaralı odanın ücreti"+ilkMusteriTc + " TC'li müşteriden alındı");
                     
                     // Listeden seçili odayı sil
                     odaComboBox.removeItem(secilen);

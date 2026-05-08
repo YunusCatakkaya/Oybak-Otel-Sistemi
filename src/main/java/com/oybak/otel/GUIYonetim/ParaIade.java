@@ -176,6 +176,7 @@ public class ParaIade extends javax.swing.JFrame implements VeriTabani,GeriButon
                             javax.swing.JOptionPane.showMessageDialog(this, 
                                 "BAŞARILI: " + adSoyad + " isimli müşteriye " + iadeMiktari + " TL iade edildi.\nGüncel Bakiye: " + (mevcutBakiye - iadeMiktari) + " TL", 
                                 "İşlem Tamamlandı", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                            logKayit(p.bilgileriYazdir() ," " +adSoyad +"isimli müşterinin"+iadeMiktari +" tutarındaki parası iade edildi");
                             
                             // Kutuları temizle
                             jTextPane1.setText("");

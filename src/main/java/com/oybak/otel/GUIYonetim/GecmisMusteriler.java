@@ -4,7 +4,6 @@
  */
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.Personel;
-import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.VeriTabani;
 import com.oybakotel.GUI.GeriButonu;
 
@@ -162,6 +161,7 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani, 
               .append("Çıkış Tarihi: ").append(rs.getString("cikis_tarihi")).append("\n")
               .append("Kasaya Katkı: ").append(rs.getInt("kasa_katki")).append(" TL\n")
               .append("-------------------------------------------\n");
+            logKayit(p.bilgileriYazdir() ," " +arananIsim + " isimli geçmiş müşteriyi aradı.");
         }
 
         if (bulundu) {

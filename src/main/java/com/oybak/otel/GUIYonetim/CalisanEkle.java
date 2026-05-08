@@ -7,13 +7,14 @@ import com.oybak.otel.Yonetim;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.Personel;
 import com.oybak.otel.Hatalar;
+import com.oybak.otel.VeriTabani;
 import static com.oybak.otel.enums.UserRole.YONETIM;
 import com.oybakotel.GUI.GeriButonu;
 /**
  *
  * @author userxpc666
  */
-public class CalisanEkle extends javax.swing.JFrame implements Hatalar, GeriButonu {
+public class CalisanEkle extends javax.swing.JFrame implements Hatalar, GeriButonu, VeriTabani{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CalisanEkle.class.getName());
 
@@ -76,6 +77,7 @@ private void personelKaydet(String uzmanlikAlani) {
 
         // 9. Başarılı İşlem Bildirimi ve Temizlik
         javax.swing.JOptionPane.showMessageDialog(this, "Personel ve şifre bilgileri başarıyla kaydedildi.");
+        logKayit(p.bilgileriYazdir() ," " +ad +" " +soyad +"isimli çalışanı işe aldı.");
         
         // Formu temizle
         jTextPane1.setText(""); jTextPane2.setText(""); jTextPane3.setText(""); 

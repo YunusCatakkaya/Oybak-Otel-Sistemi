@@ -263,6 +263,7 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
                             + "Fiyat: " + rs.getDouble("fiyat") + " TL";
             
             jTextArea1.setText(bilgiler);
+            logKayit(p.bilgileriYazdir() ," " +odaNo +" numaralı odanın bilgileri güncelledi..");
         } else {
             jTextArea1.setText("Oda Bilgileri:\n(Oda bulunamadı)");
         }

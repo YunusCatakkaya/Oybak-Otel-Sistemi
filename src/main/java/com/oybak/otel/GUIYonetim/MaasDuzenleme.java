@@ -4,14 +4,14 @@
  */
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.Personel;
-import com.oybak.otel.enums.UserRole;
+import com.oybak.otel.VeriTabani;
 import static com.oybak.otel.enums.UserRole.YONETIM;
 import com.oybakotel.GUI.GeriButonu;
 /**
  *
  * @author userxpc666
  */
-public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.Hatalar,GeriButonu{
+public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.Hatalar,GeriButonu, VeriTabani{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MaasDuzenleme.class.getName());
 
@@ -175,6 +175,7 @@ public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.
         // 5. Yonetim sınıfını çağır
         com.oybak.otel.Yonetim yonetici = new com.oybak.otel.Yonetim("", 0, 0, YONETIM, "");
         yonetici.maasGuncelle(tamAdSoyad, tcNoStr, yeniMaasStr);
+        logKayit(p.bilgileriYazdir() ," " +tamAdSoyad +" isimli personelin maaşını güncelledi.");
 
         // 6. Başarılıysa kutuları temizle
         jTextPane1.setText("");

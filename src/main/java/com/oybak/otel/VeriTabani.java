@@ -91,6 +91,30 @@ public interface VeriTabani {
         return calisan;
     }
     
+    public default Personel calısanBilgileri(String tc){
+        Personel calisan = null;
+        String sql = "SELECT * FROM calisanlar WHERE tc_no = ? AND Parola = ?";
+    
+        try (Connection baglanti = DriverManager.getConnection(URL);
+            PreparedStatement sorgu = baglanti.prepareStatement(sql)) {
+
+            // 2. Soru işaretlerini dolduruyoruz
+            sorgu.setString(1, tc);
+            
+            // 3. Sorguyu çalıştır ve sonucu al
+            ResultSet sonuc = sorgu.executeQuery();
+
+            if (sonuc.next()) { // Eğer böyle bir kullanıcı bulunduysa
+                UserRole rol = UserRole.valueOf(sonuc.getString("is_tipi"));
+                calisan = new Personel(sonuc.getString("ad_soyad"), sonuc.getLong("tc_no"), sonuc.getInt("maas"),rol,sonuc.getString("parola"));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Hata oluştu: " + e.getMessage());
+        } // Kullanıcı bulunamadıysa boş dön
+        return calisan;
+    }
+    
     public default List<Oda> doluOdaListesi() {
         List<Oda> doluOdalar = new ArrayList<>();
         String sql = "SELECT * FROM odalar WHERE durum = 'DOLU'";

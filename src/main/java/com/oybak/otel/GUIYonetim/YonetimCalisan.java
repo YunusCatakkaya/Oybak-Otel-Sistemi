@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIYonetim;
-import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.Personel;
 import com.oybakotel.GUI.GeriButonu;
 

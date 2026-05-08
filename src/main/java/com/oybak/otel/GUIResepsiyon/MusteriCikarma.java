@@ -5,10 +5,6 @@
 package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 /**
  *
