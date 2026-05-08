@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.oybak.otel.GUIYonetim;
+package com.oybak.otel.GUIYonetim;//8
 import com.oybak.otel.Yonetim;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.Personel;
