@@ -22,7 +22,6 @@ public class Oda {
     private boolean jakuzi;
     private OdaDurumu odaDurumu;  // Bakımda  Müsait Dolu
     private String bakımSebebi;
-    private List<Musteri> odadakiMusteriler;
     private int kapasite;//odanın kapasitresinii belirlemek için
     private double fiyat;
     boolean odenmeDurumu;
@@ -31,23 +30,12 @@ public class Oda {
     public Oda(int odaNumarası, OdaDurumu odaDurumu, String odaTipi, String ekOzellikler,int kapasite) { //oda constructor 
 	this.odaNumarası = odaNumarası;
 	this.odaDurumu = odaDurumu;
-	this.odadakiMusteriler = new ArrayList<Musteri>();//Odada birden fazla musteri kalması durumunda gerekli
         this.kapasite=kapasite;
     }
 
     public Oda() {
     }
-    //odaya musteri ekleme methodu
-    public void musteriEkle(Musteri musteri) {
-        if (getKisiSayisi()<kapasite) {//odaya gelen kişilerin sayısı kapasiteden fazla olma hatasını onler
-            odadakiMusteriler.add(musteri); //arraylist sayesınde musterı eklenır
-        }else{
-            System.out.println("Hata: Oda kapasitesi dolu");
-        }
-    }
-    public void musterileriTemizle() {
-	odadakiMusteriler.clear(); // Listeyi tamamen boşaltır
-    }
+   
     public String getOzelliklerHTML() {
         String ozellikMetni = "<html>"
                 + "<b>Fiyat:</b> " + this.getFiyat() + " TL / Gece<br><br>"
@@ -73,9 +61,7 @@ public class Oda {
     }
 	
 	//odadaki kisi sayisi alınırken kullanılan method
-    public int getKisiSayisi() {
-	return odadakiMusteriler.size();
-    }
+    
 
     public int getOdaNumarasi() {
 	return odaNumarası;
@@ -151,9 +137,7 @@ public class Oda {
         this.kapasite = kapasite;
     }
                 
-    public List<Musteri> getOdadakiMusteriler() {
-        return odadakiMusteriler;
-    }
+  
         
     public double getFiyat() {
                  return fiyat;
