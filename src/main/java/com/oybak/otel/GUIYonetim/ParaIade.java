@@ -6,6 +6,7 @@ package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.VeriTabani;
+import com.oybak.otel.Yonetim;
 import com.oybakotel.GUI.GeriButonu;
 /**
  *
@@ -127,74 +128,38 @@ public class ParaIade extends javax.swing.JFrame implements VeriTabani,GeriButon
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // Kullanıcının girdiği verileri alıyoruz
-    String adSoyad = jTextPane1.getText().trim();
-    String iadeMiktariStr = jTextPane3.getText().trim();
+    // 1. Arayüzdeki kutulardan verileri alıyoruz
+    String tcNoStr = jTextPane1.getText().trim(); 
+    String iadeMiktariStr = jTextPane3.getText().trim(); 
 
-    // 1. Boş alan kontrolü
-    if (adSoyad.isEmpty() || iadeMiktariStr.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen isim ve miktar alanlarını doldurunuz!", "Eksik Bilgi", javax.swing.JOptionPane.WARNING_MESSAGE);
+    // 2. Boş alan kontrolü (Kullanıcı hiçbir şey yazmadıysa uyar)
+    if (tcNoStr.isEmpty() || iadeMiktariStr.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen TC No ve Miktar alanlarını doldurunuz!");
         return;
     }
 
     try {
-        // Virgül girilirse noktaya çevirip sayıya dönüştürüyoruz
-        double iadeMiktari = Double.parseDouble(iadeMiktariStr.replace(",", "."));
+        // 3. Mevcut personeli Yonetim sınıfına çevirip metodunu çağırıyoruz
+        Yonetim yonetici = new Yonetim(p.getName(), p.getTcNo(), p.getMaas(), p.getIsTipi(), p.getParola()); 
         
-        if (iadeMiktari <= 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "İade miktarı 0'dan büyük olmalıdır!", "Hatalı Miktar", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        // Metot çalışıyor ve bize bir sonuç mesajı döndürüyor
+        String sonucMesaji = yonetici.paraIadeYap(tcNoStr, iadeMiktariStr);
 
-        // 2. Kontrol Sorgusu: Müşteri var mı ve bakiyesi yetiyor mu?
-        String kontrolSql = "SELECT kasa_katki FROM guncel_musteriler WHERE ad_soyad = ?";
-        
-        // Yonetim class'ındaki gibi VeriTabani.URL kullanıyoruz
-        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
-             java.sql.PreparedStatement pstmtKontrol = conn.prepareStatement(kontrolSql)) {
+        // 4. BİLGİ PENCERESİ: Metottan gelen cevabı (Başarılı/Hata) ekranda gösteriyoruz
+        javax.swing.JOptionPane.showMessageDialog(this, sonucMesaji);
+
+        // 5. Eğer işlem başarılıysa kutuları temizle ki iade yapıldığını anla
+        if (sonucMesaji != null && sonucMesaji.startsWith("BAŞARILI")) {
+            jTextPane1.setText("");
+            jTextPane3.setText("");
             
-            pstmtKontrol.setString(1, adSoyad);
-            java.sql.ResultSet rs = pstmtKontrol.executeQuery();
-
-            if (rs.next()) {
-                double mevcutBakiye = rs.getDouble("kasa_katki");
-
-                // 3. Mantıksal Kontrol: Ödenen paradan fazla iade yapılamaz
-                if (iadeMiktari > mevcutBakiye) {
-                    javax.swing.JOptionPane.showMessageDialog(this, 
-                        "HATA: Müşterinin toplam ödemesi " + mevcutBakiye + " TL.\nBundan daha yüksek bir iade yapamazsınız!", 
-                        "Yetersiz Bakiye", javax.swing.JOptionPane.ERROR_MESSAGE);
-                } else {
-                    // 4. Güncelleme Sorgusu: Parayı düşüyoruz
-                    String guncelleSql = "UPDATE guncel_musteriler SET kasa_katki = kasa_katki - ? WHERE ad_soyad = ?";
-                    try (java.sql.PreparedStatement pstmtGuncelle = conn.prepareStatement(guncelleSql)) {
-                        pstmtGuncelle.setDouble(1, iadeMiktari);
-                        pstmtGuncelle.setString(2, adSoyad);
-                        
-                        int sonuc = pstmtGuncelle.executeUpdate();
-                        if (sonuc > 0) {
-                            javax.swing.JOptionPane.showMessageDialog(this, 
-                                "BAŞARILI: " + adSoyad + " isimli müşteriye " + iadeMiktari + " TL iade edildi.\nGüncel Bakiye: " + (mevcutBakiye - iadeMiktari) + " TL", 
-                                "İşlem Tamamlandı", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                            logKayit(p.bilgileriYazdir() ," " +adSoyad +"isimli müşterinin"+iadeMiktari +" tutarındaki parası iade edildi");
-                            
-                            // Kutuları temizle
-                            jTextPane1.setText("");
-                            jTextPane3.setText("");
-                        }
-                    }
-                }
-            } else {
-                // İsim veritabanında yoksa
-                javax.swing.JOptionPane.showMessageDialog(this, "UYARI: '" + adSoyad + "' isminde güncel bir müşteri kaydı bulunamadı!", "Kayıt Yok", javax.swing.JOptionPane.ERROR_MESSAGE);
-            }
+            // İsteğe bağlı: Konsola da yazdırabilirsin
+            System.out.println("İşlem Onaylandı: " + sonucMesaji);
         }
 
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen miktar alanına geçerli bir sayı giriniz!", "Format Hatası", javax.swing.JOptionPane.ERROR_MESSAGE);
-    } catch (java.sql.SQLException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "VERİTABANI HATASI: " + e.getMessage(), "Hata", javax.swing.JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
+    } catch (Exception e) {
+        // Teknik bir hata (Veritabanı vb.) olursa bilgi ver
+        javax.swing.JOptionPane.showMessageDialog(this, "Sistem Hatası: " + e.getMessage());
     }
     }//GEN-LAST:event_jButton2ActionPerformed
 

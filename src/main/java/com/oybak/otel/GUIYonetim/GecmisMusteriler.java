@@ -134,22 +134,34 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani, 
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    // 1. Kutudaki metni al ve temizle
     String arananTC = jTextField1.getText().replace("TC:", "").trim();
 
+    // 2. Boş giriş kontrolü (Bu kalsın ki boş arama yapıp hata vermesin)
     if (arananTC.isEmpty()) {
         txtSonucAlani.setText("Lütfen bir TC numarası giriniz.");
         return;
     }
 
-    // Arayüzde direkt kod yazmak yerine Yönetim sınıfındaki metodumuzu çağırıyoruz
-    // p nesnesini Yonetim'e cast ederek metodumuza ulaşıyoruz
-    if (p instanceof Yonetim) {
-        String sonuc = ((Yonetim) p).gecmisMusteriAra(arananTC);
-        txtSonucAlani.setText(sonuc);
+    txtSonucAlani.setText(""); // Eski sonuçları temizle
+
+    try {
+        // 3. Yetki kontrolü yapmadan doğrudan Yonetim nesnesi üzerinden metodu çağır
+        Yonetim yonetici = (Yonetim) p; 
+        String sonuc = yonetici.gecmisMusteriAra(arananTC);
         
-        if(!sonuc.contains("bulunamadı")) {
-            logKayit(p.bilgileriYazdir(), arananTC + " TC numaralı geçmiş müşteriyi sorguladı.");
+        txtSonucAlani.setText(sonuc);
+
+        // Başarılıysa log kaydet
+        if (sonuc != null && !sonuc.contains("bulunamadı")) {
+             logKayit(p.bilgileriYazdir(), arananTC + " TC numaralı geçmiş müşteriyi sorguladı.");
         }
+
+    } catch (ClassCastException e) {
+        Yonetim geciciYonetici = new Yonetim(p.getName(), p.getTcNo(), p.getMaas(), p.getIsTipi(), p.getParola());
+        txtSonucAlani.setText(geciciYonetici.gecmisMusteriAra(arananTC));
+    } catch (Exception e) {
+        txtSonucAlani.setText("Hata oluştu: " + e.getMessage());
     }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
