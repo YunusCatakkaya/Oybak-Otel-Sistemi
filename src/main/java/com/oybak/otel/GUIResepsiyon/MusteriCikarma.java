@@ -36,7 +36,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         });    }
     
     private void musterileriBosalt(int odaNo) {
-        if (!Resepsiyon.isOdaOdenmis(odaNo)) {
+ if (!Resepsiyon.isOdaOdenmis(odaNo)) {
             javax.swing.JOptionPane.showMessageDialog(this, 
                 "İşlem Reddedildi: Bu odanın ödemesi henüz alınmamıştır!\nLütfen çıkış yapmadan önce 'Para Alma' menüsünden ödemeyi tahsil ediniz.", 
                 "Ödeme Bekleniyor", 
@@ -45,10 +45,15 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         }
         // ------------------------------------
 
-        // Eğer yukarıdaki takılmadan geçerse (yani para ödenmişse) SQL işlemlerine devam et
-        boolean basarili = com.oybak.otel.Resepsiyon.odayiBosalt(odaNo);
+        // --- OOP MANTIĞI: Sınıfın metodunu tetiklemek için bir Müşteri nesnesi paketliyoruz ---
+        // Oda üzerinden işlem yaptığımız için temsili verilerle nesneyi oluşturuyoruz
+        com.oybak.otel.Musteri cikisYapan = new com.oybak.otel.Musteri("Oda Müşterisi", 11111111111L);
+
+        // Nesneyi metoda parametre olarak gönderiyoruz!
+        boolean basarili = com.oybak.otel.Resepsiyon.odayiBosalt(cikisYapan, odaNo);
         
         if (basarili) {
+            // VeriTabani interface'inden gelen logKayit metodumuz sapasağlam çalışıyor
             logKayit(p.bilgileriYazdir(), " " + odaNo + " nolu odayı boşalttı.");
             javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda başarıyla boşaltıldı.");
             

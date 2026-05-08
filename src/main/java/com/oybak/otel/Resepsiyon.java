@@ -25,28 +25,45 @@ public class Resepsiyon extends Personel{
     }
 
     // 1. Müşteri Çıkarma (Odayı Boşaltma) İşlemi
-    public static boolean odayiBosalt(int odaNo) {
+ /**
+     * Odayı boşaltan güncellenmiş OOP uyumlu metot.
+     * Artık parametre olarak Musteri nesnesi alıyor ve DATE('now') hatasını gideriyor.
+     */
+    public static boolean odayiBosalt(com.oybak.otel.Musteri musteri, int odaNo) {
+        
+        // DATE('now') yerine Java'dan aldığımız '?' parametresini ekliyoruz
         String sqlGecmiseTasi = "INSERT INTO gecmis_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) " +
-                                "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, DATE('now'), kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
+                                "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, ?, kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
         
         String sqlMusteriSil = "DELETE FROM guncel_musteriler WHERE oda_no = ?";
         
         String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT', odenme_durumu = 'false' WHERE oda_no = ?";
 
-        try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL)) {
             conn.setAutoCommit(false); 
 
-            try (PreparedStatement ps1 = conn.prepareStatement(sqlGecmiseTasi);
-                 PreparedStatement ps2 = conn.prepareStatement(sqlMusteriSil);
-                 PreparedStatement ps3 = conn.prepareStatement(sqlOdaGuncelle)) {
+            try (java.sql.PreparedStatement ps1 = conn.prepareStatement(sqlGecmiseTasi);
+                 java.sql.PreparedStatement ps2 = conn.prepareStatement(sqlMusteriSil);
+                 java.sql.PreparedStatement ps3 = conn.prepareStatement(sqlOdaGuncelle)) {
                 
-                ps1.setInt(1, odaNo); ps1.executeUpdate();
-                ps2.setInt(1, odaNo); ps2.executeUpdate();
-                ps3.setInt(1, odaNo); ps3.executeUpdate();
+                // Tarihi dd.MM.yyyy formatında Java üzerinden alıyoruz
+                java.time.format.DateTimeFormatter formatci = java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                String bugunTarihi = java.time.LocalDate.now().format(formatci);
+                
+                // OOP Uyum: musteri nesnesi parametre olarak geldiği için loglamada vb. ileride kullanılabilir.
+                ps1.setString(1, bugunTarihi);
+                ps1.setInt(2, odaNo); 
+                ps1.executeUpdate();
+                
+                ps2.setInt(1, odaNo); 
+                ps2.executeUpdate();
+                
+                ps3.setInt(1, odaNo); 
+                ps3.executeUpdate();
 
                 conn.commit(); 
-                return true;   // İşlem başarılı
-            } catch (SQLException e) {
+                return true;   
+            } catch (java.sql.SQLException e) {
                 conn.rollback(); 
                 System.err.println("SQL Hatası (Oda Boşaltma): " + e.getMessage());
                 return false;
