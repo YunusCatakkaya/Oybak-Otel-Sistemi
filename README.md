@@ -3,5 +3,5 @@ oda düzenlemeleri , müşteri girişi , resepsiyyon ,yönetim ve teknik ekip ko
 SQL kullanılmıştır
 
 Resepsiyon olarak giriş yapmak için TC kısmına 12345678916 Parola kısmına 123,
-Teknik personel olarak giriş yapmak için TC kısmına 12345678927 Parola kısmına 123,
-Yönetici olarak giriş yapmak için TC kısmına 12345678938 Parola kısmına 123 giriniz.
+Teknik personel olarak giriş yapmak için TC kısmına 12345678938 Parola kısmına 123,
+Yönetici olarak giriş yapmak için TC kısmına 12345678950 Parola kısmına 123 giriniz.
