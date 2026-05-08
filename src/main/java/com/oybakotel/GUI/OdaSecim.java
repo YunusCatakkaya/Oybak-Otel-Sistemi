@@ -5,7 +5,6 @@
 package com.oybakotel.GUI;
 
 import com.oybak.otel.Personel;
-import com.oybak.otel.enums.UserRole;
 
 /**
  *
