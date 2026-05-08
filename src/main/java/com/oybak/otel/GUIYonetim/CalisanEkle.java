@@ -4,7 +4,6 @@
  */
 package com.oybak.otel.GUIYonetim;//8
 import com.oybak.otel.Yonetim;
-import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.Personel;
 import com.oybak.otel.Hatalar;
 import com.oybak.otel.VeriTabani;
@@ -32,63 +31,7 @@ public class CalisanEkle extends javax.swing.JFrame implements Hatalar, GeriButo
     
     // CalisanEkle.java dosyasının içinde bir yere:
 
-private void personelKaydet(String uzmanlikAlani) {
-    try {
-        // 1. GUI'den verileri çekiyoruz
-        String ad = jTextPane1.getText().trim();
-        String soyad = jTextPane2.getText().trim();
-        String maasStr = jTextPane3.getText().trim();
-        String tcStr = jTextPane4.getText().trim();
-        String parola = jTextPane5.getText().trim(); // Parola alanını çektik
-        
-        // 2. Boşluk Kontrolü (Parola dahil)
-        if (ad.isEmpty() || soyad.isEmpty() || maasStr.isEmpty() || tcStr.isEmpty() || parola.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları (şifre dahil) eksiksiz doldurunuz!", "Eksik Bilgi", 2);
-            return;
-        }
 
-        // 3. TC Kontrolü (Hatalar Interface'indeki gelişmiş algoritma)
-        tcKontrol(tcStr);
-
-        // 4. Sayısal Dönüşümler
-        long tc = Long.parseLong(tcStr);
-        double maas = Double.parseDouble(maasStr);
-
-        // 5. İş Tipi ve Uzmanlık Alanı Mantığı
-        String secilenIsTipi = jComboBox1.getSelectedItem().toString();
-        // Eğer teknik personel değilse uzmanlık alanını veritabanına boş gönderiyoruz
-        if (!secilenIsTipi.equals("TEKNIKPERSONEL")) {
-            uzmanlikAlani = ""; 
-        }
-
-        // 6. Veritabanı Mükerrer Kayıt Kontrolü
-        // Yonetim nesnesini 7 parametreli yeni constructor ile oluşturuyoruz
-        Yonetim yonetici = new Yonetim("Admin", 0L, 0.0, YONETIM, "123");
-        if (yonetici.tcVarMi(tc)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Bu TC numarası zaten kayıtlı!", "Mükerrer Kayıt", 0);
-            return;
-        }
-        UserRole rol = UserRole.valueOf(secilenIsTipi);
-        // 7. Personel Nesnesi Oluşturma (7 Parametre: ad, soyad, tc, maas, isTipi, uzmanlik, parola)
-        Personel yeniKisi = new Personel((ad + " " +soyad), tc, maas, rol, uzmanlikAlani, parola);
-        
-        // 8. Veritabanına Kayıt
-        yonetici.personelEkle(yeniKisi);
-
-        // 9. Başarılı İşlem Bildirimi ve Temizlik
-        javax.swing.JOptionPane.showMessageDialog(this, "Personel ve şifre bilgileri başarıyla kaydedildi.");
-        logKayit(p.bilgileriYazdir() ," " +ad +" " +soyad +"isimli çalışanı işe aldı.");
-        
-        // Formu temizle
-        jTextPane1.setText(""); jTextPane2.setText(""); jTextPane3.setText(""); 
-        jTextPane4.setText(""); jTextPane5.setText("");
-
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Maaş alanına geçerli bir sayı giriniz!", "Format Hatası", 0);
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
-    }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -247,13 +190,13 @@ private void personelKaydet(String uzmanlikAlani) {
    String secilenIs = jComboBox1.getSelectedItem().toString();
 
     if (secilenIs.equals("Seçiniz")) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Lütfen bir iş tipi seçiniz!");
+        javax.swing.JOptionPane.showMessageDialog(null, "Lütfen bir iş tipi seçiniz!");
         return;
     }
 
     if (secilenIs.equals("TEKNIKPERSONEL")) {
         // Pop-up ile uzmanlık alanını alıyoruz
-        String input = javax.swing.JOptionPane.showInputDialog(this, 
+        String input = javax.swing.JOptionPane.showInputDialog(null, 
                 "Teknik Personelin Uzmanlık Alanını Giriniz:", 
                 "Uzmanlık Bilgisi", 
                 javax.swing.JOptionPane.QUESTION_MESSAGE);
@@ -273,31 +216,28 @@ private void personelKaydet(String uzmanlikAlani) {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    String secilenIs = jComboBox1.getSelectedItem().toString();
+   String tcStr = jTextPane4.getText().trim();
+    
+    try {
+        // ADIM 1: TC Kontrolünü burada yapıyoruz. 
+        // CalisanEkle bir Component olduğu için Hatalar'daki 'this' artık çalışır!
+        tcKontrol(tcStr); 
+        
+        // ADIM 2: Eğer yukarıdaki satır hata fırlatmazsa (TC doğruysa) kayıt işlemine geç:
+        String ad = jTextPane1.getText().trim();
+        String soyad = jTextPane2.getText().trim();
+        String maasStr = jTextPane3.getText().trim();
+        String parola = jTextPane5.getText().trim();
+        String secilenIs = jComboBox1.getSelectedItem().toString();
 
-    // 1. İş tipi seçilmemişse veya "Seçiniz"de kalmışsa
-    if (secilenIs.equals("Seçiniz")) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-                "Lütfen Bilgileri Eksiksiz Giriniz!", 
-                "Eksik Bilgi", 
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        Yonetim yoneticiYetkisi = new Yonetim(p.getName(), p.getTcNo(), p.getMaas(), p.getIsTipi(), p.getParola());
+        String sonuc = yoneticiYetkisi.personelEkle(ad, soyad, tcStr, maasStr, parola, secilenIs, teknikUzmanlik);
+        
+        javax.swing.JOptionPane.showMessageDialog(null, sonuc);
 
-    // 2. Teknik personel seçilmiş ama pop-up'a cevap verilmemişse
-    if (secilenIs.equals("TEKNIKPERSONEL") && (teknikUzmanlik == null || teknikUzmanlik.isEmpty())) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-                "Lütfen Bilgileri Eksiksiz Giriniz!", 
-                "Eksik Bilgi", 
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    // Her şey tamamsa kayıt metodunu çağır
-    if (secilenIs.equals("TEKNIKPERSONEL")) {
-        personelKaydet(teknikUzmanlik);
-    } else {
-        personelKaydet(secilenIs);
+    } catch (IllegalArgumentException e) {
+        // tcKontrol içindeki throw buraya düşer, işlem durur.
+        System.out.println("TC Algoritma hatası yakalandı.");
     }
     }//GEN-LAST:event_jButton2ActionPerformed
 

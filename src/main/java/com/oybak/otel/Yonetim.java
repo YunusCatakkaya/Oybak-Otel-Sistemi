@@ -27,27 +27,40 @@ public class Yonetim extends Personel implements VeriTabani, Hatalar{
     
   
     
-  public void personelEkle(Personel p) {
-    // Sorguya uzmanlik_alanı eklendi (Toplam 6 adet '?' oldu)
-    String sql = "INSERT INTO calisanlar(ad_soyad, tc_no, maas, is_tipi, Parola, uzmanlik_alani) VALUES(?,?,?,?,?,?)";
-    
-    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
-         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        
-        String rol = String.valueOf(p.getIsTipi());
-        
-        pstmt.setString(1, p.getName());
-        pstmt.setLong(2, p.getTcNo());
-        pstmt.setDouble(3, p.getMaas());
-        pstmt.setString(4, rol);
-        pstmt.setString(5, p.getParola()); 
-        pstmt.setString(6, p.getUzmanlikAlani()); // Personel nesnesinden gelen uzmanlık bilgisi
+    // Yonetim.java içindeki personelEkle metodunu bununla değiştir
+    public String personelEkle(String ad, String soyad, String tcStr, String maasStr, String parola, String rolStr, String uzmanlik) {
+    // 1. Boşluk Kontrolü
+    if (ad.trim().isEmpty() || soyad.trim().isEmpty() || tcStr.trim().isEmpty() || 
+        maasStr.trim().isEmpty() || parola.trim().isEmpty() || rolStr.equals("Seçiniz")) {
+        return "UYARI: Lütfen tüm alanları eksiksiz doldurunuz!";
+    }
 
-        pstmt.executeUpdate();
-    } catch (java.sql.SQLException e) {
-        javax.swing.JOptionPane.showMessageDialog(null, "Veritabanı Hatası: " + e.getMessage());
-        e.printStackTrace();
+    try {
+        long tc = Long.parseLong(tcStr);
+        double maas = Double.parseDouble(maasStr);
+
+        if (tcVarMi(tc)) {
+            return "HATA: Bu TC numarası zaten kayıtlı!";
+        }
+
+        String finalUzmanlik = rolStr.equals("TEKNIKPERSONEL") ? uzmanlik : "";
+        String sql = "INSERT INTO calisanlar(ad_soyad, tc_no, maas, is_tipi, Parola, uzmanlik_alani) VALUES(?,?,?,?,?,?)";
         
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, ad + " " + soyad);
+            pstmt.setLong(2, tc);
+            pstmt.setDouble(3, maas);
+            pstmt.setString(4, rolStr);
+            pstmt.setString(5, parola);
+            pstmt.setString(6, finalUzmanlik);
+
+            pstmt.executeUpdate();
+            return "BAŞARILI: " + ad + " " + soyad + " sisteme kaydedildi.";
+        }
+    } catch (Exception e) {
+        return "HATA: " + e.getMessage();
     }
 }
   
