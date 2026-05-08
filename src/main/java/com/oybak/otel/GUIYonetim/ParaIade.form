@@ -118,7 +118,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x130;sim ve Soy &#x130;sim Giriniz"/>
+            <Property name="text" type="java.lang.String" value="TC Giriniz"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">

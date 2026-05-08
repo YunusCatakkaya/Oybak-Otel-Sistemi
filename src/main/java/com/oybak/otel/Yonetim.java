@@ -103,34 +103,99 @@ public class Yonetim extends Personel implements VeriTabani, Hatalar{
     }
 }
   
-}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-                        //ÇALIŞAN İŞLEMLERİ METOTLARI 
-        // public void calisanEkle
-        //public void calisanCikar
-        //public void maasBelirle
-        //a
-    
-    
-                        //ÖZEL BİLGİ KASA İŞLEMLERİ
-        //public void genelKasayıGoruntule
-        //public void musteriTcSorgulama
-        
-    
-    
-                        //ODA İŞLEMLERİ
-        //public void odaDuzenle  d
+  // Yonetim.java içine eklenecek metod
+public String gecmisMusteriAra(String arananIsim) {
+    if (arananIsim == null || arananIsim.trim().isEmpty() || arananIsim.equals("İsim Soyisim:")) {
+        return "Lütfen geçerli bir isim giriniz.";
+    }
 
+    StringBuilder sb = new StringBuilder();
+    String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM gecmis_musteriler WHERE ad_soyad LIKE ?";
+
+    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
+         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setString(1, "%" + arananIsim.trim() + "%");
+        java.sql.ResultSet rs = pstmt.executeQuery();
+
+        boolean bulundu = false;
+        while (rs.next()) {
+            bulundu = true;
+            sb.append("Müşteri Ad Soyad: ").append(rs.getString("ad_soyad")).append("\n")
+              .append("TC Kimlik No: ").append(rs.getString("tc_no")).append("\n")
+              .append("Oda Numarası: ").append(rs.getString("oda_no")).append("\n")
+              .append("Giriş Tarihi: ").append(rs.getString("giris_tarihi")).append("\n")
+              .append("Çıkış Tarihi: ").append(rs.getString("cikis_tarihi")).append("\n")
+              .append("Kasaya Katkı: ").append(rs.getInt("kasa_katki")).append(" TL\n")
+              .append("-------------------------------------------\n");
+        }
+
+        if (!bulundu) {
+            return "Sistemde '" + arananIsim + "' isminde bir geçmiş kayıt bulunamadı.";
+        }
+
+        return sb.toString();
+
+    } catch (java.sql.SQLException e) {
+        return "Veritabanı hatası: " + e.getMessage();
+    }
+}
+  
+// Yonetim.java içine eklenecek metod
+public String paraIadeYap(String tcNoStr, String iadeMiktariStr) {
+    if (tcNoStr == null || tcNoStr.trim().isEmpty() || iadeMiktariStr == null || iadeMiktariStr.trim().isEmpty()) {
+        return "Lütfen TC No ve miktar alanlarını doldurunuz!";
+    }
+
+    try {
+        long tcNo = Long.parseLong(tcNoStr.trim());
+        double iadeMiktari = Double.parseDouble(iadeMiktariStr.replace(",", "."));
+        
+        if (iadeMiktari <= 0) {
+            return "İade miktarı 0'dan büyük olmalıdır!";
+        }
+
+        // Sorguyu ad_soyad yerine tc_no'ya göre yapıyoruz
+        String kontrolSql = "SELECT kasa_katki, ad_soyad FROM guncel_musteriler WHERE tc_no = ?";
+        
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
+             java.sql.PreparedStatement pstmtKontrol = conn.prepareStatement(kontrolSql)) {
+            
+            pstmtKontrol.setLong(1, tcNo);
+            java.sql.ResultSet rs = pstmtKontrol.executeQuery();
+
+            if (rs.next()) {
+                double mevcutBakiye = rs.getDouble("kasa_katki");
+                String adSoyad = rs.getString("ad_soyad");
+
+                if (iadeMiktari > mevcutBakiye) {
+                    return "HATA: " + adSoyad + " isimli müşterinin toplam ödemesi " + mevcutBakiye + " TL. Daha yüksek iade yapılamaz!";
+                } else {
+                    // Güncelleme sorgusu da TC No'ya göre
+                    String guncelleSql = "UPDATE guncel_musteriler SET kasa_katki = kasa_katki - ? WHERE tc_no = ?";
+                    try (java.sql.PreparedStatement pstmtGuncelle = conn.prepareStatement(guncelleSql)) {
+                        pstmtGuncelle.setDouble(1, iadeMiktari);
+                        pstmtGuncelle.setLong(2, tcNo);
+                        
+                        int sonuc = pstmtGuncelle.executeUpdate();
+                        if (sonuc > 0) {
+                            return "BAŞARILI: " + adSoyad + " (" + tcNo + ") kişisine " + iadeMiktari + " TL iade edildi.\nGüncel Bakiye: " + (mevcutBakiye - iadeMiktari) + " TL";
+                        }
+                    }
+                }
+            } else {
+                return "UYARI: '" + tcNo + "' TC numarasına sahip bir müşteri kaydı bulunamadı!";
+            }
+        }
+    } catch (NumberFormatException e) {
+        return "HATA: Lütfen TC ve miktar alanlarına geçerli sayılar giriniz!";
+    } catch (java.sql.SQLException e) {
+        return "VERİTABANI HATASI: " + e.getMessage();
+    }
+    return "Beklenmedik bir hata oluştu.";
+}
+
+    
+}
+ 
 
