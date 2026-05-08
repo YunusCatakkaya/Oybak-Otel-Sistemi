@@ -195,7 +195,60 @@ public String paraIadeYap(String tcNoStr, String iadeMiktariStr) {
     return "Beklenmedik bir hata oluştu.";
 }
 
-    
+public String odaOzellikGuncelle(String odaNo, String tekYatak, String ciftYatak, String manzara, String balkon, String jakuzi, String fiyat) {
+    if (odaNo == null || odaNo.isEmpty() || odaNo.equals("Oda Numarası:")) {
+        return "Lütfen önce geçerli bir Oda Numarası giriniz!";
+    }
+
+    try (java.sql.Connection con = java.sql.DriverManager.getConnection(URL)) {
+        StringBuilder query = new StringBuilder("UPDATE odalar SET ");
+        boolean degisiklikVar = false;
+
+        if (!tekYatak.equals("Seçiniz")) {
+            query.append("tek_kisilik_yatak = ").append(tekYatak);
+            degisiklikVar = true;
+        }
+        if (!ciftYatak.equals("Seçiniz")) {
+            if (degisiklikVar) query.append(", ");
+            query.append("cift_kisilik_yatak = ").append(ciftYatak);
+            degisiklikVar = true;
+        }
+        if (!manzara.equals("Seçiniz")) {
+            if (degisiklikVar) query.append(", ");
+            query.append("deniz_manzarasi = ").append(manzara.equals("Var") ? "'true'" : "'false'");
+            degisiklikVar = true;
+        }
+        if (!balkon.equals("Seçiniz")) {
+            if (degisiklikVar) query.append(", ");
+            query.append("balkon = ").append(balkon.equals("Var") ? "'true'" : "'false'");
+            degisiklikVar = true;
+        }
+        if (!jakuzi.equals("Seçiniz")) {
+            if (degisiklikVar) query.append(", ");
+            query.append("jakuzi = ").append(jakuzi.equals("Var") ? "'true'" : "'false'");
+            degisiklikVar = true;
+        }
+        if (!fiyat.isEmpty() && !fiyat.equals("Fiyat:") && !fiyat.equals("Fiyat (TL)")) {
+            if (degisiklikVar) query.append(", ");
+            query.append("fiyat = ").append(fiyat.replace(",", "."));
+            degisiklikVar = true;
+        }
+
+        if (!degisiklikVar) return "Herhangi bir özellik seçilmedi, güncelleme yapılmadı.";
+
+        query.append(" WHERE oda_no = ?");
+        java.sql.PreparedStatement pst = con.prepareStatement(query.toString());
+        pst.setString(1, odaNo);
+
+        if (pst.executeUpdate() > 0) {
+            return "BAŞARILI: " + odaNo + " numaralı oda güncellendi.";
+        } else {
+            return "UYARI: " + odaNo + " numaralı oda veritabanında bulunamadı!";
+        }
+    } catch (Exception e) {
+        return "VERİTABANI HATASI: " + e.getMessage();
+    }
+}
 }
  
 

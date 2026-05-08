@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
+import com.oybak.otel.Yonetim;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.oybakotel.GUI.GeriButonu;
@@ -86,6 +87,8 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
         jButton1.setText("Geri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Kaydet");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
@@ -273,81 +276,28 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    // 1. GUI verilerini al
     String odaNo = jTextField1.getText().trim();
-    String fiyatYazi = jTextField2.getText().replace("Fiyat:", "").trim();
-    
-    if (odaNo.isEmpty() || odaNo.equals("Oda Numarası:")) {
-        JOptionPane.showMessageDialog(this, "Lütfen önce bir Oda Numarası giriniz!");
-        return;
-    }
+    String tekY = jComboBox1.getSelectedItem().toString();
+    String ciftY = jComboBox2.getSelectedItem().toString();
+    String manz = jComboBox3.getSelectedItem().toString();
+    String balk = jComboBox4.getSelectedItem().toString();
+    String jakz = jComboBox5.getSelectedItem().toString();
+    String fiyat = jTextField2.getText().replace("Fiyat:", "").trim();
 
-    try (Connection con = DriverManager.getConnection(URL)) {
-        StringBuilder query = new StringBuilder("UPDATE odalar SET ");
-        boolean first = true;
+    // 2. Güvenli nesne oluşturma (Çökmeyi engellemek için)
+    // p nesnesi Personel olsa bile Yonetim yeteneklerini kullanabilmesini sağlıyoruz
+    Yonetim yoneticiKontrol = new Yonetim(p.getName(), p.getTcNo(), p.getMaas(), p.getIsTipi(), p.getParola());
 
-        // --- DİNAMİK SORGU OLUŞTURMA ---
-        if (!jComboBox1.getSelectedItem().equals("Seçiniz")) {
-            query.append("tek_kisilik_yatak = ").append(jComboBox1.getSelectedItem());
-            first = false;
-        }
+    // 3. Metodu çalıştır ve dönen mesajı al
+    String mesaj = yoneticiKontrol.odaOzellikGuncelle(odaNo, tekY, ciftY, manz, balk, jakz, fiyat);
 
-        if (!jComboBox2.getSelectedItem().equals("Seçiniz")) {
-            if (!first) query.append(", ");
-            query.append("cift_kisilik_yatak = ").append(jComboBox2.getSelectedItem());
-            first = false;
-        }
+    // 4. MESAJI GÖSTER (Hiçbir şey dönmüyorsa sorun buraya gelmeden önceki bir koddadır)
+    javax.swing.JOptionPane.showMessageDialog(this, mesaj);
 
-        if (!jComboBox3.getSelectedItem().equals("Seçiniz")) {
-            if (!first) query.append(", ");
-            String val = jComboBox3.getSelectedItem().equals("Var") ? "'true'" : "'false'";
-            query.append("deniz_manzarasi = ").append(val);
-            first = false;
-        }
-
-        if (!jComboBox4.getSelectedItem().equals("Seçiniz")) {
-            if (!first) query.append(", ");
-            String val = jComboBox4.getSelectedItem().equals("Var") ? "'true'" : "'false'";
-            query.append("balkon = ").append(val);
-            first = false;
-        }
-
-        if (!jComboBox5.getSelectedItem().equals("Seçiniz")) {
-            if (!first) query.append(", ");
-            String val = jComboBox5.getSelectedItem().equals("Var") ? "'true'" : "'false'";
-            query.append("jakuzi = ").append(val);
-            first = false;
-        }
-
-        if (!fiyatYazi.isEmpty() && !fiyatYazi.equals("Fiyat (TL)") && !fiyatYazi.equals("Fiyat:")) {
-            if (!first) query.append(", ");
-            query.append("fiyat = ").append(fiyatYazi);
-            first = false;
-        }
-
-        // --- KRİTİK NOKTA: Hiçbir şey seçilmediyse ---
-        if (first) {
-            // SQL hatası almamak için dummy (etkisiz) bir güncelleme yapıyoruz: oda_no'yu kendisine eşitliyoruz.
-            query.append("oda_no = oda_no"); 
-        }
-
-        query.append(" WHERE oda_no = ?");
-        
-        PreparedStatement pst = con.prepareStatement(query.toString());
-        pst.setString(1, odaNo);
-        
-        if (pst.executeUpdate() > 0) {
-            // Mesajı seçime göre belirle
-            if (first) {
-                JOptionPane.showMessageDialog(this, "Hiçbir şey değiştirilmedi.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Oda " + odaNo + " güncellendi!");
-            }
-            
-            temizle(); 
-            jTextField1KeyReleased(null); 
-        }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
+    if (mesaj.startsWith("BAŞARILI")) {
+        temizle();
+        jTextField1KeyReleased(null); // Ekrandaki listeyi yenilemek için
     }
     }//GEN-LAST:event_jButton2ActionPerformed
 // Formu sıfırlamak için yardımcı metod (Bunu class içinde uygun bir yere koy)
