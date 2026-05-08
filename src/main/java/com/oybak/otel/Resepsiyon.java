@@ -34,7 +34,7 @@ public class Resepsiyon extends Personel{
         String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT', odenme_durumu = 'false' WHERE oda_no = ?";
 
         try (Connection conn = DriverManager.getConnection(VeriTabani.URL)) {
-            conn.setAutoCommit(false); // Atomik işlem (Transaction)
+            conn.setAutoCommit(false); 
 
             try (PreparedStatement ps1 = conn.prepareStatement(sqlGecmiseTasi);
                  PreparedStatement ps2 = conn.prepareStatement(sqlMusteriSil);
@@ -268,7 +268,6 @@ public class Resepsiyon extends Personel{
             return null;
         }
     }
-    
 }       
 
     

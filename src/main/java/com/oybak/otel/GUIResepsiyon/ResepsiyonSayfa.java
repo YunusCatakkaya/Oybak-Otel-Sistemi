@@ -90,7 +90,7 @@ public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
                         .addComponent(jButton4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -138,10 +138,10 @@ public class ResepsiyonSayfa extends javax.swing.JFrame implements OdaSecim{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        com.oybak.otel.GUIResepsiyon.ParaIslemleri paraEkrani = new com.oybak.otel.GUIResepsiyon.ParaIslemleri(p);
+        com.oybak.otel.GUIYonetim.YonetimKasa kasaEkrani = new com.oybak.otel.GUIYonetim.YonetimKasa(p);
         
-        paraEkrani.setLocationRelativeTo(null);
-        paraEkrani.setVisible(true);
+        kasaEkrani.setLocationRelativeTo(null);
+        kasaEkrani.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 

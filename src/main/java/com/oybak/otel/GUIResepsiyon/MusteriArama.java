@@ -5,11 +5,12 @@
 package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
+import com.oybakotel.GUI.GeriButonu;
 /**
  *
  * @author onuro
  */
-public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
+public class MusteriArama extends javax.swing.JFrame implements VeriTabani, GeriButonu {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MusteriArama.class.getName());
 
@@ -197,15 +198,7 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani {
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      if (p.getIsTipi() == com.oybak.otel.enums.UserRole.YONETIM) {
-        // Yönetim sayfasına dön[cite: 1]
-        com.oybak.otel.GUIYonetim.YonetimMusteriArama yonetimGeri = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(p);
-        yonetimGeri.setVisible(true);
-    } else {
-        // Resepsiyon sayfasına dön[cite: 1]
-        com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa resepsiyonGeri = new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p);
-        resepsiyonGeri.setVisible(true);
-    }
+      geriButonu(p);
       this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

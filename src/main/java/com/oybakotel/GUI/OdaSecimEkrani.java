@@ -181,7 +181,6 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         jLabel2.setText("FİLTRELEME");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ODA SEÇİNİZ");
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 100));

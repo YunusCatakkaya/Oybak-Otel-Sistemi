@@ -8,9 +8,11 @@ import com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa;
 import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
 import com.oybak.otel.GUIYonetim.YonetimEkran;
 import com.oybak.otel.Personel;
+import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.BAKIM;
 import static com.oybak.otel.enums.UserRole.MUSTERI;
 import static com.oybak.otel.enums.UserRole.MUSTERIEKLEME;
+import static com.oybak.otel.enums.UserRole.MUSTERICIKARMA;
 import static com.oybak.otel.enums.UserRole.RESEPSIYON;
 import static com.oybak.otel.enums.UserRole.TEKNIKPERSONEL;
 import static com.oybak.otel.enums.UserRole.YONETIM;
@@ -30,7 +32,8 @@ public interface GeriButonu {
                 t.setLocationRelativeTo(null);
                 t.setVisible(true);                
             }
-            case  RESEPSIYON, MUSTERIEKLEME->{ 
+            case  RESEPSIYON, MUSTERIEKLEME, MUSTERICIKARMA->{ 
+                p.setIsTipi(UserRole.RESEPSIYON);
                 JOptionPane.showMessageDialog((Component) this, "Resepsiyon anasayfasına aktarılıyorsunuz.");
                 ResepsiyonSayfa r = new ResepsiyonSayfa(p);
                 r.setLocationRelativeTo(null);
