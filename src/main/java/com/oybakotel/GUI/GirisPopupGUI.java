@@ -17,14 +17,14 @@ import com.oybak.otel.VeriTabani;
  *
  * @author ahmet
  */
-public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hatalar{
+public class GirisPopupGUI extends javax.swing.JFrame implements VeriTabani, Hatalar{
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GirisPopopGUI.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GirisPopupGUI.class.getName());
 
     /**
      * Creates new form GirisPopopGUI
      */
-    public GirisPopopGUI() {
+    public GirisPopupGUI() {
         initComponents();
     }
 
@@ -210,7 +210,7 @@ public class GirisPopopGUI extends javax.swing.JFrame implements VeriTabani, Hat
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GirisPopopGUI().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GirisPopupGUI().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -159,7 +159,7 @@ public class Anasayfa extends javax.swing.JFrame {
     }//GEN-LAST:event_musteriActionPerformed
 
     private void otelGirisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otelGirisActionPerformed
-        GirisPopopGUI popup = new GirisPopopGUI(); 
+        GirisPopupGUI popup = new GirisPopupGUI(); 
         popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
         popup.setVisible(true);
         this.dispose();// TODO add your handling code here:
