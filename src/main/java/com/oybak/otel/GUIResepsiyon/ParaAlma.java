@@ -3,11 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.oybak.otel.GUIResepsiyon;
-import com.oybak.otel.Oda;
 import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
-import com.oybak.otel.Yonetim;
-import static com.oybak.otel.enums.UserRole.YONETIM;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;

@@ -53,7 +53,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         boolean basarili = com.oybak.otel.Resepsiyon.odayiBosalt(odaNo);
         
         if (basarili) {
-            logKayit(p.getName(), " " + odaNo + " nolu odayı boşalttı.");
+            logKayit(p.bilgileriYazdir(), " " + odaNo + " nolu odayı boşalttı.");
             javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda başarıyla boşaltıldı.");
             
             new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p).setVisible(true);
@@ -84,6 +84,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         jButton1.setBackground(new java.awt.Color(51, 51, 255));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Evet");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setBackground(new java.awt.Color(51, 51, 255));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -131,6 +132,10 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
