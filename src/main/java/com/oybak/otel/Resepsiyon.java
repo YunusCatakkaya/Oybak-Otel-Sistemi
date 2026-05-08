@@ -222,25 +222,7 @@ public class Resepsiyon extends Personel{
         }
 
         return tabanFiyat * gunSayisi;
-    }
-    
-    // Odaya ait daha önceden ödenmiş miktarı (kasa katkı) getirir
-    public static double odenenMiktariGetir(int odaNo) {
-        double odenen = 0.0;
-        String sql = "SELECT kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
-        try (Connection conn = DriverManager.getConnection(VeriTabani.URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, String.valueOf(odaNo));
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                odenen = rs.getDouble("kasa_katki");
-            }
-        } catch (Exception e) {
-            System.err.println("Ödeme Sorgu Hatası: " + e.getMessage());
-        }
-        return odenen;
-    }
+    }   
     
     // Ödeme Alma işlemini yapar (Transaction kullanır). Başarılıysa parayı ödeyen TC'yi, başarısızsa null döner.
     public static String odemeAl(int odaNo, double odaFiyati) {
