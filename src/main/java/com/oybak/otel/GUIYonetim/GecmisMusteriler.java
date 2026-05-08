@@ -5,6 +5,7 @@
 package com.oybak.otel.GUIYonetim;
 import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
+import com.oybak.otel.Yonetim;
 import com.oybakotel.GUI.GeriButonu;
 
 /**
@@ -46,7 +47,7 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani, 
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.setText("İsim Soyisim:");
+        jTextField1.setText("TC:");
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField1FocusGained(evt);
@@ -76,7 +77,7 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani, 
         jButton1.setText("Geri");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jLabel2.setText("Aranacak müşterinin isim soyismini giriniz:");
+        jLabel2.setText("Aranacak müşterinin TC'sini giriniz:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,58 +121,35 @@ public class GecmisMusteriler extends javax.swing.JFrame implements VeriTabani, 
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
-       if (jTextField1.getText().equals("İsim Soyisim:")) {
+       if (jTextField1.getText().equals("TC:")) {
         jTextField1.setText("");
+    
     }
     }//GEN-LAST:event_jTextField1FocusGained
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
         if (jTextField1.getText().isEmpty()) {
-        jTextField1.setText("İsim Soyisim:");
+        jTextField1.setText("TC:");
     }
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        String arananIsim = jTextField1.getText().replace("İsim Soyisim:", "").trim();
+    String arananTC = jTextField1.getText().replace("TC:", "").trim();
 
-    if (arananIsim.isEmpty()) {
-        txtSonucAlani.setText("Lütfen bir isim giriniz.");
+    if (arananTC.isEmpty()) {
+        txtSonucAlani.setText("Lütfen bir TC numarası giriniz.");
         return;
     }
 
-    txtSonucAlani.setText(""); // Eski sonuçları temizle
-    // SQL sorgusu: geçmiş müşteriler tablosundan isimle arama yapıyoruz
-    String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM gecmis_musteriler WHERE ad_soyad LIKE ?";
-
-    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(URL);
-         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        pstmt.setString(1, "%" + arananIsim + "%");
-        java.sql.ResultSet rs = pstmt.executeQuery();
-
-        boolean bulundu = false;
-        StringBuilder sb = new StringBuilder();
-
-        while (rs.next()) {
-            bulundu = true;
-            sb.append("Müşteri Ad Soyad: ").append(rs.getString("ad_soyad")).append("\n")
-              .append("TC Kimlik No: ").append(rs.getString("tc_no")).append("\n") // Yönetim olduğu için TC ekliyoruz
-              .append("Oda Numarası: ").append(rs.getString("oda_no")).append("\n")
-              .append("Giriş Tarihi: ").append(rs.getString("giris_tarihi")).append("\n")
-              .append("Çıkış Tarihi: ").append(rs.getString("cikis_tarihi")).append("\n")
-              .append("Kasaya Katkı: ").append(rs.getInt("kasa_katki")).append(" TL\n")
-              .append("-------------------------------------------\n");
-            logKayit(p.bilgileriYazdir() ," " +arananIsim + " isimli geçmiş müşteriyi aradı.");
+    // Arayüzde direkt kod yazmak yerine Yönetim sınıfındaki metodumuzu çağırıyoruz
+    // p nesnesini Yonetim'e cast ederek metodumuza ulaşıyoruz
+    if (p instanceof Yonetim) {
+        String sonuc = ((Yonetim) p).gecmisMusteriAra(arananTC);
+        txtSonucAlani.setText(sonuc);
+        
+        if(!sonuc.contains("bulunamadı")) {
+            logKayit(p.bilgileriYazdir(), arananTC + " TC numaralı geçmiş müşteriyi sorguladı.");
         }
-
-        if (bulundu) {
-            txtSonucAlani.setText(sb.toString());
-        } else {
-            txtSonucAlani.setText("Sistemde '" + arananIsim + "' isminde bir geçmiş kayıt bulunamadı.");
-        }
-
-    } catch (java.sql.SQLException e) {
-        txtSonucAlani.setText("Veritabanı hatası: " + e.getMessage());
     }
     }//GEN-LAST:event_jTextField1ActionPerformed
 

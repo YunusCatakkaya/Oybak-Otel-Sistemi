@@ -74,7 +74,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextField" name="jTextField1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x130;sim Soyisim:"/>
+            <Property name="text" type="java.lang.String" value="TC:"/>
           </Properties>
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField1FocusGained"/>
@@ -119,7 +119,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Aranacak m&#xfc;&#x15f;terinin isim soyismini giriniz:"/>
+            <Property name="text" type="java.lang.String" value="Aranacak m&#xfc;&#x15f;terinin TC&apos;sini giriniz:"/>
           </Properties>
         </Component>
       </SubComponents>

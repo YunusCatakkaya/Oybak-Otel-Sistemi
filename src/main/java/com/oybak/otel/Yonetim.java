@@ -104,18 +104,19 @@ public class Yonetim extends Personel implements VeriTabani, Hatalar{
 }
   
   // Yonetim.java içine eklenecek metod
-public String gecmisMusteriAra(String arananIsim) {
-    if (arananIsim == null || arananIsim.trim().isEmpty() || arananIsim.equals("İsim Soyisim:")) {
-        return "Lütfen geçerli bir isim giriniz.";
+public String gecmisMusteriAra(String arananTC) {
+    if (arananTC == null || arananTC.trim().isEmpty() || arananTC.equals("TC:")) {
+        return "Lütfen geçerli bir TC Kimlik No giriniz.";
     }
 
     StringBuilder sb = new StringBuilder();
-    String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM gecmis_musteriler WHERE ad_soyad LIKE ?";
+    // Sorguyu ad_soyad yerine tc_no üzerinden yapıyoruz
+    String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM gecmis_musteriler WHERE tc_no = ?";
 
     try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
          java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-        pstmt.setString(1, "%" + arananIsim.trim() + "%");
+        pstmt.setString(1, arananTC.trim());
         java.sql.ResultSet rs = pstmt.executeQuery();
 
         boolean bulundu = false;
@@ -131,7 +132,7 @@ public String gecmisMusteriAra(String arananIsim) {
         }
 
         if (!bulundu) {
-            return "Sistemde '" + arananIsim + "' isminde bir geçmiş kayıt bulunamadı.";
+            return "Sistemde '" + arananTC + "' numaralı bir geçmiş kayıt bulunamadı.";
         }
 
         return sb.toString();
