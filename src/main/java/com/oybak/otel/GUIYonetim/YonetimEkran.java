@@ -119,24 +119,28 @@ public class YonetimEkran extends javax.swing.JFrame implements OdaSecim{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         odaSecim(p);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        com.oybak.otel.GUIYonetim.YonetimMusteriArama musteriArama = new com.oybak.otel.GUIYonetim.YonetimMusteriArama(p);
        
        musteriArama.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
        com.oybak.otel.GUIYonetim.YonetimGenel Genel = new com.oybak.otel.GUIYonetim.YonetimGenel(p);
        
        Genel.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         com.oybak.otel.GUIYonetim.YonetimKasa Kasa = new com.oybak.otel.GUIYonetim.YonetimKasa(p);
        
        Kasa.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

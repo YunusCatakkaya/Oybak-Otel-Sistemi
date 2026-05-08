@@ -288,6 +288,45 @@ public class Resepsiyon extends Personel{
             return null;
         }
     }
+    
+    public static String musteriAraTC(String arananTc, com.oybak.otel.enums.UserRole aktifRol) {
+        
+        // Eğer rol GMUSTERIARAMA ise geçmiş tablosuna, değilse güncel tabloya bak!
+        String tabloAdi = (aktifRol == com.oybak.otel.enums.UserRole.GMUSTERIARAMA) ? "gecmis_musteriler" : "guncel_musteriler";
+        
+        String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM " + tabloAdi + " WHERE tc_no LIKE ?";
+        StringBuilder sb = new StringBuilder();
+        boolean bulundu = false;
+
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, "%" + arananTc + "%");
+            
+            try (java.sql.ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    bulundu = true;
+                    // Yetki kısıtlaması kaldırıldı, TC direkt yazdırılıyor
+                    sb.append("Müşteri Ad Soyad: ").append(rs.getString("ad_soyad")).append("\n")
+                      .append("TC Kimlik No: ").append(rs.getString("tc_no")).append("\n")
+                      .append("Oda Numarası: ").append(rs.getString("oda_no")).append("\n")
+                      .append("Giriş Tarihi: ").append(rs.getString("giris_tarihi")).append("\n")
+                      .append("Çıkış Tarihi: ").append(rs.getString("cikis_tarihi")).append("\n")
+                      .append("Kasaya Katkı: ").append(rs.getInt("kasa_katki")).append(" TL\n")
+                      .append("---------------------------------\n");
+                }
+            }
+            
+            if (!bulundu) {
+                return "Sistemde '" + arananTc + "' TC numarası ile eşleşen bir müşteri bulunamadı.";
+            }
+            return sb.toString();
+
+        } catch (Exception e) {
+            System.err.println("Müşteri arama hatası: " + e.getMessage());
+            return "Veritabanı hatası oluştu: " + e.getMessage();
+        }
+    }
 }       
 
     

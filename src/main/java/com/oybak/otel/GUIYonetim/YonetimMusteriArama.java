@@ -111,9 +111,13 @@ public class YonetimMusteriArama extends javax.swing.JFrame implements GeriButon
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       com.oybak.otel.GUIYonetim.GecmisMusteriler Gecmis = new com.oybak.otel.GUIYonetim.GecmisMusteriler(p);
-       
-       Gecmis.setVisible(true);
+       // Rolü geçici olarak geçmiş arama yapıyoruz
+        p.setIsTipi(com.oybak.otel.enums.UserRole.GMUSTERIARAMA);
+        
+        com.oybak.otel.GUIResepsiyon.MusteriArama ortakArama = new com.oybak.otel.GUIResepsiyon.MusteriArama(p);
+        ortakArama.setLocationRelativeTo(null);
+        ortakArama.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

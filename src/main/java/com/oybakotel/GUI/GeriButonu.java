@@ -51,6 +51,13 @@ public interface GeriButonu {
                 t.setLocationRelativeTo(null);
                 t.setVisible(true);
             }
+            case GMUSTERIARAMA -> { 
+                p.setIsTipi(UserRole.YONETIM);
+                JOptionPane.showMessageDialog((Component) this, "Yönetim anasayfasına aktarılıyorsunuz.");
+                YonetimEkran y = new YonetimEkran(p);
+                y.setLocationRelativeTo(null);
+                y.setVisible(true);
+            }
         }
     }
 }

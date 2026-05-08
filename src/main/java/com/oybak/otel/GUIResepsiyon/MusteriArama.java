@@ -4,6 +4,7 @@
  */
 package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Personel;
+import com.oybak.otel.Resepsiyon;
 import com.oybak.otel.VeriTabani;
 import com.oybakotel.GUI.GeriButonu;
 /**
@@ -51,9 +52,9 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani, Geri
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setText("Aranacak müşterinin isim soyismini giriniz:");
+        jLabel2.setText("Aranacak Müşterinin TC Kimlik No'sunu giriniz.");
 
-        jTextField1.setText("İsim Soyisim:");
+        jTextField1.setText("TC Kimlik No:");
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField1FocusGained(evt);
@@ -89,12 +90,11 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani, Geri
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(116, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(117, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,54 +126,23 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani, Geri
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-    String arananIsim = jTextField1.getText().replace("İsim Soyisim:", "").trim();
-    
-    if (arananIsim.isEmpty()) {
-        txtSonucAlani.setText("Lütfen bir isim giriniz.");
-        return;
-    }
-
-    txtSonucAlani.setText(""); // Eski sonuçları temizle
-
-    // Veritabanından tüm bilgileri (TC dahil) çekiyoruz[cite: 1]
-    String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM guncel_musteriler WHERE ad_soyad LIKE ?";
-
-    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(URL);
-         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        pstmt.setString(1, "%" + arananIsim + "%");
-        java.sql.ResultSet rs = pstmt.executeQuery();
-
-        boolean bulundu = false;
-        while (rs.next()) {
-            bulundu = true;
-            StringBuilder sb = new StringBuilder();
-            sb.append("Müşteri Ad Soyad: ").append(rs.getString("ad_soyad")).append("\n");
-
-            // --- YETKİ KONTROLÜ BURADA YAPILIYOR ---
-            // Eğer aktif rol YONETIM ise TC numarasını da ekle[cite: 1]
-            if (p.getIsTipi() == com.oybak.otel.enums.UserRole.YONETIM) {
-                sb.append("TC Kimlik No: ").append(rs.getString("tc_no")).append("\n");
-            }
-            // --------------------------------------
-
-            sb.append("Oda Numarası: ").append(rs.getString("oda_no")).append("\n")
-              .append("Giriş Tarihi: ").append(rs.getString("giris_tarihi")).append("\n")
-              .append("Çıkış Tarihi: ").append(rs.getString("cikis_tarihi")).append("\n")
-              .append("Kasaya Katkı: ").append(rs.getInt("kasa_katki")).append(" TL\n")
-              .append("---------------------------------\n");
-
-            txtSonucAlani.append(sb.toString());
-            logKayit(p.bilgileriYazdir() ," " +arananIsim +" isimli müşteriyi aradı.");
+    String arananTc = jTextField1.getText().replace("TC Kimlik No:", "").trim();
+        
+        if (arananTc.isEmpty()) {
+            txtSonucAlani.setText("Lütfen aranacak müşterinin TC Kimlik Numarasını giriniz.");
+            return;
         }
 
-        if (!bulundu) {
-            txtSonucAlani.setText("Sistemde '" + arananIsim + "' isminde bir müşteri bulunamadı.");
-        }
+        txtSonucAlani.setText(""); // Eski sonuçları temizle
 
-    } catch (java.sql.SQLException e) {
-        txtSonucAlani.setText("Veritabanı hatası: " + e.getMessage());
-    }
+        // SQL yok! Bütün arama işini Resepsiyon sınıfına yaptırıp dönen metni alıyoruz
+        String aramaSonucu = Resepsiyon.musteriAraTC(arananTc, p.getIsTipi());
+        txtSonucAlani.setText(aramaSonucu);
+
+        // Eğer sonuç hata mesajı değilse, başarıyla bulunmuş demektir; log kaydını at
+        if (!aramaSonucu.startsWith("Sistemde") && !aramaSonucu.startsWith("Veritabanı")) {
+            logKayit(p.bilgileriYazdir() ," " + arananTc +" TC numaralı müşteriyi aradı.");
+        }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void txtSonucAlaniFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSonucAlaniFocusGained
@@ -185,15 +154,15 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani, Geri
     }//GEN-LAST:event_txtSonucAlaniFocusLost
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
-        // Eğer kutunun içinde varsayılan yazı varsa, kullanıcı tıklayınca içini temizle
-        if (jTextField1.getText().equals("İsim Soyisim:")) {
-        jTextField1.setText("");
+    
+        if (jTextField1.getText().equals("TC Kimlik No:")) {
+            jTextField1.setText("");
         }
     }//GEN-LAST:event_jTextField1FocusGained
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
         if (jTextField1.getText().isEmpty()) {
-        jTextField1.setText("İsim Soyisim:");
+            jTextField1.setText("TC Kimlik No:");
         }
     }//GEN-LAST:event_jTextField1FocusLost
 
