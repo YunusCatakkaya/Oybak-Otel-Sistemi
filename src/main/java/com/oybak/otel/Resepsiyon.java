@@ -31,30 +31,27 @@ public class Resepsiyon extends Personel{
      */
     public static boolean odayiBosalt(com.oybak.otel.Musteri musteri, int odaNo) {
         
-        // DATE('now') yerine Java'dan aldığımız '?' parametresini ekliyoruz
+        String bugununTarihi = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
+        // SQL kodunda DATE('now') yerine dışarıdan (?) tarih alacak şekilde güncelledik
         String sqlGecmiseTasi = "INSERT INTO gecmis_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) " +
                                 "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, ?, kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
         
         String sqlMusteriSil = "DELETE FROM guncel_musteriler WHERE oda_no = ?";
-        
         String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT', odenme_durumu = 'false' WHERE oda_no = ?";
 
-        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(com.oybak.otel.VeriTabani.URL)) {
-            conn.setAutoCommit(false); 
+        try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL)) {
+            conn.setAutoCommit(false); // Atomik işlem (Transaction)
 
             try (java.sql.PreparedStatement ps1 = conn.prepareStatement(sqlGecmiseTasi);
                  java.sql.PreparedStatement ps2 = conn.prepareStatement(sqlMusteriSil);
                  java.sql.PreparedStatement ps3 = conn.prepareStatement(sqlOdaGuncelle)) {
                 
-                // Tarihi dd.MM.yyyy formatında Java üzerinden alıyoruz
-                java.time.format.DateTimeFormatter formatci = java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                String bugunTarihi = java.time.LocalDate.now().format(formatci);
-                
-                // OOP Uyum: musteri nesnesi parametre olarak geldiği için loglamada vb. ileride kullanılabilir.
-                ps1.setString(1, bugunTarihi);
-                ps1.setInt(2, odaNo); 
+                // ? işaretlerinin yerlerine değerleri koyuyoruz
+                ps1.setString(1, bugununTarihi); // 1. Soru işareti (çıkış tarihi)
+                ps1.setInt(2, odaNo);            // 2. Soru işareti (oda no)
                 ps1.executeUpdate();
-                
+
                 ps2.setInt(1, odaNo); 
                 ps2.executeUpdate();
                 
@@ -62,7 +59,7 @@ public class Resepsiyon extends Personel{
                 ps3.executeUpdate();
 
                 conn.commit(); 
-                return true;   
+                return true;   // İşlem başarılı
             } catch (java.sql.SQLException e) {
                 conn.rollback(); 
                 System.err.println("SQL Hatası (Oda Boşaltma): " + e.getMessage());

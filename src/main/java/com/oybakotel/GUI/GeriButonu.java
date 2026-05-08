@@ -10,6 +10,7 @@ import com.oybak.otel.GUIYonetim.YonetimEkran;
 import com.oybak.otel.Personel;
 import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.BAKIM;
+import static com.oybak.otel.enums.UserRole.GMUSTERIARAMA;
 import static com.oybak.otel.enums.UserRole.MUSTERI;
 import static com.oybak.otel.enums.UserRole.MUSTERIEKLEME;
 import static com.oybak.otel.enums.UserRole.MUSTERICIKARMA;
@@ -39,7 +40,8 @@ public interface GeriButonu {
                 r.setLocationRelativeTo(null);
                 r.setVisible(true);
             }
-            case  YONETIM->{ 
+            case  YONETIM, GMUSTERIARAMA->{ 
+                p.setIsTipi(UserRole.YONETIM);
                 JOptionPane.showMessageDialog((Component) this, "Yonetim anasayfasına aktarılıyorsunuz.");
                 YonetimEkran y = new YonetimEkran(p);
                 y.setLocationRelativeTo(null);
@@ -50,13 +52,6 @@ public interface GeriButonu {
                 TeknikPersonelSayfasi t = new TeknikPersonelSayfasi(p);
                 t.setLocationRelativeTo(null);
                 t.setVisible(true);
-            }
-            case GMUSTERIARAMA -> { 
-                p.setIsTipi(UserRole.YONETIM);
-                JOptionPane.showMessageDialog((Component) this, "Yönetim anasayfasına aktarılıyorsunuz.");
-                YonetimEkran y = new YonetimEkran(p);
-                y.setLocationRelativeTo(null);
-                y.setVisible(true);
             }
         }
     }
