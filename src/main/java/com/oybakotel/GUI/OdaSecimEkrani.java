@@ -80,9 +80,9 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
 
-        jPanel2.setBackground(new java.awt.Color(51, 102, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(51, 102, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.GridLayout(4, 6, 10, 10));
 
         j101.setLabel("101");
@@ -172,6 +172,8 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         Filtreleme.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hepsi", "1 Kişilik", "2 Kişilik", "3 Kişilik", "4 Kişilik" }));
         Filtreleme.addActionListener(this::FiltrelemeActionPerformed);
 
+        Geri.setBackground(new java.awt.Color(51, 51, 255));
+        Geri.setForeground(new java.awt.Color(255, 255, 255));
         Geri.setText("GERİ");
         Geri.addActionListener(this::GeriActionPerformed);
 
@@ -179,7 +181,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         jLabel2.setText("FİLTRELEME");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ODA SEÇİNİZ");
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 100));
@@ -192,13 +194,13 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(Geri)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addGap(106, 106, 106)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Filtreleme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -453,7 +455,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
    
 // Bu fonksiyon dışarıdan (filtreleme ekranından) çağrılacak
 public void filtreyiUygula(int kapasite) {
-   
+    
     
     
     if (kapasite == 0) { // "Hepsi" seçildiyse

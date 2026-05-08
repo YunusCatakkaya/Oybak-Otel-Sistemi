@@ -1,17 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.oybak.otel;
 
-/**
- *
- * @author Yunus
- */                        
 import com.oybak.otel.enums.OdaDurumu;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Oda {
     private int odaNumarası;   //Örn:3002
@@ -22,17 +11,16 @@ public class Oda {
     private boolean jakuzi;
     private OdaDurumu odaDurumu;  // Bakımda  Müsait Dolu
     private String bakımSebebi;
-    private int kapasite;//odanın kapasitresinii belirlemek için
     private double fiyat;
-    boolean odenmeDurumu;
+    private boolean odenmeDurumu;
         
-	
-    public Oda(int odaNumarası, OdaDurumu odaDurumu, String odaTipi, String ekOzellikler,int kapasite) { //oda constructor 
-	this.odaNumarası = odaNumarası;
-	this.odaDurumu = odaDurumu;
-        this.kapasite=kapasite;
+    // Parametreli Constructor (Gereksiz parametreler silindi)
+    public Oda(int odaNumarası, OdaDurumu odaDurumu) { 
+        this.odaNumarası = odaNumarası;
+        this.odaDurumu = odaDurumu;
     }
 
+    // Boş Constructor (Veritabanından veri çekerken çok işe yarar)
     public Oda() {
     }
    
@@ -59,18 +47,21 @@ public class Oda {
         ozellikMetni += "</html>";
         return ozellikMetni;
     }
-	
-	//odadaki kisi sayisi alınırken kullanılan method
     
+    // --- AKILLI METOT: Kapasiteyi kendi kendine hesaplar ---
+    public int getKapasite() {
+        return this.tekKisilikYatak + (this.ciftKisilikYatak * 2);
+    }
 
+    // --- STANDART GETTER VE SETTER'LAR ---
     public int getOdaNumarasi() {
-	return odaNumarası;
+        return odaNumarası;
     }
 
     public void setOdaNumarasi(int odaNumarası) {
-	if (odaNumarası>0) { //oda numarası "0"dan küçük olamaz
+        if (odaNumarası > 0) { //oda numarası "0"dan küçük olamaz
             this.odaNumarası = odaNumarası;
-	}
+        }
     }
 
     public int getTekKisilikYatak() {
@@ -129,23 +120,13 @@ public class Oda {
         this.odaDurumu = odaDurumu;
     }
 
-    public int getKapasite() {
-        return kapasite;
-    }
-
-    public void setKapasite(int kapasite) {
-        this.kapasite = kapasite;
-    }
-                
-  
-        
     public double getFiyat() {
-                 return fiyat;
+         return fiyat;
     }
         
     public void setFiyat(double fiyat) {
         if (fiyat >= 0) {
-                this.fiyat = fiyat;
+            this.fiyat = fiyat;
         }
     }
 
@@ -157,4 +138,3 @@ public class Oda {
         return odenmeDurumu;
     }
 }
-
