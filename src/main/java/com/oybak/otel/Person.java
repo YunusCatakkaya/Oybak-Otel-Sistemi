@@ -5,7 +5,7 @@
 package com.oybak.otel;
 
 /**
- *
+ *y
  * @author Yunus
  */
 public abstract class Person {
