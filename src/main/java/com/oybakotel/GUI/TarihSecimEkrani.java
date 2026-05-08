@@ -5,13 +5,7 @@
 package com.oybakotel.GUI;
 
 import com.oybak.otel.Personel;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.text.SimpleDateFormat;
-import javax.swing.JOptionPane;
-import com.oybakotel.GUI.OdaSecimEkrani;
-import java.sql.ResultSet;
+
 
 /**
  *

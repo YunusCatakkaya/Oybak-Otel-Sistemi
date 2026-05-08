@@ -4,7 +4,7 @@
  */
 package com.oybak.otel;
 
-import com.oybak.otel.enums.OdaDurumu;
+
 import com.oybak.otel.enums.UserRole;
 import static com.oybak.otel.enums.UserRole.RESEPSIYON;
 import java.sql.Connection;

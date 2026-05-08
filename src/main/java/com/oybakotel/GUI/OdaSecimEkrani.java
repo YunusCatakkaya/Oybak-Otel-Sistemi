@@ -453,16 +453,13 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
    
 // Bu fonksiyon dışarıdan (filtreleme ekranından) çağrılacak
 public void filtreyiUygula(int kapasite) {
-    // Tüm oda butonlarını bir diziye veya listeye alırsan işin kolaylaşır
-    // Şimdilik mantığı anlaman için örnek:
+   
+    
     
     if (kapasite == 0) { // "Hepsi" seçildiyse
         
     } else {
-        // Burada normalde veritabanına bakılır ama manuel test için:
-        // Eğer seçilen kapasite oda kapasitesine uymuyorsa gizle
-        // Örn: jButton1 (101 nolu oda) 2 kişilikse ve kapasite 3 seçildiyse:
-        // jButton1.setVisible(false);
+
     }
 }
 private void odalariRenklendir() {

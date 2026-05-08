@@ -48,6 +48,29 @@ public class Oda {
     public void musterileriTemizle() {
 	odadakiMusteriler.clear(); // Listeyi tamamen boşaltır
     }
+    public String getOzelliklerHTML() {
+        String ozellikMetni = "<html>"
+                + "<b>Fiyat:</b> " + this.getFiyat() + " TL / Gece<br><br>"
+                + "<b>Yatak Kapasitesi:</b><br>"
+                + "- " + this.getTekKisilikYatak() + " Adet Tek Kişilik<br>"
+                + "- " + this.getCiftKisilikYatak() + " Adet Çift Kişilik<br><br>"
+                + "<b>Ekstra Özellikler:</b><br>"
+                + "✔️ Ücretsiz Wi-Fi<br>"      
+                + "✔️ Kahvaltı Dahil<br>";     
+        
+        if (this.isDenizManzarasi()) { 
+            ozellikMetni += "✔️ Deniz Manzarası<br>";
+        }
+        if (this.isBalkon()) {
+            ozellikMetni += "✔️ Balkon<br>";
+        }
+        if (this.isJakuzi()) {
+            ozellikMetni += "✔️ Jakuzi<br>";
+        }
+        
+        ozellikMetni += "</html>";
+        return ozellikMetni;
+    }
 	
 	//odadaki kisi sayisi alınırken kullanılan method
     public int getKisiSayisi() {

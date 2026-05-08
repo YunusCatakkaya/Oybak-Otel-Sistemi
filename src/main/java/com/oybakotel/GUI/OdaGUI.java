@@ -4,7 +4,7 @@
  */
 package com.oybakotel.GUI;
 
-import com.oybak.otel.GUIResepsiyon.MusteriCikarma;
+
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
 import com.oybak.otel.Oda;
 import com.oybak.otel.Personel;
@@ -19,7 +19,7 @@ import static com.oybak.otel.enums.UserRole.RESEPSIYON;
 
 /**
  *
- * @author ahmet
+ * @author yunus
  */
 public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
     
@@ -33,6 +33,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
 
    // Parametreli Constructor: Bu ekran açılırken bir Oda nesnesi bekler
     public OdaGUI(int oda, Personel p) {
+
         this.secilenOda = oda; // Gelen oda bilgisini kaydet
         this.p = p;
         initComponents();    // Verileri arayüze bas
@@ -40,40 +41,16 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
         // 1. Oda Numarasını Yazdır
         OdaNo.setText("Oda No: " + this.secilenOda);
 
-        // --- 2. VERİTABANINDAN ÖZELLİKLERİ ÇEKİP YAZDIRMA BAŞLANGICI ---
-        // Implemente ettiğimiz VeriTabani arayüzündeki metodu kullanarak odayı çekiyoruz
+        // 2. VERİTABANINDAN ÖZELLİKLERİ ÇEKİP YAZDIRMA 
         Oda aktifOda = odaBilgileri(this.secilenOda);
         
- if (aktifOda != null) {
-            // JLabel içinde alt alta ve kalın yazdırabilmek için HTML kullanıyoruz
-            String ozellikMetni = "<html>"
-                    + "<b>Fiyat:</b> " + aktifOda.getFiyat() + " TL / Gece<br><br>"
-                    + "<b>Yatak Kapasitesi:</b><br>"
-                    + "- " + aktifOda.getTekKisilikYatak() + " Adet Tek Kişilik<br>"
-                    + "- " + aktifOda.getCiftKisilikYatak() + " Adet Çift Kişilik<br><br>"
-                    + "<b>Ekstra Özellikler:</b><br>"
-                    + "✔️ Ücretsiz Wi-Fi<br>"      // <--- STANDART ÖZELLİK EKLENDİ
-                    + "✔️ Kahvaltı Dahil<br>";     // <--- STANDART ÖZELLİK EKLENDİ
-            
-            // Boolean (true/false) olan özel özellikleri kontrol edip listeye ekliyoruz
-            if (aktifOda.isDenizManzarasi()) { 
-                ozellikMetni += "✔️ Deniz Manzarası<br>";
-            }
-            if (aktifOda.isBalkon()) {
-                ozellikMetni += "✔️ Balkon<br>";
-            }
-            if (aktifOda.isJakuzi()) {
-                ozellikMetni += "✔️ Jakuzi<br>";
-            }
-            
-            ozellikMetni += "</html>";
-            
-            // Hazırladığımız metni ekrandaki Label'a basıyoruz
-            Ozellikler.setText(ozellikMetni);
+        if (aktifOda != null) {
+            // İŞTE BÜTÜN SİHİR BURADA:
+            // HTML oluşturma işini Oda nesnesine devrettik, biz sadece sonucu alıp yazdırıyoruz.
+            Ozellikler.setText(aktifOda.getOzelliklerHTML());
         } else {
             Ozellikler.setText("Oda bilgileri veritabanından çekilemedi.");
         }
-        // --- VERİTABANINDAN ÖZELLİKLERİ ÇEKİP YAZDIRMA BİTİŞİ ---
 
         setLocationRelativeTo(null);
         
@@ -270,22 +247,20 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani{
         musteriBilgileriPaneli.setLayout(musteriBilgileriPaneliLayout);
         musteriBilgileriPaneliLayout.setHorizontalGroup(
             musteriBilgileriPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(musteriBilgileriPaneliLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, musteriBilgileriPaneliLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(musteriBilgileriPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(musteriBilgileriPaneliLayout.createSequentialGroup()
-                        .addComponent(Bilgiler, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 17, Short.MAX_VALUE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(musteriBilgileriPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Bilgiler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
                 .addContainerGap())
         );
         musteriBilgileriPaneliLayout.setVerticalGroup(
             musteriBilgileriPaneliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(musteriBilgileriPaneliLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Bilgiler, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Bilgiler, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
