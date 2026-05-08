@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 
 /**
  * 
- * @author Yunus                      //implements IVeriTabani edıp ıcındekı fonskyıonları yazılcak
+ * @author Yunus                      
  */ 
 
 public class Resepsiyon extends Personel{
@@ -24,9 +24,9 @@ public class Resepsiyon extends Personel{
             super(name, tcNo, maas, RESEPSIYON ,parola);
     }
 
-    // 1. Müşteri Çıkarma (Odayı Boşaltma) İşlemi
- /**
-     * Odayı boşaltan güncellenmiş OOP uyumlu metot.
+    // Müşteri Çıkarma (Odayı Boşaltma) İşlemi
+    /**
+    
      * Artık parametre olarak Musteri nesnesi alıyor ve DATE('now') hatasını gideriyor.
      */
     public static boolean odayiBosalt(com.oybak.otel.Musteri musteri, int odaNo) {
