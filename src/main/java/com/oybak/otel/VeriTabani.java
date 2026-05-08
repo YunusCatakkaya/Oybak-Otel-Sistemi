@@ -45,6 +45,7 @@ public interface VeriTabani {
                     bulunanOda.setJakuzi(Boolean.parseBoolean(rs.getString("jakuzi")));
                     bulunanOda.setFiyat(rs.getInt("fiyat"));
                     bulunanOda.setOdenmeDurumu(Boolean.parseBoolean(rs.getString("odenme_durumu")));
+                    bulunanOda.setBakimSebebi(rs.getString("bakim_sebebi"));
                     
                     
                    

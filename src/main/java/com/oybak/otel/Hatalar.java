@@ -21,18 +21,13 @@ public interface Hatalar {
         try {
             if (tc.length() != 11) {
                 JOptionPane.showMessageDialog((Component) this, "TC Kimlik numarası 11 haneli olmalıdır!");
-                throw new IllegalArgumentException("Hatalı TC"); // KODU BURADA KESER!
+                throw new IllegalArgumentException("Hatalı TC"); 
             }
             
             long sayi = Long.parseLong(tc);
             int sonHane = (int) (sayi%10);
             sayi = sayi/10;
             int toplam = 0;
-            
-            if(!(sayi > 999999999L) && (sayi < 10000000000L)){
-                JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz! Hata:001");
-                throw new IllegalArgumentException("Hatalı TC"); // KODU BURADA KESER!
-            }
             
             while(sayi >= 1){
                 int hane =  (int) (sayi%10);
@@ -41,13 +36,13 @@ public interface Hatalar {
             }
             
             if(((toplam%10) != sonHane) || ((sonHane%2) !=0)){
-                JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz! Hata:002");
-                throw new IllegalArgumentException("Hatalı TC"); // KODU BURADA KESER!
+                JOptionPane.showMessageDialog((Component) this, "Geçerli bir TC no giriniz! Hata:001");
+                throw new IllegalArgumentException("Hatalı TC"); 
             }
             
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog((Component) this, "Hata: TC Kimlik numarası sadece sayılardan oluşmalıdır!");
-            throw new IllegalArgumentException("Hatalı TC"); // KODU BURADA KESER!
+            JOptionPane.showMessageDialog((Component) this, "Hata: TC Kimlik numarası sadece sayılar1an oluşmalıdır!");
+            throw new IllegalArgumentException("Hatalı TC"); 
         }
     }
     public default boolean tcVarMi(long tcNo) {
@@ -59,7 +54,7 @@ public interface Hatalar {
         ResultSet rs = pstmt.executeQuery();
         
         if (rs.next()) {
-            return rs.getInt(1) > 0; // Eğer sonuç 0'dan büyükse bu TC kayıtlıdır
+            return rs.getInt(1) > 0; 
         }
     } catch (Exception e) {
         System.out.println("TC kontrol hatası: " + e.getMessage());

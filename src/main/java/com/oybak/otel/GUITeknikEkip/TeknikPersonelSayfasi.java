@@ -91,11 +91,13 @@ public class TeknikPersonelSayfasi extends javax.swing.JFrame implements OdaSeci
 
     private void odalarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_odalarActionPerformed
         odaSecim(personel);
+        this.dispose();
     }//GEN-LAST:event_odalarActionPerformed
 
     private void bakımIslemiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bakımIslemiActionPerformed
         personel.setIsTipi(BAKIM);
         odaSecim(personel);
+        this.dispose();
     }//GEN-LAST:event_bakımIslemiActionPerformed
 
     /**

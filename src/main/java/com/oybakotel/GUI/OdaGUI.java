@@ -6,6 +6,7 @@ package com.oybakotel.GUI;
 
 
 import com.oybak.otel.GUITeknikEkip.BakımSebebiPopupGUI;
+import com.oybak.otel.GUITeknikEkip.TeknikPersonelSayfasi;
 import com.oybak.otel.Oda;
 import com.oybak.otel.Personel;
 import com.oybak.otel.TeknikEkip;
@@ -51,7 +52,11 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
         } else {
             Ozellikler.setText("Oda bilgileri veritabanından çekilemedi.");
         }
-
+        
+        if (aktifOda != null) {
+            BakımSebebi.setText("Bakım Sebebi: " + aktifOda.getBakimSebebi());
+        }
+        
         setLocationRelativeTo(null);
         
         rolleriAyarla();
@@ -70,7 +75,8 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
     // 2. Aktif role göre panelleri görünür yap
     switch (p.getIsTipi()) {
         case TEKNIKPERSONEL ->{
-            bakimSebebiPaneli.setVisible(true); // Bakım sebebi yazısını da görmeleri gerekir
+            bakimSebebiPaneli.setVisible(true);
+            
         }
         case BAKIM ->{
             teknikPersonelPaneli.setVisible(true);
@@ -379,6 +385,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
                 TeknikEkip.odaBakimdanCikar(this.secilenOda);
                 JOptionPane.showMessageDialog(this, "Oda bakımdan çıkarıldı.");
                 logKayit(p.bilgileriYazdir() ," " +secilenOda +" numaralı odayı bakımdan çıkardı.");
+                new TeknikPersonelSayfasi(p).setVisible(true);
                 this.dispose();
             }
             case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");

@@ -153,12 +153,16 @@ public class GirisPopupGUI extends javax.swing.JFrame implements VeriTabani, Hat
             return;
         }
         
+        try {
+            tcKontrol(tc);
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+        
         Personel geciciPersonel = calısanBilgileri(tc, parola);
         
-        tcKontrol(tc);
-        
-        if (geciciPersonel.getIsTipi() == null) {
-            JOptionPane.showMessageDialog(this, "Personel bulunamadı! Hata:003");
+        if (geciciPersonel == null) {
+            JOptionPane.showMessageDialog(this, "Hatalı TC veya parola!");
             return;
         }
         
