@@ -1,58 +1,72 @@
-OybakOtel Yönetim Sistemi 🏨🗝️
-OybakOtel, modern otel işletmeciliği için geliştirilmiş, Nesne Yönelimli Programlama (OOP) prensiplerini temel alan kapsamlı bir masaüstü uygulamasıdır. Rezervasyon yönetiminden teknik bakım takibine, gelişmiş oda haritalandırmasından finansal raporlamaya kadar bir otelin tüm operasyonel ihtiyaçlarını modern ve modüler tek bir platformda birleştirir.
+# OybakOtel 🏨🗝️
 
-🌟 Öne Çıkan Özellikler
-👥 Çoklu Kullanıcı Rolleri
-Yönetim: Merkezi panel üzerinden personel ekleme/çıkarma, maaş güncellemeleri, geçmiş müşteri kayıtlarının analizi ve sistemin genel kontrolü.
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![Maven](https://img.shields.io/badge/apache_maven-%23C71A36.svg?style=for-the-badge&logo=apachemaven&logoColor=white)
 
-Resepsiyon: Görsel oda haritası üzerinden müşteri girişi (Check-in), ödeme tahsilatı ve müşteri çıkış (Check-out) işlemleri.
+**OybakOtel**, profesyonel otel işletmeciliği için geliştirilmiş, Nesne Yönelimli Programlama (OOP) prensiplerini temel alan kapsamlı bir masaüstü uygulamasıdır. Rezervasyon yönetiminden teknik bakım takibine, gelişmiş oda haritalandırmasından finansal raporlamaya kadar bir otelin tüm operasyonel ihtiyaçlarını modern ve sadeleştirilmiş tek bir platformda birleştirir.
 
-Teknik Ekip: Odaların teknik durum takibi, arızalı odaları bakıma alma ve bakım sürecini sonlandırma operasyonları.
+## 🌟 Öne Çıkan Özellikler
 
-🖼️ Görsel Oda Yönetimi
-Dinamik Oda Haritası: Odaların durumunu OdaDurumu enum yapısına göre renk kodlarıyla (Yeşil: Müsait, Kırmızı: Dolu, Sarı: Bakımda) anlık olarak gösterir.
+### 👥 Çoklu Kullanıcı Rolleri
 
-Akıllı Filtreleme: Kapasiteye göre (1-4 kişilik) gerçek zamanlı hızlı buton filtreleme sistemi.
+* **Yönetim:** Merkezi panel üzerinden personel ekleme/çıkarma, maaş güncellemeleri, geçmiş müşteri kayıtlarının analizi ve sistemin genel kontrolünü sağlar.
+* **Resepsiyon:** Görsel oda haritası üzerinden müşteri girişi (Check-in), ödeme tahsilatı ve müşteri çıkış (Check-out) işlemlerini yönetir.
+* **Teknik Ekip:** Odaların teknik durum takibi, arızalı odaları bakıma alma ve bakım sürecini sonlandırma operasyonlarını yürütür.
 
-HTML Detay Sunumu: Her odanın teknik özellikleri veritabanından çekilerek şık bir arayüz ile listelenir.
+### 🖼️ Görsel Oda Yönetimi
 
-🛡️ Güvenlik ve Validasyon
-Kimlik Doğrulama: Algoritmik TC No kontrolü ve veritabanı üzerinden mükerrer kayıt engelleme sistemi.
+* **Dinamik Oda Haritası:** Odaların durumunu `OdaDurumu` enum yapısına göre renk kodlarıyla (**Yeşil:** Müsait, **Kırmızı:** Dolu, **Sarı:** Bakımda) anlık olarak gösterir.
+* **Akıllı Filtreleme:** Kapasiteye göre (1-4 kişilik) gerçek zamanlı hızlı buton filtreleme sistemi.
+* **HTML Detay Sunumu:** Her odanın teknik özellikleri veritabanından çekilerek şık bir arayüz ile listelenir.
 
-Tarih Kontrolü: Geçmiş tarihe rezervasyon yapılmasını engelleyen otomatik validasyon (JDateChooser entegrasyonu).
+### 🛡️ Güvenlik ve Validasyon
 
-Sistem Logları: Personel tarafından yapılan tüm kritik işlemler tarih ve saat damgasıyla veritabanına kaydedilir.
+* **Kimlik Doğrulama:** Algoritmik TC No kontrolü ve veritabanı üzerinden mükerrer kayıt engelleme sistemi.
+* **Tarih Kontrolü:** Geçmiş tarihe rezervasyon yapılmasını engelleyen otomatik validasyon.
+* **Sistem Logları:** Personel tarafından yapılan tüm kritik işlemler tarih ve saat damgasıyla veritabanına kaydedilir.
 
-🛠️ Kullanılan Teknolojiler
-Programlama Dili: Java (JDK 25)
+## 🛠️ Kullanılan Teknolojiler
 
-Kullanıcı Arayüzü: Java Swing
+* **Programlama Dili:** Java
+* **Kullanıcı Arayüzü:** Java Swing
+* **Veritabanı:** SQLite (JDBC Driver ile)
+* **Proje Yönetimi:** Maven
 
-Veritabanı: SQLite (JDBC Driver ile)
+## 🚀 Kurulum ve Çalıştırma
 
-Proje Yönetimi: Maven
-
-Mimari: Nesne Yönelimli Programlama (Arayüzler, Soyut Sınıflar, Kalıtım)
-
-🚀 Kurulum ve Çalıştırma
 Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları izleyin:
 
-Adımlar
-Projeyi klonlayın:
+### Ön Koşullar
 
-Bash
-git clone https://github.com/yunusemre/OybakOtel.git
-Proje dizinine gidin:
+* Bilgisayarınızda **Java Development Kit (JDK) 25** yüklü olmalıdır.
+* **Maven** yüklü olmalıdır.
 
-Bash
+### Adımlar
+
+1. Projeyi klonlayın:
+
+```bash
 cd OybakOtel
-Uygulamayı başlatın:
-Bağımlılıkları yüklemek ve projeyi doğrudan Giriş Sayfası (Ana Sayfa) üzerinden başlatmak için terminale şu komutu girin:
-
-Bash
 mvn clean compile exec:java -Dexec.mainClass="com.oybakotel.GUI.GirisSayfasi"
+(Not: Uygulama direkt olarak GirisSayfasi.java üzerinden başlatılacaktır. Sisteme test girişi yapmak için aşağıdaki hesapları kullanabilirsiniz:)
 
-Ön Koşullar
-Bilgisayarınızda Java Development Kit (JDK) 25 yüklü olmalıdır.
+Resepsiyon: TC 12345678916 | Şifre 123
 
-Maven yüklü olmalıdır.
+Teknik Ekip: TC 12345678938 | Şifre 123
+
+Yönetim: TC 12345678950 | Şifre 123
+
+📂 Proje Mimarisi
+com.oybak.otel : Temel veri modelleri (Musteri, Oda, Personel) ve iş mantığı servisleri.
+
+com.oybakotel.GUI : Kullanıcı arayüzü bileşenleri. Uygulamanın merkezi giriş noktası GirisSayfasi.java dosyasıdır.
+
+VeriTabani.java : SQLite veritabanı işlemleri ve loglama kayıtlarının tutulduğu arayüz.
+
+Resepsiyon.java : OOP standartlarına uygun, müşteri nesnesi üzerinden işlem yapan resepsiyon servisleri.
+
+com.oybak.otel.enums : Sistemin tip güvenliğini sağlayan roller ve durum bildirimleri.
+
+OybakOtel ile otel yönetiminde profesyonelliği yakala! 🏆
+git clone [https://github.com/yunusemre/OybakOtel.git](https://github.com/yunusemre/OybakOtel.git)
