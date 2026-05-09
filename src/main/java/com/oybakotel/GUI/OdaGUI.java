@@ -16,6 +16,7 @@ import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
 import static com.oybak.otel.enums.OdaDurumu.DOLU;
 import static com.oybak.otel.enums.OdaDurumu.MUSAIT;
 import static com.oybak.otel.enums.UserRole.BAKIM;
+import static com.oybak.otel.enums.UserRole.MUSTERIEKLEME;
 import static com.oybak.otel.enums.UserRole.RESEPSIYON;
 
 /**
@@ -88,6 +89,10 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
         case MUSTERIEKLEME -> {
             musteriEklemePaneli.setVisible(true);
             musteriBilgileriPaneli.setVisible(true);
+        }
+        case YONETIM -> {
+            musteriBilgileriPaneli.setVisible(true);
+            bakimSebebiPaneli.setVisible(true);
         }
         // Diğer roller (YÖNETİM, MÜŞTERİ vb.) için paneller kapalı kalmaya devam eder
         default -> {
