@@ -11,10 +11,7 @@ import com.oybak.otel.enums.OdaDurumu;
 import com.oybak.otel.enums.UserRole;
 import com.oybak.otel.VeriTabani;
 
-/**
- *
- * @author ahmet
- */
+
 public interface OdalaraGecis extends VeriTabani {
     public default void odalaraGecis(int odaNo, Personel p){
         
