@@ -5,13 +5,14 @@
 package com.oybakotel.GUI;
 import com.oybak.otel.Resepsiyon;
 import com.oybak.otel.Personel;
+import com.oybak.otel.VeriTabani;
 
 
 /**
  *
  * @author Yunus
  */
-public class TarihSecimEkrani extends javax.swing.JFrame {
+public class TarihSecimEkrani extends javax.swing.JFrame implements VeriTabani{
     
     private com.toedter.calendar.JDateChooser girisTakvim;
     private com.toedter.calendar.JDateChooser cikisTakvim;
@@ -209,6 +210,7 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
         
         
         int sonuc = com.oybak.otel.Resepsiyon.musteriEkle(odaNo, gelenMusteri, girisStr, cikisStr);
+        logKayit(p.bilgileriYazdir(), " " + odaNo + " nolu odaya"+ gelenMusteri.bilgileriYazdir() +" müşterisini ekledi.");
 
         if (sonuc == -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "HATA: Bu oda tam kapasite dolu!");
@@ -229,9 +231,9 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
         else if (sonuc == 0) {
             int cevap = javax.swing.JOptionPane.showConfirmDialog(this, 
                 "Müşteri eklendi.\nBu odaya başka bir müşteri daha ekleyecek misiniz?", 
-                "Kayıt Başarılı", 
+                "Kayıt Başarılı",                 
                 javax.swing.JOptionPane.YES_NO_OPTION);
-                
+                            
             if (cevap == javax.swing.JOptionPane.YES_OPTION) {
                 com.oybak.otel.GUIResepsiyon.MusteriEkleme yeniEkleme = new com.oybak.otel.GUIResepsiyon.MusteriEkleme(p, odaNo, girisStr, cikisStr);
                 yeniEkleme.setLocationRelativeTo(null);
