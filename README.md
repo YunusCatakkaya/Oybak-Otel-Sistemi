@@ -72,8 +72,10 @@ com.oybakotel.GUI : Kullanıcı arayüzü bileşenleri. Uygulamanın merkezi gir
 VeriTabani.java : SQLite veritabanı işlemleri ve loglama kayıtlarının tutulduğu arayüz.
 
 Resepsiyon.java : OOP standartlarına uygun, müşteri nesnesi üzerinden işlem yapan resepsiyon servisleri.
-'
 
 com.oybak.otel.enums : Sistemin tip güvenliğini sağlayan roller ve durum bildirimleri.
 
 OybakOtel ile otel yönetiminde profesyonelliği yakala! 🏆
+
+
+Sadece bu en dıştaki `
