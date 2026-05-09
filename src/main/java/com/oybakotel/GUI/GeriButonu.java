@@ -48,7 +48,7 @@ public interface GeriButonu {
                 y.setVisible(true);
             }
             case  TEKNIKPERSONEL, BAKIM->{ 
-                JOptionPane.showMessageDialog((Component) this, "Teknik perosnel anasayfayasına aktarılıyorsunuz.");
+                JOptionPane.showMessageDialog((Component) this, "Teknik personel anasayfayasına aktarılıyorsunuz.");
                 TeknikPersonelSayfasi t = new TeknikPersonelSayfasi(p);
                 t.setLocationRelativeTo(null);
                 t.setVisible(true);
