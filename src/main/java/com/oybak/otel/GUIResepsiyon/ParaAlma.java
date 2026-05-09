@@ -25,6 +25,7 @@ public class ParaAlma extends javax.swing.JFrame implements VeriTabani, GeriButo
     
     public ParaAlma(Personel p) {
         initComponents();
+        this.setLocationRelativeTo(null);
         doluOdalariYukle();
         odaComboBoxActionPerformed(null);
         this.p = p;

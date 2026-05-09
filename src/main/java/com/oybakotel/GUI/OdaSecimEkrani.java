@@ -360,7 +360,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
         else if (secim.equals("3 Kişilik")) hedefKapasite = 3;
         else if (secim.equals("4 Kişilik")) hedefKapasite = 4;
 
-        // 3. İŞTE DÜZELTİLEN KISIM: Odalarımız jPanel1'in içinde!
+        
         for (java.awt.Component comp : jPanel1.getComponents()) {
             
             // Eğer taradığımız şey bir butonsa işlemi yap

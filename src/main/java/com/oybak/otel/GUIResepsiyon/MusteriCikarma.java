@@ -6,13 +6,15 @@ package com.oybak.otel.GUIResepsiyon;
 import com.oybak.otel.Personel;
 import com.oybak.otel.VeriTabani;
 import com.oybak.otel.Resepsiyon;
+import com.oybak.otel.enums.UserRole;
+import com.oybakotel.GUI.GeriButonu;
 
 /**
  *
  * @author onuro
  */
 
-public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
+public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani, GeriButonu {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MusteriCikarma.class.getName());
 
@@ -31,7 +33,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
         
         // "Hayır" butonuna basılırsa resepsiyon sayfasına dön ve bu pencereyi kapat
         jButton2.addActionListener(evt -> {
-            new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p).setVisible(true);
+            geriButonu(p);
             this.dispose();
         });    }
     
@@ -57,6 +59,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani {
             logKayit(p.bilgileriYazdir(), " " + odaNo + " nolu odayı boşalttı.");
             javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda başarıyla boşaltıldı.");
             
+            p.setIsTipi(UserRole.RESEPSIYON);
             new com.oybak.otel.GUIResepsiyon.ResepsiyonSayfa(p).setVisible(true);
             this.dispose();
         } else {

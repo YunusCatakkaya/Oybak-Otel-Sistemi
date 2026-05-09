@@ -25,15 +25,10 @@ public class Resepsiyon extends Personel{
     }
 
     // Müşteri Çıkarma (Odayı Boşaltma) İşlemi
-    /**
-    
-     * Artık parametre olarak Musteri nesnesi alıyor ve DATE('now') hatasını gideriyor.
-     */
     public static boolean odayiBosalt(com.oybak.otel.Musteri musteri, int odaNo) {
         
         String bugununTarihi = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
-        // SQL kodunda DATE('now') yerine dışarıdan (?) tarih alacak şekilde güncelledik
         String sqlGecmiseTasi = "INSERT INTO gecmis_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) " +
                                 "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, ?, kasa_katki FROM guncel_musteriler WHERE oda_no = ?";
         
@@ -41,7 +36,7 @@ public class Resepsiyon extends Personel{
         String sqlOdaGuncelle = "UPDATE odalar SET durum = 'MUSAIT', odenme_durumu = 'false' WHERE oda_no = ?";
 
         try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL)) {
-            conn.setAutoCommit(false); // Atomik işlem (Transaction)
+            conn.setAutoCommit(false); 
 
             try (java.sql.PreparedStatement ps1 = conn.prepareStatement(sqlGecmiseTasi);
                  java.sql.PreparedStatement ps2 = conn.prepareStatement(sqlMusteriSil);
@@ -83,7 +78,6 @@ public class Resepsiyon extends Personel{
                 pstmtCap.setInt(1, odaNo);
                 java.sql.ResultSet rsCap = pstmtCap.executeQuery();
                 if(rsCap.next()){
-                    // Akıllı kapasite hesabı: Tek kişilik yataklar + (Çift kişilikler * 2)
                     kapasite = rsCap.getInt("tek_kisilik_yatak") + (rsCap.getInt("cift_kisilik_yatak") * 2);
                 }
             }
@@ -114,7 +108,7 @@ public class Resepsiyon extends Personel{
                 pstmt.executeUpdate();
             }
             
-            mevcutMusteri++; // Yeni kayıt başarılı, sayacı artır
+            mevcutMusteri++;
             
             // C) Kapasite dolduysa odayı otomatik olarak DOLU durumuna getir
             if (mevcutMusteri >= kapasite) {
@@ -157,7 +151,6 @@ public class Resepsiyon extends Personel{
         } catch (Exception e) {
             System.err.println("Ödeme kontrol hatası: " + e.getMessage());
         }
-        // Eğer veritabanına ulaşılamazsa güvenli tarafta kalıp çıkışa izin verme
         return false; 
     }
     
@@ -270,7 +263,7 @@ public class Resepsiyon extends Personel{
     
     public static String musteriAraTC(String arananTc, com.oybak.otel.enums.UserRole aktifRol) {
         
-        // Eğer rol GMUSTERIARAMA ise geçmiş tablosuna, değilse güncel tabloya bak!
+        // Eğer rol GMUSTERIARAMA ise geçmiş tablosuna, değilse güncel tabloya bak
         String tabloAdi = (aktifRol == com.oybak.otel.enums.UserRole.GMUSTERIARAMA) ? "gecmis_musteriler" : "guncel_musteriler";
         
         String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM " + tabloAdi + " WHERE tc_no LIKE ?";
@@ -285,7 +278,6 @@ public class Resepsiyon extends Personel{
             try (java.sql.ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     bulundu = true;
-                    // Yetki kısıtlaması kaldırıldı, TC direkt yazdırılıyor
                     sb.append("Müşteri Ad Soyad: ").append(rs.getString("ad_soyad")).append("\n")
                       .append("TC Kimlik No: ").append(rs.getString("tc_no")).append("\n")
                       .append("Oda Numarası: ").append(rs.getString("oda_no")).append("\n")

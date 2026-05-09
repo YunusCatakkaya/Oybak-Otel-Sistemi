@@ -6,10 +6,6 @@ package com.oybakotel.GUI;
 
 import com.oybak.otel.Personel;
 
-/**
- *
- * @author ahmet
- */
 public interface OdaSecim {
     
     public default void odaSecim(Personel p){
