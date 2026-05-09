@@ -47,8 +47,14 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 1. Projeyi klonlayın:
 
 ```bash
+git clone [https://github.com/yunusemre/OybakOtel.git](https://github.com/yunusemre/OybakOtel.git)
+
+```bash
 cd OybakOtel
-mvn clean compile exec:java -Dexec.mainClass="com.oybakotel.GUI.GirisSayfasi"
+
+```bash
+mvn clean compile exec:java -Dexec.mainClass="com.oybakotel.GUI.Anasayfa"
+
 (Not: Uygulama direkt olarak GirisSayfasi.java üzerinden başlatılacaktır. Sisteme test girişi yapmak için aşağıdaki hesapları kullanabilirsiniz:)
 
 Resepsiyon: TC 12345678916 | Şifre 123
@@ -69,4 +75,3 @@ Resepsiyon.java : OOP standartlarına uygun, müşteri nesnesi üzerinden işlem
 com.oybak.otel.enums : Sistemin tip güvenliğini sağlayan roller ve durum bildirimleri.
 
 OybakOtel ile otel yönetiminde profesyonelliği yakala! 🏆
-git clone [https://github.com/yunusemre/OybakOtel.git](https://github.com/yunusemre/OybakOtel.git)
