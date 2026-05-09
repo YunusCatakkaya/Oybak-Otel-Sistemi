@@ -42,19 +42,20 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 * Bilgisayarınızda **Java Development Kit (JDK) 25** yüklü olmalıdır.
 * **Maven** yüklü olmalıdır.
 
+Markdown
 ### Adımlar
 
-1. Projeyi klonlayın:
-
+1. **Projeyi klonlayın:**
 ```bash
-git clone [https://github.com/yunusemre/OybakOtel.git](https://github.com/yunusemre/OybakOtel.git)
+git clone https://github.com/yunusemre/OybakOtel.git
+Proje dizinine gidin:
 
-```bash
+Bash
 cd OybakOtel
+Bağımlılıkları yükleyin, projeyi derleyin ve uygulamayı başlatın:
 
-```bash
-mvn clean compile exec:java -Dexec.mainClass="com.oybakotel.GUI.Anasayfa"
-
+Bash
+mvn clean compile exec:java -Dexec.mainClass="com.oybakotel.GUI.GirisSayfasi"
 (Not: Uygulama direkt olarak GirisSayfasi.java üzerinden başlatılacaktır. Sisteme test girişi yapmak için aşağıdaki hesapları kullanabilirsiniz:)
 
 Resepsiyon: TC 12345678916 | Şifre 123
@@ -71,6 +72,7 @@ com.oybakotel.GUI : Kullanıcı arayüzü bileşenleri. Uygulamanın merkezi gir
 VeriTabani.java : SQLite veritabanı işlemleri ve loglama kayıtlarının tutulduğu arayüz.
 
 Resepsiyon.java : OOP standartlarına uygun, müşteri nesnesi üzerinden işlem yapan resepsiyon servisleri.
+'
 
 com.oybak.otel.enums : Sistemin tip güvenliğini sağlayan roller ve durum bildirimleri.
 
