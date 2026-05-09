@@ -116,44 +116,7 @@ public class Yonetim extends Personel implements VeriTabani, Hatalar{
     }
 }
   
-  // Yonetim.java içine eklenecek metod
-public String gecmisMusteriAra(String arananTC) {
-    if (arananTC == null || arananTC.trim().isEmpty() || arananTC.equals("TC:")) {
-        return "Lütfen geçerli bir TC Kimlik No giriniz.";
-    }
-
-    StringBuilder sb = new StringBuilder();
-    // Sorguyu ad_soyad yerine tc_no üzerinden yapıyoruz
-    String sql = "SELECT ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki FROM gecmis_musteriler WHERE tc_no = ?";
-
-    try (java.sql.Connection conn = java.sql.DriverManager.getConnection(VeriTabani.URL);
-         java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        pstmt.setString(1, arananTC.trim());
-        java.sql.ResultSet rs = pstmt.executeQuery();
-
-        boolean bulundu = false;
-        while (rs.next()) {
-            bulundu = true;
-            sb.append("Müşteri Ad Soyad: ").append(rs.getString("ad_soyad")).append("\n")
-              .append("TC Kimlik No: ").append(rs.getString("tc_no")).append("\n")
-              .append("Oda Numarası: ").append(rs.getString("oda_no")).append("\n")
-              .append("Giriş Tarihi: ").append(rs.getString("giris_tarihi")).append("\n")
-              .append("Çıkış Tarihi: ").append(rs.getString("cikis_tarihi")).append("\n")
-              .append("Kasaya Katkı: ").append(rs.getInt("kasa_katki")).append(" TL\n")
-              .append("-------------------------------------------\n");
-        }
-
-        if (!bulundu) {
-            return "Sistemde '" + arananTC + "' numaralı bir geçmiş kayıt bulunamadı.";
-        }
-
-        return sb.toString();
-
-    } catch (java.sql.SQLException e) {
-        return "Veritabanı hatası: " + e.getMessage();
-    }
-}
+  
   
 
 public String paraIadeYap(String tcNoStr, String iadeMiktariStr) {
@@ -209,22 +172,51 @@ public String paraIadeYap(String tcNoStr, String iadeMiktariStr) {
     return "Beklenmedik bir hata oluştu.";
 }
 
-public String odaOzellikGuncelle(String odaNo, String tekYatak, String ciftYatak, String manzara, String balkon, String jakuzi, String fiyat) {
+public String odaOzellikGuncelle(String odaNo, String yeniTekY, String yeniCiftY, String manzara, String balkon, String jakuzi, String fiyat) {
     if (odaNo == null || odaNo.isEmpty() || odaNo.equals("Oda Numarası:")) {
         return "Lütfen önce geçerli bir Oda Numarası giriniz!";
     }
 
     try (java.sql.Connection con = java.sql.DriverManager.getConnection(URL)) {
+        // Mevcut yatak bilgilerini veri tabanından çek
+        int mevcutTekYatak = 0;
+        int mevcutCiftYatak = 0;
+        
+        String selectSql = "SELECT tek_kisilik_yatak, cift_kisilik_yatak FROM odalar WHERE oda_no = ?";
+        try (java.sql.PreparedStatement pstSelect = con.prepareStatement(selectSql)) {  
+            pstSelect.setString(1, odaNo);
+            java.sql.ResultSet rs = pstSelect.executeQuery();
+            if (rs.next()) {
+                mevcutTekYatak = rs.getInt("tek_kisilik_yatak");
+                mevcutCiftYatak = rs.getInt("cift_kisilik_yatak");
+            } else {
+                return "UYARI: " + odaNo + " numaralı oda bulunamadı!";
+            }
+        }
+
+        // Kullanıcı "Seçiniz" dediyse mevcut olanı koru, sayı seçtiyse yenisini al
+        int kontrolTekY = yeniTekY.equals("Seçiniz") ? mevcutTekYatak : Integer.parseInt(yeniTekY);
+        int kontrolCiftY = yeniCiftY.equals("Seçiniz") ? mevcutCiftYatak : Integer.parseInt(yeniCiftY);
+
+        // Hesaplama: (Tek Yatak * 1) + (Çift Yatak * 2)
+        int toplamKapasite = (kontrolTekY * 1) + (kontrolCiftY * 2);
+
+        if (toplamKapasite > 4) {
+            return "HATA: Oda kapasitesi (4) aşıldı! Seçtiğiniz düzen " + toplamKapasite + " kişilik.\n" +
+                   "Lütfen yatak sayılarını azaltın.";
+        }
+
+      
         StringBuilder query = new StringBuilder("UPDATE odalar SET ");
         boolean degisiklikVar = false;
 
-        if (!tekYatak.equals("Seçiniz")) {
-            query.append("tek_kisilik_yatak = ").append(tekYatak);
+        if (!yeniTekY.equals("Seçiniz")) {
+            query.append("tek_kisilik_yatak = ").append(yeniTekY);
             degisiklikVar = true;
         }
-        if (!ciftYatak.equals("Seçiniz")) {
+        if (!yeniCiftY.equals("Seçiniz")) {
             if (degisiklikVar) query.append(", ");
-            query.append("cift_kisilik_yatak = ").append(ciftYatak);
+            query.append("cift_kisilik_yatak = ").append(yeniCiftY);
             degisiklikVar = true;
         }
         if (!manzara.equals("Seçiniz")) {
@@ -255,9 +247,9 @@ public String odaOzellikGuncelle(String odaNo, String tekYatak, String ciftYatak
         pst.setString(1, odaNo);
 
         if (pst.executeUpdate() > 0) {
-            return "BAŞARILI: " + odaNo + " numaralı oda güncellendi.";
+            return "BAŞARILI: " + odaNo + " numaralı oda kapasiteye uygun olarak güncellendi.";
         } else {
-            return "UYARI: " + odaNo + " numaralı oda veritabanında bulunamadı!";
+            return "HATA: Güncelleme sırasında bir sorun oluştu!";
         }
     } catch (Exception e) {
         return "VERİTABANI HATASI: " + e.getMessage();

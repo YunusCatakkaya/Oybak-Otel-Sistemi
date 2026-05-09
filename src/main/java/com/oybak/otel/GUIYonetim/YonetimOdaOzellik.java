@@ -11,8 +11,6 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import com.oybak.otel.VeriTabani;
 import com.oybak.otel.Yonetim;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import com.oybakotel.GUI.GeriButonu;
 
 /**
@@ -39,10 +37,9 @@ public class YonetimOdaOzellik extends javax.swing.JFrame implements VeriTabani,
         if (jTextField1.getText().equals("Oda Numarası:")) jTextField1.setText("");
     }
 });
-// Formu sıfırlamak için yardımcı metod (Bunu class içinde uygun bir yere koy)
 
-// Fiyat kutusuna tıklayınca yazıyı siler
-jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+    // Fiyat kutusuna tıklayınca yazıyı siler
+    jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
     @Override
     public void focusGained(java.awt.event.FocusEvent evt) {
         if (jTextField2.getText().equals("Fiyat:")) jTextField2.setText("");
@@ -246,8 +243,8 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
         ResultSet rs = pst.executeQuery();
 
         if (rs.next()) {
-            // --- GÜVENLİ OKUMA YÖNTEMİ ---
-            // getString kullanarak hem "true" metnini hem de "1" değerini yakalıyoruz
+           
+            // getString kullanarak "true" metnini yakalıyoruz
             String dbManzara = String.valueOf(rs.getObject("deniz_manzarasi"));
             String dbBalkon = String.valueOf(rs.getObject("balkon"));
             String dbJakuzi = String.valueOf(rs.getObject("jakuzi"));
@@ -285,14 +282,13 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
     String jakz = jComboBox5.getSelectedItem().toString();
     String fiyat = jTextField2.getText().replace("Fiyat:", "").trim();
 
-    // 2. Güvenli nesne oluşturma (Çökmeyi engellemek için)
-    // p nesnesi Personel olsa bile Yonetim yeteneklerini kullanabilmesini sağlıyoruz
+    
     Yonetim yoneticiKontrol = new Yonetim(p.getName(), p.getTcNo(), p.getMaas(), p.getIsTipi(), p.getParola());
 
-    // 3. Metodu çalıştır ve dönen mesajı al
+    // Metodu çalıştır ve dönen mesajı al
     String mesaj = yoneticiKontrol.odaOzellikGuncelle(odaNo, tekY, ciftY, manz, balk, jakz, fiyat);
 
-    // 4. MESAJI GÖSTER (Hiçbir şey dönmüyorsa sorun buraya gelmeden önceki bir koddadır)
+   
     javax.swing.JOptionPane.showMessageDialog(this, mesaj);
 
     if (mesaj.startsWith("BAŞARILI")) {
@@ -300,10 +296,10 @@ jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
         jTextField1KeyReleased(null); // Ekrandaki listeyi yenilemek için
     }
     }//GEN-LAST:event_jButton2ActionPerformed
-// Formu sıfırlamak için yardımcı metod (Bunu class içinde uygun bir yere koy)
+  // Formu sıfırlamak için yardımcı metod
     private void temizle() {
     jTextField1.setText("Oda Numarası:");
-    jTextField2.setText("Fiyat:"); // veya boş: jTextField2.setText("");
+    jTextField2.setText("Fiyat:");
     jTextArea1.setText("Oda Bilgileri:");
     jComboBox1.setSelectedIndex(0); // "Seçiniz"e döner
     jComboBox2.setSelectedIndex(0);
