@@ -42,36 +42,36 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 
 ### Adımlar
 
-1. **Projeyi klonlayın veya indirin:**
-```bash
-git clone [https://github.com/yunusemre/OybakOtel.git](https://github.com/yunusemre/OybakOtel.git)Projeyi NetBeans ile Açın:
+**1. Projeyi klonlayın veya indirin:**
+`git clone https://github.com/yunusemre/OybakOtel.git`
 
-Apache NetBeans IDE 29 programını başlatın.
+**2. Projeyi NetBeans ile Açın:**
+* **Apache NetBeans IDE 29** programını başlatın.
+* Üst menüden `File` > `Open Project` yolunu izleyerek bilgisayarınıza indirdiğiniz **OybakOtel** klasörünü seçip açın.
 
-Üst menüden File > Open Project yolunu izleyerek bilgisayarınıza indirdiğiniz OybakOtel klasörünü seçip açın.
+**3. Uygulamayı Başlatın:**
+* Proje yüklendikten sonra, sol taraftaki *Projects* menüsünden `com.oybakotel.GUI` paketinin altındaki `GirisSayfasi.java` dosyasına sağ tıklayın.
+* **Run File** (Dosyayı Çalıştır) seçeneğine tıklayarak projeyi doğrudan başlatabilirsiniz.
 
-Uygulamayı Başlatın:
+## 🔐 Test Bilgileri (Giriş Hesapları)
 
-Proje yüklendikten sonra, sol taraftaki Projects menüsünden com.oybakotel.GUI paketinin altındaki GirisSayfasi.java dosyasına sağ tıklayın.
-
-Run File (Dosyayı Çalıştır) seçeneğine tıklayarak projeyi doğrudan başlatabilirsiniz.
-
-🔐 Test Bilgileri (Giriş Hesapları)
 Sisteme hızlıca test girişi yapmak için aşağıdaki hazır hesapları kullanabilirsiniz:
 
-Resepsiyon: TC 12345678916 | Şifre 123
+* **Resepsiyon:** TC `12345678916` | Şifre `123`
+* **Teknik Ekip:** TC `12345678938` | Şifre `123`
+* **Yönetim:** TC `12345678950` | Şifre `123`
 
-Teknik Ekip: TC 12345678938 | Şifre 123
+## 📂 Proje Mimarisi
 
-Yönetim: TC 12345678950 | Şifre 123
+* `com.oybak.otel` : Temel veri modelleri (Musteri, Oda, Personel) ve iş mantığı servisleri.
+* `com.oybakotel.GUI` : Kullanıcı arayüzü bileşenleri. Uygulamanın merkezi giriş noktası `GirisSayfasi.java` dosyasıdır.
+* `VeriTabani.java` : SQLite veritabanı işlemleri ve loglama kayıtlarının tutulduğu arayüz.
+* `Resepsiyon.java` : OOP standartlarına uygun, müşteri nesnesi üzerinden işlem yapan resepsiyon servisleri.
+* `com.oybak.otel.enums` : Sistemin tip güvenliğini sağlayan roller ve durum bildirimleri.
 
-📂 Proje Mimarisi
-com.oybak.otel : Temel veri modelleri (Musteri, Oda, Personel) ve iş mantığı servisleri.
+---
 
-com.oybakotel.GUI : Kullanıcı arayüzü bileşenleri. Uygulamanın merkezi giriş noktası GirisSayfasi.java dosyasıdır.
-
-VeriTabani.java : SQLite veritabanı işlemleri ve loglama kayıtlarının tutulduğu arayüz.
-
+*OybakOtel ile otel yönetiminde profesyonelliği yakala!* 🏆
 Resepsiyon.java : OOP standartlarına uygun, müşteri nesnesi üzerinden işlem yapan resepsiyon servisleri.
 
 com.oybak.otel.enums : Sistemin tip güvenliğini sağlayan roller ve durum bildirimleri.
