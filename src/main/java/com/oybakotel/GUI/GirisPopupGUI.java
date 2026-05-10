@@ -148,39 +148,48 @@ public class GirisPopupGUI extends javax.swing.JFrame implements VeriTabani, Hat
         String tc = TCalani.getText().trim();
         String parola = parolaAlani.getText().trim();
         
+        //kullanıcıdan veri aldığımız alanların boş olmamasını kontrol ediyoruz.
         if (tc.isEmpty() || parola.isEmpty()) {
             JOptionPane.showMessageDialog(this, "TC veya parola boş bırakılamaz!");
             return;
         }
         
+        //TC'yi kontrolden geçiriyoruz. hatalar interface'indeki tckontrol metodunu kullanıyoruz.
         try {
             tcKontrol(tc);
         } catch (IllegalArgumentException e) {
             return;
         }
         
+        //Personel nesnesine veritabani interface'indeki calisanBilgileri metodunu kullanarak bilgileri çekiyoruz.
         Personel geciciPersonel = calısanBilgileri(tc, parola);
         
+        //eğer girilen tc ve parola uyuşmuyorsa ya da böyle biri yoksa nesne null olacaktır.
+        //burada da null'luğunu kontrol edip kullanıcyı bu konuda bilgilendiriyoruz.
         if (geciciPersonel == null) {
             JOptionPane.showMessageDialog(this, "Hatalı TC veya parola!");
             return;
         }
         
+        //nesneden iş tipini alıp UserRole tipinde bir değişkene atıyoruz.
         UserRole aktifRol =  geciciPersonel.getIsTipi();
         
         switch(aktifRol){
+            //Eğer rol resepsiyon ise resepsiyon anasayfasına yönlendiriyoruz.
             case RESEPSIYON -> {
                 ResepsiyonSayfa r = new ResepsiyonSayfa(geciciPersonel);
                 r.setLocationRelativeTo(null);
                 r.setVisible(true);
                 this.dispose();
             }
+            //Eğer rol yönetim ise yönetim anasayfasına yönlendiriyoruz.
             case YONETIM -> {
                 YonetimEkran y = new YonetimEkran(geciciPersonel);
                 y.setLocationRelativeTo(null);
                 y.setVisible(true);
                 this.dispose();
             }
+            //Eğer rol teknikpersonel ise teknikpersonel anasayfasına yönlendiriyoruz.
             case TEKNIKPERSONEL -> {
                 TeknikPersonelSayfasi t = new TeknikPersonelSayfasi(geciciPersonel);
                 t.setLocationRelativeTo(null);

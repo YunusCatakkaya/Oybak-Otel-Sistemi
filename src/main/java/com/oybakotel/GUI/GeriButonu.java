@@ -26,13 +26,17 @@ import javax.swing.JOptionPane;
  */
 public interface GeriButonu {
     public default void geriButonu(Personel p){
+        //switch-case yapısı ile karmaşık if bloklarının önüne geçerek konunn okunaklığını ve bakımını kolaylaştırıyoz
         switch(p.getIsTipi()){
+            //iş tipi musteri ise geri butonları anasayfaya atar
             case  MUSTERI->{ 
                 JOptionPane.showMessageDialog((Component) this, "Anasayfaya aktarılıyorsunuz.");
                 Anasayfa t = new Anasayfa();
                 t.setLocationRelativeTo(null);
                 t.setVisible(true);                
             }
+            
+            //iş tipi resepsiyon ve onun alt rolleri ise geri butonları resepsiyon anasayfaya atar
             case  RESEPSIYON, MUSTERIEKLEME, MUSTERICIKARMA->{ 
                 p.setIsTipi(UserRole.RESEPSIYON);
                 JOptionPane.showMessageDialog((Component) this, "Resepsiyon anasayfasına aktarılıyorsunuz.");
@@ -40,6 +44,8 @@ public interface GeriButonu {
                 r.setLocationRelativeTo(null);
                 r.setVisible(true);
             }
+            
+            //iş tipi yönetim ve onun alt rolleri ise geri butonları yönetim anasayfaya atar
             case  YONETIM, GMUSTERIARAMA->{ 
                 p.setIsTipi(UserRole.YONETIM);
                 JOptionPane.showMessageDialog((Component) this, "Yonetim anasayfasına aktarılıyorsunuz.");
@@ -47,6 +53,8 @@ public interface GeriButonu {
                 y.setLocationRelativeTo(null);
                 y.setVisible(true);
             }
+            
+            //iş tipi teknikpersonel ve onun alt rolleri ise geri butonları teknikpersonel anasayfaya atar
             case  TEKNIKPERSONEL, BAKIM->{ 
                 JOptionPane.showMessageDialog((Component) this, "Teknik personel anasayfayasına aktarılıyorsunuz.");
                 TeknikPersonelSayfasi t = new TeknikPersonelSayfasi(p);

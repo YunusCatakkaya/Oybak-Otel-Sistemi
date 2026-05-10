@@ -137,23 +137,34 @@ public class BakımSebebiPopupGUI extends javax.swing.JDialog implements VeriTab
     private void tamamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tamamActionPerformed
         String sebep = bakımSebebi.getText().trim();
 
+        //bakım sebebini aldığımız text alanının boş bırakılmamasını kontrol ediyoruz.
         if (sebep.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Sebep boş bırakılamaz!");
             return;
         }
-        
+        // Oda tipindeki nesneye odaBilgileri metodunu kullanarak bilgileri dolduruyoruz
         Oda geciciOda = odaBilgileri(this.oda);
         
+        //nesneyi null kontrolünden geçiriyoruz
         if (geciciOda == null) {
             JOptionPane.showMessageDialog(this, "Hata: Oda bilgileri veritabanından alınamadı!");
             return;
         }
         
+        //oda bakıma alcak metodumuzu çağırıyoruz
         TeknikEkip.odaBakimAl(this.oda, sebep);
+        
+        //terminalde takip edebilmek için terminale ufak bilgileri yazdırıyoruz
         System.out.println("İşlem gerçekleştiriliyor.");
+        
+        //kullanıcıya pop-up bakıma alındığının bilgisini veriyoruz
         JOptionPane.showMessageDialog(this, oda + " numaralı oda bakıma alındı.");
         System.out.println("İşlem gerçekleşti.");
+        
+        //log kaydımızı tutuyoruz
         logKayit(p.bilgileriYazdir() ," " +oda +" numaralı odayı bakıma aldı.");
+        
+        //teknik personel anasayfamıza dönüyoruz
         new TeknikPersonelSayfasi(p).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_tamamActionPerformed
