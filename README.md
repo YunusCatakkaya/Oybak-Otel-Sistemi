@@ -38,7 +38,7 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 
 ### 📋 Ön Koşullar
 
-* Projeyi sorunsuz açmak için **Apache NetBeans IDE 29** kurulu olması önerilir.
+* Projeyi sorunsuz açmak için **[Apache NetBeans IDE 29](https://netbeans.apache.org/front/main/download/nb29/)** kurulu olması önerilir.
 
 ### 🛠️ Ekstra Araçlar (Tercihe Bağlı)
 
