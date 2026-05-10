@@ -25,7 +25,7 @@
 
 ## 🛠️ Kullanılan Teknolojiler
 
-* **Programlama Dili:** Java
+* **Programlama Dili:** Java (JDK 25)
 * **Kullanıcı Arayüzü:** Java Swing
 * **Veritabanı:** SQLite (JDBC Driver ile)
 * **Tarih Yönetimi:** JCalendar / JDateChooser
@@ -57,13 +57,23 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 * Proje yüklendikten sonra, sol taraftaki *Projects* menüsünden `com.oybakotel.GUI` paketinin altındaki `Anasayfa.java` dosyasına sağ tıklayın.
 * **Run File** (Dosyayı Çalıştır) seçeneğine tıklayarak projeyi doğrudan başlatabilirsiniz.
 
-## 🔐 Test Bilgileri (Giriş Hesapları)
+## 🔐 Test Bilgileri ve Veriler
 
-Sisteme hızlıca test girişi yapmak için aşağıdaki hazır hesapları kullanabilirsiniz:
+Sistemi, arama algoritmalarını ve çıkış işlemlerini hızlıca test edebilmeniz için veritabanında hazır bulunan kayıtlar:
 
+### 👨‍💼 Personel Giriş Hesapları
 * **Resepsiyon:** TC `12345678916` | Şifre `123`
 * **Teknik Ekip:** TC `12345678938` | Şifre `123`
 * **Yönetim:** TC `12345678950` | Şifre `123`
+
+### 🛏️ Test Müşterileri
+**Güncel Müşteriler (Oda boşaltma ve ödeme alma testleri için):**
+* **Ege Çevni** (Oda 204) - TC: `12345678932`
+* **Arda Karakoçoğlu** (Oda 303) - TC: `12345678988`
+
+**Geçmiş Müşteriler (Yönetim paneli geçmiş müşteri arama testleri için):**
+* **Onur Çakır** - TC: `12345678954`
+* **Pege Çeviş** - TC: `13579135790`
 
 ## 📂 Proje Mimarisi
 
