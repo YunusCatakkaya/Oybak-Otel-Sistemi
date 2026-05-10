@@ -38,7 +38,6 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 
 ### 📋 Ön Koşullar
 
-* Bilgisayarınızda **Java Development Kit (JDK) 25** yüklü olmalıdır.
 * Projeyi sorunsuz açmak için **Apache NetBeans IDE 29** kurulu olması önerilir.
 
 ### 🛠️ Ekstra Araçlar (Tercihe Bağlı)
