@@ -36,11 +36,16 @@
 
 Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları izleyin:
 
-### Ekstra Araçlar (Tercihe Bağlı)
+### 📋 Ön Koşullar
+
+* Bilgisayarınızda **Java Development Kit (JDK) 25** yüklü olmalıdır.
+* Projeyi sorunsuz açmak için **Apache NetBeans IDE 29** kurulu olması önerilir.
+
+### 🛠️ Ekstra Araçlar (Tercihe Bağlı)
 
 * Veritabanı tablolarını aktif olarak görüntülemek ve yönetmek için **[DB Browser for SQLite](https://sqlitebrowser.org/)** programını bilgisayarınıza kurabilirsiniz.
 
-### Adımlar
+### 🏁 Adımlar
 
 **1. Projeyi klonlayın veya indirin:**
 `git clone https://github.com/yunusemre/OybakOtel.git`
@@ -50,7 +55,7 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 * Üst menüden `File` > `Open Project` yolunu izleyerek bilgisayarınıza indirdiğiniz **OybakOtel** klasörünü seçip açın.
 
 **3. Uygulamayı Başlatın:**
-* Proje yüklendikten sonra, sol taraftaki *Projects* menüsünden `com.oybakotel.GUI` paketinin altındaki `GirisSayfasi.java` dosyasına sağ tıklayın.
+* Proje yüklendikten sonra, sol taraftaki *Projects* menüsünden `com.oybakotel.GUI` paketinin altındaki `Anasayfa.java` dosyasına sağ tıklayın.
 * **Run File** (Dosyayı Çalıştır) seçeneğine tıklayarak projeyi doğrudan başlatabilirsiniz.
 
 ## 🔐 Test Bilgileri (Giriş Hesapları)
@@ -64,7 +69,7 @@ Sisteme hızlıca test girişi yapmak için aşağıdaki hazır hesapları kulla
 ## 📂 Proje Mimarisi
 
 * `com.oybak.otel` : Temel veri modelleri (Musteri, Oda, Personel) ve iş mantığı servisleri.
-* `com.oybakotel.GUI` : Kullanıcı arayüzü bileşenleri. Uygulamanın merkezi giriş noktası `GirisSayfasi.java` dosyasıdır.
+* `com.oybakotel.GUI` : Kullanıcı arayüzü bileşenleri. Uygulamanın merkezi giriş noktası `Anasayfa.java` dosyasıdır.
 * `VeriTabani.java` : SQLite veritabanı işlemleri ve loglama kayıtlarının tutulduğu arayüz.
 * `Resepsiyon.java` : OOP standartlarına uygun, müşteri nesnesi üzerinden işlem yapan resepsiyon servisleri.
 * `com.oybak.otel.enums` : Sistemin tip güvenliğini sağlayan roller ve durum bildirimleri.
@@ -72,8 +77,3 @@ Sisteme hızlıca test girişi yapmak için aşağıdaki hazır hesapları kulla
 ---
 
 *OybakOtel ile otel yönetiminde profesyonelliği yakala!* 🏆
-Resepsiyon.java : OOP standartlarına uygun, müşteri nesnesi üzerinden işlem yapan resepsiyon servisleri.
-
-com.oybak.otel.enums : Sistemin tip güvenliğini sağlayan roller ve durum bildirimleri.
-
-OybakOtel ile otel yönetiminde profesyonelliği yakala! 🏆
