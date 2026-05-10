@@ -38,7 +38,7 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 
 ### 📋 Ön Koşullar
 
-* Projeyi sorunsuz açmak için **[Apache NetBeans IDE 29](https://netbeans.apache.org/front/main/download/nb29/)** ve **[JDK-25]([https://www.oracle.com/java/technologies/downloads/#jdk25-windows](https://www.oracle.com/java/technologies/downloads/#java25))** kurulu olması önerilir.
+* Projeyi sorunsuz açmak için **[Apache NetBeans IDE 29](https://netbeans.apache.org/front/main/download/nb29/)** ve **[JDK-25](https://www.oracle.com/java/technologies/downloads/#jdk25-windows)** kurulu olması önerilir.
 
 ### 🛠️ Ekstra Araçlar (Tercihe Bağlı)
 
