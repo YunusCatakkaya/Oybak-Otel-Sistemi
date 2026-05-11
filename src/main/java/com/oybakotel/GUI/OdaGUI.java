@@ -16,6 +16,7 @@ import static com.oybak.otel.enums.OdaDurumu.BAKIMDA;
 import static com.oybak.otel.enums.OdaDurumu.DOLU;
 import static com.oybak.otel.enums.OdaDurumu.MUSAIT;
 import static com.oybak.otel.enums.UserRole.BAKIM;
+import static com.oybak.otel.enums.UserRole.MUSTERIEKLEME;
 import static com.oybak.otel.enums.UserRole.RESEPSIYON;
 
 /**
@@ -88,6 +89,10 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
         case MUSTERIEKLEME -> {
             musteriEklemePaneli.setVisible(true);
             musteriBilgileriPaneli.setVisible(true);
+        }
+        case YONETIM -> {
+            musteriBilgileriPaneli.setVisible(true);
+            bakimSebebiPaneli.setVisible(true);
         }
         // Diğer roller (YÖNETİM, MÜŞTERİ vb.) için paneller kapalı kalmaya devam eder
         default -> {
@@ -358,13 +363,20 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
     }// </editor-fold>//GEN-END:initComponents
 
     private void BakimAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BakimAlActionPerformed
+        //oda tipinde oluşturduğumuz nesneyi veritabanı interface'indeki odaBilgileri metodunu kullanrak doluruyoruz
         Oda geciciOda = odaBilgileri(this.secilenOda);
+        
         switch(geciciOda.getOdaDurumu()){
+            //bakımda olan odayı bir daha bakıma almayı engelliyoruz
             case BAKIMDA -> JOptionPane.showMessageDialog(this, "Oda zaten bakımda!");
+            //içinde müşteri varken bir odayı bakıma almayı engelliyoruz
             case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");
+            //musaitse odayı bakıma alıyoruz
             case MUSAIT -> {
+                //odayı bakıma alacak pop-up ekranı açıyoruz
                 BakımSebebiPopupGUI popup = new BakımSebebiPopupGUI(this, true, secilenOda, p); 
-                popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
+                // Pop-up'ın ana pencerenin tam ortasında açılmasını sağlıyoruz
+                popup.setLocationRelativeTo(this); 
                 popup.setVisible(true);
                 this.dispose();
             }
@@ -379,16 +391,23 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BakımdanCikarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BakımdanCikarActionPerformed
+        //oda tipinde oluşturduğumuz nesneyi veritabanı interface'indeki odaBilgileri metodunu kullanrak doluruyoruz
         Oda geciciOda = odaBilgileri(this.secilenOda);
+        
         switch(geciciOda.getOdaDurumu()){
+            //bakımda olan odayı bakımdan çıkartıyoruz.
             case BAKIMDA ->{ 
                 TeknikEkip.odaBakimdanCikar(this.secilenOda);
                 JOptionPane.showMessageDialog(this, "Oda bakımdan çıkarıldı.");
+                
+                //odanın bakımdan çıkarıldığının log kaydını tutuyoruz.
                 logKayit(p.bilgileriYazdir() ," " +secilenOda +" numaralı odayı bakımdan çıkardı.");
                 new TeknikPersonelSayfasi(p).setVisible(true);
                 this.dispose();
-            }
+            }            
+            //içinde müşteri olan oda bakımda olamayacağı için dolu odalları bakımdan çıakrmayı engelliyoruz.
             case DOLU -> JOptionPane.showMessageDialog(this, "Odada müşteri var. Bakım yapılamıyor!");
+            //musait olan oda bakımda olmadığı için bakımdan çıkarma işlemi yapılmasını engelliyoruz.
             case MUSAIT -> JOptionPane.showMessageDialog(this, "Odada bakımda değil.!");
         }// TODO add your handling code here:
     }//GEN-LAST:event_BakımdanCikarActionPerformed

@@ -99,7 +99,7 @@ public class Resepsiyon extends Personel{
             // B) Müşteriyi Nesne Üzerinden Veritabanına Ekle
             String sqlMusteri = "INSERT INTO guncel_musteriler (ad_soyad, tc_no, oda_no, giris_tarihi, cikis_tarihi, kasa_katki) VALUES (?, ?, ?, ?, ?, 0)";
             try (java.sql.PreparedStatement pstmt = conn.prepareStatement(sqlMusteri)) {
-                // Bilgileri Musteri nesnesinden çekiyoruz (OOP'nin gücü!)
+               
                 pstmt.setString(1, musteri.getName());
                 pstmt.setString(2, String.valueOf(musteri.getTcNo()));
                 pstmt.setString(3, String.valueOf(odaNo));

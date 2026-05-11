@@ -97,6 +97,8 @@ public class CalisanEkle extends javax.swing.JFrame implements Hatalar, GeriButo
 
         jScrollPane7.setViewportView(jTextPane4);
 
+        jButton2.setBackground(new java.awt.Color(51, 51, 255));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Kaydet");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
@@ -219,11 +221,10 @@ public class CalisanEkle extends javax.swing.JFrame implements Hatalar, GeriButo
    String tcStr = jTextPane4.getText().trim();
     
     try {
-        // ADIM 1: TC Kontrolünü burada yapıyoruz. 
-        // CalisanEkle bir Component olduğu için Hatalar'daki 'this' artık çalışır!
+        // TC Kontrolünü burada yapıyoruz. 
         tcKontrol(tcStr); 
         
-        // ADIM 2: Eğer yukarıdaki satır hata fırlatmazsa (TC doğruysa) kayıt işlemine geç:
+        // Eğer yukarıdaki satır hata fırlatmazsa (TC doğruysa) kayıt işlemine geç:
         String ad = jTextPane1.getText().trim();
         String soyad = jTextPane2.getText().trim();
         String maasStr = jTextPane3.getText().trim();

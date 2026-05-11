@@ -5,13 +5,14 @@
 package com.oybakotel.GUI;
 import com.oybak.otel.Resepsiyon;
 import com.oybak.otel.Personel;
+import com.oybak.otel.VeriTabani;
 
 
 /**
  *
  * @author Yunus
  */
-public class TarihSecimEkrani extends javax.swing.JFrame {
+public class TarihSecimEkrani extends javax.swing.JFrame implements VeriTabani{
     
     private com.toedter.calendar.JDateChooser girisTakvim;
     private com.toedter.calendar.JDateChooser cikisTakvim;
@@ -209,6 +210,7 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
         
         
         int sonuc = com.oybak.otel.Resepsiyon.musteriEkle(odaNo, gelenMusteri, girisStr, cikisStr);
+        logKayit(p.bilgileriYazdir(), " " + odaNo + " nolu odaya"+ gelenMusteri.bilgileriYazdir() +" müşterisini ekledi.");
 
         if (sonuc == -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "HATA: Bu oda tam kapasite dolu!");
@@ -229,16 +231,15 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
         else if (sonuc == 0) {
             int cevap = javax.swing.JOptionPane.showConfirmDialog(this, 
                 "Müşteri eklendi.\nBu odaya başka bir müşteri daha ekleyecek misiniz?", 
-                "Kayıt Başarılı", 
+                "Kayıt Başarılı",                 
                 javax.swing.JOptionPane.YES_NO_OPTION);
-                
+                            
             if (cevap == javax.swing.JOptionPane.YES_OPTION) {
                 com.oybak.otel.GUIResepsiyon.MusteriEkleme yeniEkleme = new com.oybak.otel.GUIResepsiyon.MusteriEkleme(p, odaNo, girisStr, cikisStr);
                 yeniEkleme.setLocationRelativeTo(null);
                 yeniEkleme.setVisible(true);
                 this.dispose();
             } else {
-                // Odayı dolu yapma işlemini de kısa şekilde çağırıyoruz
                 Resepsiyon.odayiDoluYap(odaNo);
                 
                 com.oybakotel.GUI.OdaSecimEkrani odaSecim = new com.oybakotel.GUI.OdaSecimEkrani(p);
@@ -289,16 +290,10 @@ public class TarihSecimEkrani extends javax.swing.JFrame {
             String girisStr = sdf.format(giris);
             String cikisStr = sdf.format(cikis);
             
-            // İşlemleri arka planda yapan metodumuzu çağırıyoruz
             veritabaninaIsleVeKontrolEt(girisStr, cikisStr);
-            
-            // Yönlendirmeyi veritabaninaIsleVeKontrolEt zaten yaptığı için,
-            // metodun aşağısındaki kodların çalışıp 2. bir sayfa açmasını engelliyoruz.
             return; 
             
         } else {
-            // Misafir (Anasayfa) girişi ise yapılacak normal işlemler...
-            
             // Eğer oda numarası -1 ise (yani yeni rezervasyonsa) Oda Seçim Ekranını aç
             com.oybakotel.GUI.OdaSecimEkrani odaEkrani = new com.oybakotel.GUI.OdaSecimEkrani(p);
             odaEkrani.setVisible(true);

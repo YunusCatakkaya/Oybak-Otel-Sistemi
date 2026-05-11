@@ -26,7 +26,7 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim, Hatal
         initComponents();
     }
     
-    // YENİ EKLENEN KURUCU METOT (2. ve 3. kişiler için çalışır, tarihleri alır)
+    //(2. ve 3. kişiler için çalışır, tarihleri alır)
     public MusteriEkleme(Personel p, int odaNo, String giris, String cikis) {
         this.p = p;
         this.odaNo = odaNo;
@@ -153,26 +153,21 @@ public class MusteriEkleme extends javax.swing.JFrame implements OdaSecim, Hatal
     }
 
     try {
-        // --- YENİ OOP YAPISI BAŞLANGICI ---
         
         // TC No'yu sayısal formata çeviriyoruz
         long tcLong = Long.parseLong(tcNoStr);
         
         // Müşteri nesnesini oluşturuyoruz (Verileri paketledik)
         com.oybak.otel.Musteri yeniMusteri = new com.oybak.otel.Musteri(adSoyad, tcLong);
-        
-        // --- YENİ OOP YAPISI BİTİŞİ ---
 
         // EĞER TARİHLER HAFIZADA VARSA
         if (otoGiris != null && otoCikis != null) {
-            // Tarih Seçim Ekranı'na artık adSoyad ve tcNo yerine doğrudan nesneyi gönderiyoruz
             com.oybakotel.GUI.TarihSecimEkrani gizliEkran = new com.oybakotel.GUI.TarihSecimEkrani(p, odaNo, yeniMusteri);
             gizliEkran.veritabaninaIsleVeKontrolEt(otoGiris, otoCikis); 
             this.dispose(); 
         } 
         // EĞER TARİHLER YOKSA
         else {
-            // Aynı şekilde burada da nesneyi gönderiyoruz
             com.oybakotel.GUI.TarihSecimEkrani tarihEkrani = new com.oybakotel.GUI.TarihSecimEkrani(p, odaNo, yeniMusteri);
             tarihEkrani.setLocationRelativeTo(null);
             tarihEkrani.setVisible(true);

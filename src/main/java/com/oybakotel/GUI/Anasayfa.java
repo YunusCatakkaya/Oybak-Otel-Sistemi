@@ -34,16 +34,16 @@ public class Anasayfa extends javax.swing.JFrame {
     }
     
     private void videoBaslat(String dosyaYolu) {
-    // 1. JFXPanel oluştur (Swing ile FX arasındaki köprü)
-    final JFXPanel jfxPanel = new JFXPanel();
-    
-    // 2. videoPanel içine ekle
-    videoPanel.removeAll(); // Varsa eski içeriği temizle
-    videoPanel.add(jfxPanel, BorderLayout.CENTER);
-    videoPanel.revalidate();
-    videoPanel.repaint();
+        
+        //Swing ile FX arasındaki köprüyü kuruyoruz
+        final JFXPanel jfxPanel = new JFXPanel();
 
-    // 3. JavaFX Thread'ini başlat
+        videoPanel.removeAll(); // Varsa eski içeriği temizliyoruz ne olur ne olmaz diye
+        videoPanel.add(jfxPanel, BorderLayout.CENTER);
+        videoPanel.revalidate();
+        videoPanel.repaint();
+
+        // Anasayfadaki videoyu başlatıyoruz
         Platform.runLater(() -> {
             try {
                 File file = new File(dosyaYolu);
@@ -52,21 +52,15 @@ public class Anasayfa extends javax.swing.JFrame {
                 Media media = new Media(url);
                 MediaPlayer mediaPlayer = new MediaPlayer(media);
                 MediaView mediaView = new MediaView(mediaPlayer);
-
-                // 1. Bir StackPane oluştur (JavaFX Layout bileşeni)
-                // StackPane, içine konulan bileşeni otomatik olarak merkeze yerleştirir.
+                
                 javafx.scene.layout.StackPane root = new javafx.scene.layout.StackPane();
                 root.getChildren().add(mediaView);
-                
-                // 2. Sahneyi (Scene) bu root panel ile oluştur
+                                
                 Scene scene = new Scene(root);
-
-                // 3. HATA ALDIĞIN YER: 
-                // JFXPanel yerine doğrudan Sahne'nin (Scene) genişliğine bağla.
+                
                 mediaView.fitWidthProperty().bind(scene.widthProperty());
                 mediaView.fitHeightProperty().bind(scene.heightProperty());
-        
-                // Oranı korumak istersen true, tam sığsın istersen false yap
+                        
                 mediaView.setPreserveRatio(true); 
 
                 jfxPanel.setScene(scene);
@@ -150,15 +144,19 @@ public class Anasayfa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void musteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musteriActionPerformed
+        //müşteri girişi misafir girişi olduğu için misafir nesnesi oluşturup 
+        //misafir nesnesini argüman olarak yolluyoruz.
         Personel misafirKullanici = new Personel("Misafir", 0L, 0, MUSTERI, "000");
         TarihSecimEkrani tarihEkrani = new TarihSecimEkrani(misafirKullanici);
-        // 3. Ekranı ortala ve görünür yap
+        
+        //açılacak ekranı ortalayıp görünür yapıyoruz
         tarihEkrani.setLocationRelativeTo(null); 
         tarihEkrani.setVisible(true);
         this.dispose(); // Anasayfayı kapat        /
     }//GEN-LAST:event_musteriActionPerformed
 
     private void otelGirisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otelGirisActionPerformed
+        //Kullanıcı girişinini yapıldığı pop-up ekranı açıyoruz.
         GirisPopupGUI popup = new GirisPopupGUI(); 
         popup.setLocationRelativeTo(this); // Pop-up'ın ana pencerenin tam ortasında fırlamasını sağlar
         popup.setVisible(true);

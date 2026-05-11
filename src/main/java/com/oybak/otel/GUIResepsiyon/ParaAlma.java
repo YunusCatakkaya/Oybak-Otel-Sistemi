@@ -31,7 +31,6 @@ public class ParaAlma extends javax.swing.JFrame implements VeriTabani, GeriButo
         this.p = p;
     }
     
-    // Sınıfınızın içinde uygun bir yere bu metodu ekleyin:
 private void doluOdalariYukle() {
         odaComboBox.removeAllItems(); 
         
@@ -138,7 +137,6 @@ private void doluOdalariYukle() {
 
         try {
             int odaNo = Integer.parseInt(secilen.toString());
-            // Hesaplama işlemini arkaplana devrettik
             double toplamFiyat = Resepsiyon.hesaplaToplamFiyat(odaNo);
             
             if (toplamFiyat >= 0) {

@@ -17,7 +17,8 @@ public class TeknikEkip extends Personel {
         super(name, tcNo, maas, TEKNIKPERSONEL ,uzmanlikAlani,parola);
         
     }
-    
+    //veritabanındaki odalar table'ında oda noya göre arama yapıyoruz.
+    //bulunan odanın durumunu bakımda yapıp bakım sebebini değiştiriyoruz
     public static void odaBakimAl(int oda, String sebep) {
         String url = VeriTabani.URL;
         String sql = "UPDATE odalar SET durum = 'BAKIMDA', bakim_sebebi = ? WHERE oda_no = ?";
@@ -41,6 +42,8 @@ public class TeknikEkip extends Personel {
         }
     }
     
+    //veritabanındaki odalar table'ında oda noya göre arama yapıyoruz.
+    //bulunan odanın durumunu musait yapıp bakım sebebini Bakımda değil olarak değiştiriyoruz
     public static void odaBakimdanCikar(int oda){
         String url = VeriTabani.URL;
         String sql = "UPDATE odalar SET durum = ?, bakim_sebebi = ? WHERE oda_no = ?";
@@ -64,6 +67,4 @@ public class TeknikEkip extends Personel {
             System.out.println("Hata: " + e.getMessage());
         }
     }
-
-    
 }

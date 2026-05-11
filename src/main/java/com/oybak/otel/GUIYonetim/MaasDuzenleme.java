@@ -154,7 +154,7 @@ public class MaasDuzenleme extends javax.swing.JFrame implements com.oybak.otel.
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       try {
-        // 1. Verileri al (Tasarımındaki sıraya göre eşleşen kutular)
+        // 1. Verileri al
         String isim = jTextPane1.getText().trim();
         String soyisim = jTextPane4.getText().trim(); 
         String tcNoStr = jTextPane2.getText().trim(); 

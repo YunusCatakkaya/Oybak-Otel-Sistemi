@@ -95,6 +95,7 @@ public class TeknikPersonelSayfasi extends javax.swing.JFrame implements OdaSeci
     }//GEN-LAST:event_odalarActionPerformed
 
     private void bakımIslemiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bakımIslemiActionPerformed
+        //Oda gui'sindeki bakıma alma ve çıkarma butonlarının aktif olması için rolümüzü bakımda olarak değiştiriyoruz
         personel.setIsTipi(BAKIM);
         odaSecim(personel);
         this.dispose();

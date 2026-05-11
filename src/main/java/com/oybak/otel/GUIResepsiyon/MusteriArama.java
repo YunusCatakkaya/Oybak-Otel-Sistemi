@@ -135,7 +135,6 @@ public class MusteriArama extends javax.swing.JFrame implements VeriTabani, Geri
 
         txtSonucAlani.setText(""); // Eski sonuçları temizle
 
-        // SQL yok! Bütün arama işini Resepsiyon sınıfına yaptırıp dönen metni alıyoruz
         String aramaSonucu = Resepsiyon.musteriAraTC(arananTc, p.getIsTipi());
         txtSonucAlani.setText(aramaSonucu);
 

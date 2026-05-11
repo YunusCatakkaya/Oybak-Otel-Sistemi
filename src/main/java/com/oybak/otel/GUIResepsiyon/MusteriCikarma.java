@@ -25,7 +25,6 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani, Ge
         this.odaNo = odaNo;
         this.p = p;
         
-        // DİKKAT: initComponents her zaman ilk sırada çağrılmalıdır!
         initComponents();
         
         // "Evet" butonuna basılırsa müşteriyi boşalt
@@ -45,9 +44,6 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani, Ge
                 javax.swing.JOptionPane.ERROR_MESSAGE);
             return; 
         }
-        // ------------------------------------
-
-        // --- OOP MANTIĞI: Sınıfın metodunu tetiklemek için bir Müşteri nesnesi paketliyoruz ---
         // Oda üzerinden işlem yaptığımız için temsili verilerle nesneyi oluşturuyoruz
         com.oybak.otel.Musteri cikisYapan = new com.oybak.otel.Musteri("Oda Müşterisi", 11111111111L);
 
@@ -55,7 +51,7 @@ public class MusteriCikarma extends javax.swing.JFrame implements VeriTabani, Ge
         boolean basarili = com.oybak.otel.Resepsiyon.odayiBosalt(cikisYapan, odaNo);
         
         if (basarili) {
-            // VeriTabani interface'inden gelen logKayit metodumuz sapasağlam çalışıyor
+            // VeriTabani interface'inden gelen logKayit metodumuz çalışıyor
             logKayit(p.bilgileriYazdir(), " " + odaNo + " nolu odayı boşalttı.");
             javax.swing.JOptionPane.showMessageDialog(this, odaNo + " nolu oda başarıyla boşaltıldı.");
             

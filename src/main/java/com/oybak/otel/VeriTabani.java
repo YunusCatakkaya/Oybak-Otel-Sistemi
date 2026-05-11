@@ -19,38 +19,35 @@ import java.time.format.DateTimeFormatter;
  */
 public interface VeriTabani {
     
+    //her yerde aynı URL olduğu için static final tanımladık
     static final String URL = "jdbc:sqlite:veritabani_dosyan.db";
     
+    //oda numarasına göre veritabanındaki odalar table'ında arama yapıyoruz
+    //eğer buluursa Oda tipindeki bir nesneyi, bilgileri veritabanından çekip dolduruyoruz.
+    //doldurduğumuz neseneyi de döndürüyoruz.
     public default Oda odaBilgileri(int oda_no) {
         Oda bulunanOda = null; // Başlangıçta boş bırakıyoruz
         String sql = "SELECT * FROM odalar WHERE oda_no = ?";
 
         try (Connection conn = DriverManager.getConnection(URL);
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            // 1. Parametre olarak gelen oda_no'yu sorguya yerleştiriyoruz
+                        
             pstmt.setInt(1, oda_no);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    bulunanOda = new Oda(); // Oda bulundu, nesneyi oluştur
-                
-                    // 2. Veritabanındaki sütun isimlerine göre verileri çekip nesneye doldur
+                    bulunanOda = new Oda(); 
+                                    
                     bulunanOda.setOdaNumarasi(rs.getInt("oda_no"));
                     bulunanOda.setTekKisilikYatak(rs.getInt("tek_kisilik_yatak"));
-                    bulunanOda.setCiftKisilikYatak(rs.getInt("cift_kisilik_yatak"));
-                    // rs.getString(...) alıp onu Boolean'a çeviriyoruz:
+                    bulunanOda.setCiftKisilikYatak(rs.getInt("cift_kisilik_yatak"));                    
                     bulunanOda.setDenizManzarasi(Boolean.parseBoolean(rs.getString("deniz_manzarasi")));
                     bulunanOda.setBalkon(Boolean.parseBoolean(rs.getString("balkon")));
                     bulunanOda.setJakuzi(Boolean.parseBoolean(rs.getString("jakuzi")));
                     bulunanOda.setFiyat(rs.getInt("fiyat"));
                     bulunanOda.setOdenmeDurumu(Boolean.parseBoolean(rs.getString("odenme_durumu")));
-                    bulunanOda.setBakimSebebi(rs.getString("bakim_sebebi"));
-                    
-                    
-                   
-                
-                    // 3. Durum bilgisini Enum'a çevirirken hata payını azaltmak için büyük harf yapıyoruz
+                    bulunanOda.setBakimSebebi(rs.getString("bakim_sebebi"));                                   
+                                                      
                     String durumString = rs.getString("durum");
                     if (durumString != null) {
                         bulunanOda.setOdaDurumu(OdaDurumu.valueOf(durumString.toUpperCase().trim()));
@@ -64,56 +61,36 @@ public interface VeriTabani {
         }
         return bulunanOda; // Oda bulunamazsa null, bulunursa dolu nesne döner
     }   
- 
+    
+    //Girilen tc ve paraloya göre veritabanındaki calisanlar table'ında arama yapıyoruz
+    //eğer eşleşme bulunursa Personel tipinde bir nesneyi bilgileri veritabanından çekerek dolduruyoruz.
+    //doldurduğumuz nesneyi döndürüyoruz.
     public default Personel calısanBilgileri(String tc, String parola){
         Personel calisan = null;
         String sql = "SELECT * FROM calisanlar WHERE tc_no = ? AND Parola = ?";
     
         try (Connection baglanti = DriverManager.getConnection(URL);
             PreparedStatement sorgu = baglanti.prepareStatement(sql)) {
-
-            // 2. Soru işaretlerini dolduruyoruz
+            
             sorgu.setString(1, tc);
             sorgu.setString(2, parola);
             
-            // 3. Sorguyu çalıştır ve sonucu al
             ResultSet sonuc = sorgu.executeQuery();
 
-            if (sonuc.next()) { // Eğer böyle bir kullanıcı bulunduysa
+            // Eğer böyle bir kullanıcı bulunduysa
+            if (sonuc.next()) {                 
+                //İş tipi veritabanında string tutulduğu için stringi enumsa çeviriyoruz.
                 UserRole rol = UserRole.valueOf(sonuc.getString("is_tipi"));
                 calisan = new Personel(sonuc.getString("ad_soyad"), sonuc.getLong("tc_no"), sonuc.getInt("maas"),rol,sonuc.getString("parola"));
             }
 
         } catch (Exception e) {
             System.out.println("Hata oluştu: " + e.getMessage());
-        } // Kullanıcı bulunamadıysa boş dön
+        } // Kullanıcı bulunamadıysa boş döndürüyoruz
         return calisan;
-    }
+    } 
     
-    public default Personel calısanBilgileri(String tc){
-        Personel calisan = null;
-        String sql = "SELECT * FROM calisanlar WHERE tc_no = ? AND Parola = ?";
-    
-        try (Connection baglanti = DriverManager.getConnection(URL);
-            PreparedStatement sorgu = baglanti.prepareStatement(sql)) {
-
-            // 2. Soru işaretlerini dolduruyoruz
-            sorgu.setString(1, tc);
-            
-            // 3. Sorguyu çalıştır ve sonucu al
-            ResultSet sonuc = sorgu.executeQuery();
-
-            if (sonuc.next()) { // Eğer böyle bir kullanıcı bulunduysa
-                UserRole rol = UserRole.valueOf(sonuc.getString("is_tipi"));
-                calisan = new Personel(sonuc.getString("ad_soyad"), sonuc.getLong("tc_no"), sonuc.getInt("maas"),rol,sonuc.getString("parola"));
-            }
-
-        } catch (Exception e) {
-            System.out.println("Hata oluştu: " + e.getMessage());
-        } // Kullanıcı bulunamadıysa boş dön
-        return calisan;
-    }   
-    
+    //Anlık saati alıp girilen kullanıcı ve islem stringi ile veritabanındaki log_kayitlar table'ına işliyoruz.
     public default void logKayit(String kullanici,String islem){
         String sql = "INSERT INTO log_kayitlar (tarih_saat, aciklama) VALUES (?, ?)";
     
@@ -132,5 +109,4 @@ public interface VeriTabani {
             System.out.println("Log Kayıt Hatası: " + e.getMessage());
         }
     }
-    //çalışan eklerken aynı tc ile birden fazla kişi eklenmesin diye yazdım
 }   

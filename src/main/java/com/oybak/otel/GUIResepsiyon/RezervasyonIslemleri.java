@@ -109,7 +109,7 @@ public class RezervasyonIslemleri extends javax.swing.JFrame implements OdaSecim
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    odaSecim(p); // OdaSecim interface'inden gelen metot
+    odaSecim(p);
     this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
