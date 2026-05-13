@@ -253,7 +253,7 @@ public class TarihSecimEkrani extends javax.swing.JFrame implements VeriTabani{
     private void devamEtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devamEtActionPerformed
     java.util.Date giris = girisTakvim.getDate();
         java.util.Date cikis = cikisTakvim.getDate();
-        java.util.Date bugun = new java.util.Date();
+        java.util.Date bugun = new java.util.Date(); //bugunun tarıhı alınır
         
         // KONTROL 1: Boşluk Kontrolü
         if (giris == null || cikis == null) {

@@ -4,10 +4,7 @@
  */
 package com.oybak.otel.enums;
 
-/**
- *
- * @author Yunus
- */
+
 public enum OdaOzelligi {
     DENIZ_MANZARASI,
     BALKON,

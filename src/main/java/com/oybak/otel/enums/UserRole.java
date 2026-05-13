@@ -4,10 +4,7 @@
  */
 package com.oybak.otel.enums;
 
-/**
- *
- * @author ahmet
- */
+
 public enum UserRole {
     MUSTERI,
     RESEPSIYON,

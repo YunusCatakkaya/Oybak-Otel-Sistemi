@@ -9,7 +9,7 @@ import com.oybak.otel.Personel;
 public interface OdaSecim {
     
     public default void odaSecim(Personel p){
-        OdaSecimEkrani t = new OdaSecimEkrani(p);
+        OdaSecimEkrani t = new OdaSecimEkrani(p);//oda şeçim ekranı nesnesı olusuturuz , parametre olarak personel alırız
         t.setLocationRelativeTo(null);
         t.setVisible(true);
     }
