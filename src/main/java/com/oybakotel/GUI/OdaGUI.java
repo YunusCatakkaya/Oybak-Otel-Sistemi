@@ -47,8 +47,8 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
         Oda aktifOda = odaBilgileri(this.secilenOda);
         
         if (aktifOda != null) {
-            // İŞTE BÜTÜN SİHİR BURADA:
-            // HTML oluşturma işini Oda nesnesine devrettik, biz sadece sonucu alıp yazdırıyoruz.
+            
+            //html olusturma oda nesnesıne gecırıldı
             Ozellikler.setText(aktifOda.getOzelliklerHTML());
         } else {
             Ozellikler.setText("Oda bilgileri veritabanından çekilemedi.");
@@ -96,7 +96,7 @@ public class OdaGUI extends javax.swing.JFrame implements VeriTabani, GeriButonu
         }
         // Diğer roller (YÖNETİM, MÜŞTERİ vb.) için paneller kapalı kalmaya devam eder
         default -> {
-            // İsteğe bağlı: Varsayılan bir işlem buraya eklenebilir
+            
         }
     }
     }

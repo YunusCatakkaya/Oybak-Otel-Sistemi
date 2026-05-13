@@ -63,7 +63,7 @@ public class TarihSecimEkrani extends javax.swing.JFrame implements VeriTabani{
     public TarihSecimEkrani(Personel p, int odaNo, com.oybak.otel.Musteri m) {
         this.p = p;
         this.odaNo = odaNo;
-        this.gelenMusteri = m; // Verileri paket olarak aldık!
+        this.gelenMusteri = m; // Verileri paket olarak alınır
         
         initComponents();
         

@@ -13,10 +13,7 @@ import static com.oybak.otel.enums.OdaDurumu.DOLU;
 import static com.oybak.otel.enums.OdaDurumu.MUSAIT;
 import com.oybak.otel.enums.UserRole;
     
-/**
- *
- * @author userxpc666
- */
+
 public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, VeriTabani, GeriButonu{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(OdaSecimEkrani.class.getName());
@@ -349,7 +346,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
     }//GEN-LAST:event_GeriActionPerformed
 
     private void FiltrelemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FiltrelemeActionPerformed
-        // 1. Seçilen filtreyi al (Örn: "2 Kişilik")
+        // 1. Seçilen filtreyi al
         javax.swing.JComboBox filtreKutusu = (javax.swing.JComboBox) evt.getSource();
         String secim = filtreKutusu.getSelectedItem().toString();
         
@@ -452,7 +449,7 @@ public class OdaSecimEkrani extends javax.swing.JFrame implements OdalaraGecis, 
 
     
    
-// Bu fonksiyon dışarıdan (filtreleme ekranından) çağrılacak
+//filtreleme methodu
 public void filtreyiUygula(int kapasite) {
     
     

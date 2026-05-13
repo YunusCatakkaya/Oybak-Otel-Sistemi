@@ -16,7 +16,8 @@ public abstract class Person {
         this.name=name;
         this.tcNo=tcNo;
     }
-    public abstract String bilgileriYazdir();
+    public abstract String bilgileriYazdir();//log kayıtları için kullanıyoruz
+    
 
     public String getName() {
         return name;
